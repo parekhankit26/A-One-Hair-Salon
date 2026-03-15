@@ -1039,16 +1039,7 @@ ScrollTrigger.create({
   }
 });
 
-/* 6. Testimonial cards pop in */
-ScrollTrigger.create({
-  trigger: '.testimonial-strip',
-  start: 'top 80%',
-  onEnter: () => {
-    gsap.from('.testi-card', {
-      y: 40, duration: 0.7, stagger: 0.18, ease: 'back.out(1.4)'
-    });
-  }
-});
+/* 6. Testimonial cards — CSS reveal handles animation, no GSAP conflict */
 
 /* 7. Text scramble on hero title (runs after entrance) */
 function scramble(el, finalText, duration){
