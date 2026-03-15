@@ -52,7 +52,7 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 /* PAGE HERO */
 .page-hero{height:55vh;min-height:400px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:80px 70px}
 .page-hero-bg{position:absolute;inset:0}
-.page-hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.28) saturate(.8)}
+.page-hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.9)}
 .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(8,8,10,.4) 60%,rgba(8,8,10,.6) 100%)}
 .page-hero-content{position:relative;z-index:2}
 .breadcrumb{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
@@ -118,15 +118,15 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 .gallery-grid.masonry .gal-item.tall{grid-row:span 2}
 .gallery-grid.masonry .gal-item.wide{grid-column:span 2}
 
-/* Overlay - subtle bottom gradient always visible, intensifies on hover */
+/* Overlay - only bottom strip for label, image fully visible above */
 .gal-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(to top, rgba(8,8,10,.75) 0%, rgba(8,8,10,.1) 38%, transparent 60%);
+  background:linear-gradient(to top, rgba(8,8,10,.82) 0%, rgba(8,8,10,.3) 25%, transparent 45%);
   display:flex;flex-direction:column;justify-content:flex-end;
   padding:24px;opacity:1;transition:background .4s;
 }
 .gal-item:hover .gal-overlay{
-  background:linear-gradient(to top, rgba(8,8,10,.92) 0%, rgba(8,8,10,.32) 50%, rgba(8,8,10,.04) 100%);
+  background:linear-gradient(to top, rgba(8,8,10,.9) 0%, rgba(8,8,10,.35) 30%, transparent 52%);
 }
 .gal-title{font-family:var(--serif);font-size:1.3rem;color:var(--white);transform:translateY(6px);transition:transform .4s var(--ease);opacity:.85}
 .gal-item:hover .gal-title{transform:translateY(0);opacity:1}
