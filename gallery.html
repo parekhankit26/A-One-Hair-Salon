@@ -118,16 +118,18 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 .gallery-grid.masonry .gal-item.tall{grid-row:span 2}
 .gallery-grid.masonry .gal-item.wide{grid-column:span 2}
 
-/* Overlay — HIDDEN by default, slides in only on hover */
+/* Overlay — display:none = truly invisible, cannot bleed over images */
 .gal-overlay{
   position:absolute;inset:0;
   background:linear-gradient(to top, rgba(8,8,10,.88) 0%, rgba(8,8,10,.25) 35%, transparent 55%);
-  display:flex;flex-direction:column;justify-content:flex-end;
-  padding:24px;opacity:0;transition:opacity .4s var(--ease);
+  flex-direction:column;justify-content:flex-end;
+  padding:24px;display:none;
 }
-.gal-item:hover .gal-overlay{opacity:1}
-.gal-title{font-family:var(--serif);font-size:1.3rem;color:var(--white);transform:translateY(12px);transition:transform .4s var(--ease);opacity:1}
-.gal-item:hover .gal-title{transform:translateY(0)}
+.gal-item:hover .gal-overlay{display:flex;animation:galOverlayIn .35s ease both}
+@keyframes galOverlayIn{from{opacity:0}to{opacity:1}}
+.gal-title{font-family:var(--serif);font-size:1.3rem;color:var(--white);margin-top:4px}
+.gal-item:hover .gal-title{animation:galTitleIn .4s ease both}
+@keyframes galTitleIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .gal-cat{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
 .gal-expand{
   position:absolute;top:16px;right:16px;
@@ -145,8 +147,8 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
   border:1px solid var(--border);
 }
 .gallery-grid.list-view .gal-overlay{
-  position:static;background:var(--bg2);opacity:1;padding:32px 40px;
-  flex-direction:column;justify-content:center;
+  position:static;background:var(--bg2);display:flex;padding:32px 40px;
+  flex-direction:column;justify-content:center;animation:none;
 }
 .gallery-grid.list-view .gal-title{font-size:1.6rem;transform:none}
 .gallery-grid.list-view .gal-expand{display:none}
@@ -262,7 +264,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
 <!-- PAGE HERO -->
 <div class="page-hero">
   <div class="page-hero-bg">
-    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1400&q=85" alt="Gallery">
+    <img src="https://design.canva.ai/GHA3ChbutvbeHbn" alt="Gallery">
   </div>
   <div class="page-hero-content">
     <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Gallery</div>
@@ -297,7 +299,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
   <div class="gallery-grid masonry" id="galleryGrid">
 
     <div class="gal-item wide" data-cat="interior">
-      <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=85" alt="Luxury Salon Interior">
+      <img src="https://design.canva.ai/sTlJQ7Xvd8wRt8m" alt="Luxury Salon Interior">
       <div class="gal-overlay">
         <div class="gal-cat">Salon Interior</div>
         <div class="gal-title">Luxury Salon Interior</div>
@@ -306,7 +308,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     </div>
 
     <div class="gal-item tall" data-cat="color">
-      <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=85" alt="Balayage">
+      <img src="https://design.canva.ai/Eik3RiM2Z7JKqhd" alt="Balayage">
       <div class="gal-overlay">
         <div class="gal-cat">Color</div>
         <div class="gal-title">Balayage Color</div>
@@ -315,7 +317,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     </div>
 
     <div class="gal-item" data-cat="grooming">
-      <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=85" alt="Men's Grooming">
+      <img src="https://design.canva.ai/lSda8hD6mzJZJtU" alt="Men's Grooming">
       <div class="gal-overlay">
         <div class="gal-cat">Men's Grooming</div>
         <div class="gal-title">Precision Grooming</div>
@@ -324,7 +326,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     </div>
 
     <div class="gal-item" data-cat="hair">
-      <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=85" alt="Hair Spa">
+      <img src="https://design.canva.ai/kXoByhk1edGgvlF" alt="Hair Spa">
       <div class="gal-overlay">
         <div class="gal-cat">Hair Styling</div>
         <div class="gal-title">Rejuvenating Hair Spa</div>
@@ -333,7 +335,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     </div>
 
     <div class="gal-item tall" data-cat="color">
-      <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1400&q=85" alt="Bold Color">
+      <img src="https://design.canva.ai/GHA3ChbutvbeHbn" alt="Bold Color">
       <div class="gal-overlay">
         <div class="gal-cat">Color</div>
         <div class="gal-title">Bold Fashion Color</div>
@@ -342,7 +344,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     </div>
 
     <div class="gal-item wide" data-cat="bridal">
-      <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=85" alt="Bridal Styling">
+      <img src="https://design.canva.ai/hbVKzwLnnoXJrZE" alt="Bridal Styling">
       <div class="gal-overlay">
         <div class="gal-cat">Bridal</div>
         <div class="gal-title">Bridal Elegance</div>
@@ -351,7 +353,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     </div>
 
     <div class="gal-item" data-cat="nails">
-      <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=800&q=85" alt="Nail Art">
+      <img src="https://design.canva.ai/Vcy6RUp02Nr9iEW" alt="Nail Art">
       <div class="gal-overlay">
         <div class="gal-cat">Nails</div>
         <div class="gal-title">Artistic Nail Design</div>
@@ -360,7 +362,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     </div>
 
     <div class="gal-item" data-cat="skin">
-      <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=800&q=85" alt="Facial Treatment">
+      <img src="https://design.canva.ai/cZOZaOFK3QC8YQp" alt="Facial Treatment">
       <div class="gal-overlay">
         <div class="gal-cat">Skin</div>
         <div class="gal-title">Luxury Facial</div>
@@ -369,7 +371,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     </div>
 
     <div class="gal-item wide" data-cat="interior">
-      <img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?auto=format&fit=crop&w=900&q=85" alt="Wash Station">
+      <img src="https://design.canva.ai/27ZxuRVCje6yOL3" alt="Wash Station">
       <div class="gal-overlay">
         <div class="gal-cat">Salon Interior</div>
         <div class="gal-title">Wash &amp; Refresh Station</div>
@@ -378,7 +380,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     </div>
 
     <div class="gal-item tall" data-cat="hair">
-      <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=800&q=85" alt="Premium Hair Wash">
+      <img src="https://design.canva.ai/Ssm_8HUAiJck1I6" alt="Premium Hair Wash">
       <div class="gal-overlay">
         <div class="gal-cat">Hair Styling</div>
         <div class="gal-title">Premium Wash Experience</div>
@@ -387,7 +389,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     </div>
 
     <div class="gal-item" data-cat="interior">
-      <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=85" alt="Shampoo Suite">
+      <img src="https://design.canva.ai/GBPs0oAWDlnOW1f" alt="Shampoo Suite">
       <div class="gal-overlay">
         <div class="gal-cat">Salon Interior</div>
         <div class="gal-title">Shampoo Suite</div>
@@ -396,7 +398,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     </div>
 
     <div class="gal-item" data-cat="hair">
-      <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=800&q=85" alt="Hair Care Ritual">
+      <img src="https://design.canva.ai/jaRxOKnlMZQ1HRl" alt="Hair Care Ritual">
       <div class="gal-overlay">
         <div class="gal-cat">Hair Styling</div>
         <div class="gal-title">Hair Care Ritual</div>
@@ -610,10 +612,10 @@ gsap.to('.page-hero-bg img',{
   scrollTrigger:{trigger:'.page-hero',start:'top top',end:'bottom top',scrub:true}
 });
 
-/* Stagger items on load */
+/* Stagger items on load — no opacity so images are always visible */
 gsap.from('.gal-item',{
-  opacity:0, scale:.95, y:24,
-  stagger:.06, duration:.7, ease:'power3.out', delay:.3
+  scale:.95, y:24,
+  stagger:.06, duration:.7, ease:'power3.out', delay:.2
 });
 
 /* CSS fadeIn for filter */
