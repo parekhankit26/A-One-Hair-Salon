@@ -57,10 +57,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
   position:sticky;top:0;height:100vh;
   overflow:hidden;
 }
-.booking-visual img{width:100%;height:100%;object-fit:cover;filter:brightness(.78) saturate(1.05)}
+.booking-visual img{width:100%;height:100%;object-fit:cover;filter:brightness(.92) saturate(1.05)}
 .booking-visual::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(to right, rgba(8,8,10,.08) 0%, rgba(8,8,10,.45) 100%);
+  background:linear-gradient(to right, rgba(8,8,10,.0) 0%, rgba(8,8,10,.28) 100%);
 }
 .booking-visual-text{
   position:absolute;bottom:80px;left:60px;right:60px;z-index:2;
@@ -116,16 +116,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 /* SERVICE CARDS */
 .svc-pick-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:32px}
 .svc-pick-card{
-  padding:20px 18px;border:1px solid var(--border);background:var(--bg2);
+  padding:20px 18px;border:1px solid rgba(201,168,76,.28);background:var(--bg3);
   cursor:none;transition:all .3s;position:relative;overflow:hidden;
 }
 .svc-pick-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s var(--ease)}
-.svc-pick-card:hover,.svc-pick-card.selected{border-color:rgba(201,168,76,.5);background:var(--bg3)}
+.svc-pick-card:hover{border-color:rgba(201,168,76,.6);background:rgba(30,30,40,.95)}
 .svc-pick-card:hover::before,.svc-pick-card.selected::before{transform:scaleX(1)}
-.svc-pick-card.selected{border-color:var(--gold);background:rgba(201,168,76,.06)}
+.svc-pick-card.selected{border-color:var(--gold);background:rgba(201,168,76,.14);box-shadow:0 0 18px rgba(201,168,76,.12)}
 .spk-icon{font-size:1.6rem;color:var(--gold);margin-bottom:8px}
 .spk-name{font-family:var(--serif);font-size:1rem;color:var(--white);margin-bottom:3px}
-.spk-price{font-size:.68rem;color:var(--muted)}
+.spk-price{font-size:.68rem;color:rgba(201,168,76,.7)}
 .spk-check{
   position:absolute;top:12px;right:12px;
   width:20px;height:20px;border-radius:50%;
@@ -138,25 +138,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 /* DATE GRID */
 .date-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:28px}
 .date-cell{
-  padding:10px 4px;text-align:center;border:1px solid var(--border);
-  background:var(--bg2);cursor:none;transition:all .3s;
+  padding:10px 4px;text-align:center;border:1px solid rgba(201,168,76,.22);
+  background:var(--bg3);cursor:none;transition:all .3s;
 }
-.date-cell:hover,.date-cell.selected{border-color:var(--gold);background:rgba(201,168,76,.1);color:var(--gold)}
-.date-cell.selected{background:rgba(201,168,76,.15)}
+.date-cell:hover{border-color:rgba(201,168,76,.55);background:rgba(201,168,76,.1);color:var(--gold)}
+.date-cell.selected{border-color:var(--gold);background:rgba(201,168,76,.18);box-shadow:0 0 12px rgba(201,168,76,.15)}
 .date-cell.past{opacity:.3;pointer-events:none}
-.date-cell .dc-day{font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.date-cell .dc-day{font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(201,168,76,.6);margin-bottom:4px}
 .date-cell .dc-num{font-family:var(--serif);font-size:1.2rem;color:var(--white)}
 .date-cell.selected .dc-num,.date-cell:hover .dc-num{color:var(--gold)}
 .date-month-label{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
 
 .time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:32px}
 .time-slot{
-  padding:12px 8px;text-align:center;border:1px solid var(--border);
-  background:var(--bg2);cursor:none;transition:all .3s;
-  font-size:.75rem;color:var(--muted);
+  padding:12px 8px;text-align:center;border:1px solid rgba(201,168,76,.22);
+  background:var(--bg3);cursor:none;transition:all .3s;
+  font-size:.75rem;color:rgba(245,240,232,.75);
 }
-.time-slot:hover,.time-slot.selected{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
-.time-slot.selected{background:rgba(201,168,76,.14)}
+.time-slot:hover{border-color:rgba(201,168,76,.55);color:var(--gold);background:rgba(201,168,76,.1)}
+.time-slot.selected{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.18);box-shadow:0 0 12px rgba(201,168,76,.15)}
 .time-slot.taken{opacity:.35;pointer-events:none;text-decoration:line-through}
 
 /* FORM FIELDS */
@@ -207,10 +207,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 .stylist-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
 .stylist-card{
   display:flex;align-items:center;gap:18px;
-  padding:18px 20px;border:1px solid var(--border);background:var(--bg2);
+  padding:18px 20px;border:1px solid rgba(201,168,76,.28);background:var(--bg3);
   cursor:none;transition:all .3s;
 }
-.stylist-card:hover,.stylist-card.selected{border-color:var(--gold);background:rgba(201,168,76,.06)}
+.stylist-card:hover{border-color:rgba(201,168,76,.6);background:rgba(30,30,40,.95)}
+.stylist-card.selected{border-color:var(--gold);background:rgba(201,168,76,.14);box-shadow:0 0 18px rgba(201,168,76,.12)}
 .stylist-card.selected{border-color:var(--gold)}
 .stylist-avatar{
   width:52px;height:52px;border-radius:50%;flex-shrink:0;
@@ -278,6 +279,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
   .time-grid{grid-template-columns:repeat(3,1fr)}
   .form-row{grid-template-columns:1fr}
 }
+
+/* FOOTER */
+footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--border)}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;margin-bottom:50px}
+.footer-brand .logo-main{font-family:var(--serif);font-size:1.4rem;letter-spacing:.1em;color:var(--white)}
+.footer-brand p{font-size:.78rem;color:var(--muted);line-height:1.8;margin-top:16px;max-width:260px}
+.footer-col h4{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col ul a{font-size:.8rem;color:var(--muted);transition:color .3s}
+.footer-col ul a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-bottom p{font-size:.68rem;color:var(--muted)}
+.socials{display:flex;gap:14px}
+.social-btn{width:34px;height:34px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--muted);transition:all .3s;cursor:none;text-decoration:none}
+.social-btn:hover{border-color:var(--gold);color:var(--gold)}
+@media(max-width:900px){footer{padding:40px 24px 30px}.footer-grid{grid-template-columns:1fr 1fr;gap:30px}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -829,5 +847,52 @@ async function confirmBooking(){
 window.confirmBooking = confirmBooking;
 window.prevStep = prevStep;
 </script>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-main">A ONE HAIR SALON</div>
+      <p>Mumbai's premier luxury unisex salon. Where every visit is a bespoke journey of beauty.</p>
+      <div class="socials" style="margin-top:20px">
+        <a href="#" class="social-btn">f</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">&#10022;</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="booking.html">Book Now</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <ul>
+        <li><a href="#">Mon-Fri: 10am - 8pm</a></li>
+        <li><a href="#">Saturday: 9am - 9pm</a></li>
+        <li><a href="#">Sunday: 10am - 6pm</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">+91 98765 43210</a></li>
+        <li><a href="#">hello@aonehairsalon.com</a></li>
+        <li><a href="#">Linking Road, Bandra, Mumbai</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&#169; 2026 A One Hair Salon, Mumbai. All rights reserved.</p>
+    <p>Crafted with &#10022; for luxury</p>
+  </div>
+</footer>
+
+<script src="site.js"></script>
 </body>
 </html>
