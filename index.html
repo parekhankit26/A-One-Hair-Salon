@@ -382,11 +382,10 @@ section { padding:120px 70px; }
 .g-overlay {
   position:absolute; inset:0;
   background:linear-gradient(to top, rgba(8,8,10,.88) 0%, rgba(8,8,10,.2) 35%, transparent 55%);
-  align-items:flex-end; padding:22px;
-  display:none;
+  display:flex; align-items:flex-end; padding:22px;
+  opacity:0; transition:opacity .4s var(--ease);
 }
-.g-item:hover .g-overlay { display:flex; animation:gOverlayIn .35s ease both; }
-@keyframes gOverlayIn{from{opacity:0}to{opacity:1}}
+.g-item:hover .g-overlay { opacity:1; }
 .g-overlay span { font-family:var(--serif); font-size:1.15rem; color:var(--white); letter-spacing:.04em; }
 .gallery-cta-wrap { text-align:center; margin-top:50px; }
 
@@ -1032,7 +1031,7 @@ ScrollTrigger.create({
   start: 'top 80%',
   onEnter: () => {
     gsap.from('.g-item', {
-      scale: 0.9, duration: 0.6, stagger: 0.08, ease: 'power3.out'
+      scale: 0.9, opacity: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out'
     });
   }
 });
