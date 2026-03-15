@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services & Pricing — A One Hair Salon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+:root {
+  --gold:#c9a84c; --gold-lt:#f0d47a; --gold-dk:#8a6f2e; --gold-glow:rgba(201,168,76,.35);
+  --bg:#08080a; --bg1:#0f0f14; --bg2:#171720; --bg3:#1e1e28;
+  --white:#f5f0e8; --muted:#706a7a; --border:rgba(201,168,76,.15);
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+  --ease:cubic-bezier(.23,1,.32,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--sans);overflow-x:hidden;cursor:none}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%;height:100%;object-fit:cover}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--gold)}
+
+/* CURSOR */
+.cursor-ring{position:fixed;width:32px;height:32px;border:1.5px solid var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+.cursor-dot{position:fixed;width:5px;height:5px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%)}
+.cursor-ring.expand{width:55px;height:55px;border-color:var(--gold-lt);background:rgba(201,168,76,.06)}
+.cursor-spark{position:fixed;width:3px;height:3px;background:var(--gold-lt);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);animation:sparkFade .8s ease-out forwards}
+@keyframes sparkFade{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% - 28px)) scale(0)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content:space-between;align-items:center;padding:24px 70px;transition:all .5s var(--ease)}
+nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:14px}
+.logo-emblem{width:44px;height:44px;background:linear-gradient(135deg,var(--gold-lt),var(--gold),var(--gold-dk));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--bg);font-weight:900;font-family:var(--serif);box-shadow:0 0 28px var(--gold-glow);flex-shrink:0}
+.logo-text .logo-main{font-family:var(--serif);font-size:1.25rem;font-weight:600;letter-spacing:.12em;color:var(--white)}
+.logo-text .logo-sub{font-size:.6rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,232,.6);transition:color .3s;position:relative;padding-bottom:4px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .4s var(--ease)}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-book{padding:10px 26px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;transition:all .4s var(--ease)}
+.nav-book:hover{background:var(--gold);color:var(--bg)}
+
+/* PAGE HERO */
+.page-hero{
+  height:52vh; min-height:380px;
+  position:relative; overflow:hidden;
+  display:flex; align-items:flex-end; padding:80px 70px;
+}
+.page-hero-bg{position:absolute;inset:0}
+.page-hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.3) saturate(.7)}
+.page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(8,8,10,.4) 60%,rgba(8,8,10,.7) 100%)}
+.page-hero-content{position:relative;z-index:2}
+.breadcrumb{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.breadcrumb a{color:var(--muted);transition:color .3s}
+.breadcrumb a:hover{color:var(--gold)}
+.page-title{font-family:var(--serif);font-size:clamp(3rem,6vw,6rem);font-weight:300;line-height:.95;letter-spacing:.04em;text-transform:uppercase}
+.page-title em{font-style:italic;color:var(--gold)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(35px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-l{opacity:0;transform:translateX(-35px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal-l.visible{opacity:1;transform:none}
+
+/* FILTER TABS */
+.filter-section{background:var(--bg1);padding:40px 70px;border-bottom:1px solid var(--border)}
+.filter-tabs{display:flex;gap:4px;flex-wrap:wrap}
+.filter-tab{
+  padding:9px 22px;border:1px solid var(--border);background:transparent;
+  color:var(--muted);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;
+  cursor:none;transition:all .3s;
+}
+.filter-tab.active,.filter-tab:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+
+/* SERVICE CATEGORY */
+.services-body{padding:70px 70px 100px;background:var(--bg)}
+.svc-category{margin-bottom:80px}
+.cat-header{display:flex;align-items:center;gap:24px;margin-bottom:40px}
+.cat-icon{font-size:2rem;color:var(--gold)}
+.cat-info h2{font-family:var(--serif);font-size:2.4rem;font-weight:300;color:var(--white)}
+.cat-info p{font-size:.78rem;color:var(--muted);letter-spacing:.06em;margin-top:4px}
+.cat-line{flex:1;height:1px;background:var(--border)}
+
+/* Category photo banner */
+.cat-photo-banner{
+  height:200px; position:relative; overflow:hidden;
+  margin-bottom:32px; border-radius:4px;
+  border:1px solid var(--border);
+}
+.cat-photo-banner img{
+  width:100%; height:100%; object-fit:cover;
+  filter:brightness(.72) saturate(1.05);
+  transition:transform .8s var(--ease), filter .5s;
+}
+.svc-category:hover .cat-photo-banner img{ transform:scale(1.04); filter:brightness(.82) saturate(1.1); }
+.cat-photo-banner::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to right, rgba(8,8,10,.6) 0%, transparent 55%, rgba(8,8,10,.25) 100%);
+}
+.cat-photo-label{
+  position:absolute; left:28px; top:50%; transform:translateY(-50%);
+  z-index:2; pointer-events:none;
+}
+.cat-photo-label h3{
+  font-family:var(--serif); font-size:2.2rem; font-weight:300;
+  color:var(--white); line-height:1;
+}
+.cat-photo-label p{
+  font-size:.65rem; letter-spacing:.25em; color:var(--gold);
+  text-transform:uppercase; margin-top:6px;
+}
+
+/* Service rows */
+.svc-table{width:100%;border-collapse:collapse}
+.svc-row{
+  display:grid;grid-template-columns:2fr 1fr 1fr 180px;
+  align-items:center;padding:20px 28px;
+  border-bottom:1px solid var(--border);
+  background:var(--bg2);
+  transition:background .3s,border-color .3s;
+  gap:20px;
+}
+.svc-row:first-child{border-top:1px solid var(--border)}
+.svc-row:hover{background:var(--bg3);border-color:rgba(201,168,76,.3)}
+.svc-name{font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--white)}
+.svc-detail{font-size:.72rem;color:var(--muted);margin-top:3px;letter-spacing:.04em}
+.svc-duration{font-size:.72rem;color:var(--muted);text-align:center}
+.svc-duration span{display:block;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;margin-top:2px;color:var(--muted)}
+.svc-price-cell{text-align:center}
+.svc-price{font-family:var(--serif);font-size:1.5rem;color:var(--gold);font-weight:400}
+.svc-price small{font-size:.7rem;color:var(--muted);font-family:var(--sans)}
+.svc-book-btn{
+  display:inline-block;padding:10px 20px;
+  border:1px solid rgba(201,168,76,.4);color:var(--gold);
+  font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+  transition:all .3s;text-align:center;cursor:none;
+}
+.svc-book-btn:hover{background:var(--gold);color:var(--bg)}
+
+/* PACKAGE CARDS */
+.packages-section{background:var(--bg1);padding:80px 70px}
+.packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:50px}
+.pkg-card{
+  background:var(--bg2);padding:44px 36px;
+  border:1px solid var(--border);position:relative;
+  transition:all .5s var(--ease);overflow:hidden;
+}
+.pkg-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .5s var(--ease)}
+.pkg-card:hover{border-color:rgba(201,168,76,.4);transform:translateY(-6px)}
+.pkg-card:hover::before{transform:scaleX(1)}
+.pkg-card.featured{border-color:var(--gold);background:linear-gradient(135deg,var(--bg3),var(--bg2))}
+.pkg-card.featured::before{transform:scaleX(1)}
+.pkg-badge{position:absolute;top:20px;right:20px;padding:4px 14px;background:var(--gold);color:var(--bg);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+.pkg-name{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:var(--white);margin-bottom:6px}
+.pkg-subtitle{font-size:.68rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px}
+.pkg-price{font-family:var(--serif);font-size:3rem;color:var(--gold);line-height:1;margin-bottom:4px}
+.pkg-price small{font-size:1rem;color:var(--muted);font-family:var(--sans)}
+.pkg-desc{font-size:.78rem;color:var(--muted);margin:20px 0;line-height:1.7}
+.pkg-includes{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.pkg-includes li{font-size:.78rem;color:rgba(245,240,232,.7);display:flex;align-items:center;gap:10px}
+.pkg-includes li::before{content:'✦';color:var(--gold);font-size:.6rem;flex-shrink:0}
+.pkg-cta{display:block;padding:13px 0;text-align:center;border:1px solid var(--gold);color:var(--gold);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;transition:all .4s var(--ease);cursor:none}
+.pkg-cta:hover,.pkg-card.featured .pkg-cta{background:var(--gold);color:var(--bg)}
+
+/* FOOTER */
+footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--border)}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;margin-bottom:50px}
+.footer-brand .logo-main{font-family:var(--serif);font-size:1.4rem;letter-spacing:.1em;color:var(--white)}
+.footer-brand p{font-size:.78rem;color:var(--muted);line-height:1.8;margin-top:16px;max-width:260px}
+.footer-col h4{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col ul a{font-size:.8rem;color:var(--muted);transition:color .3s}
+.footer-col ul a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-bottom p{font-size:.68rem;color:var(--muted)}
+.socials{display:flex;gap:14px}
+.social-btn{width:34px;height:34px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--muted);transition:all .3s;cursor:none}
+.social-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+@media(max-width:1100px){
+  nav,.page-hero,.filter-section,.services-body,.packages-section,footer{padding-left:40px;padding-right:40px}
+  .svc-row{grid-template-columns:1.5fr 1fr 1fr;}.svc-row .svc-book-btn{display:none}
+  .packages-grid{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr 1fr;gap:40px}
+}
+@media(max-width:768px){
+  body{cursor:auto}.cursor-ring,.cursor-dot,.cursor-spark{display:none!important}
+  nav{padding:18px 24px}nav.scrolled{padding:12px 24px}
+  .nav-links,.nav-book{display:none}
+  nav,.page-hero,.filter-section,.services-body,.packages-section,footer{padding-left:24px;padding-right:24px}
+  .page-hero{padding-bottom:50px}
+  .svc-row{grid-template-columns:1fr 1fr;gap:10px;padding:16px}
+  .svc-duration,.svc-book-btn{display:none}
+  .packages-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<nav id="mainNav">
+  <div class="nav-logo">
+    <div class="logo-emblem">A</div>
+    <div class="logo-text">
+      <div class="logo-main">A ONE</div>
+      <div class="logo-sub">Hair Salon · Mumbai</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="booking.html" class="nav-book">Book Now</a>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg">
+    <img src="https://design.canva.ai/kXoByhk1edGgvlF" alt="Hair Services">
+  </div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Services</div>
+    <h1 class="page-title">Services &amp;<br><em>Pricing</em></h1>
+  </div>
+</div>
+
+<!-- FILTER TABS -->
+<div class="filter-section">
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-cat="all">All Services</button>
+    <button class="filter-tab" data-cat="hair">Hair Services</button>
+    <button class="filter-tab" data-cat="color">Color & Treatments</button>
+    <button class="filter-tab" data-cat="bridal">Bridal</button>
+    <button class="filter-tab" data-cat="men">Men's Grooming</button>
+    <button class="filter-tab" data-cat="skin">Skin & Nails</button>
+  </div>
+</div>
+
+<!-- SERVICES BODY -->
+<div class="services-body">
+
+  <!-- HAIR -->
+  <div class="svc-category reveal" data-cat="hair">
+    <div class="cat-header">
+      <div class="cat-icon">✂</div>
+      <div class="cat-info">
+        <h2>Hair Services</h2>
+        <p>Precision cuts for women, men &amp; kids</p>
+      </div>
+      <div class="cat-line"></div>
+    </div>
+    <div class="cat-photo-banner">
+      <img src="https://design.canva.ai/27ZxuRVCje6yOL3" alt="Hair Services">
+      <div class="cat-photo-label">
+        <h3>Hair Services</h3>
+        <p>Cut · Blowdry · Straightening</p>
+      </div>
+    </div>
+    <div class="svc-table">
+      <div class="svc-row">
+        <div><div class="svc-name">Women's Haircut &amp; Blowdry</div><div class="svc-detail">Consultation + shampoo + style finish</div></div>
+        <div class="svc-duration">60 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹800 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Men's Haircut</div><div class="svc-detail">Scissor cut / machine cut + styling</div></div>
+        <div class="svc-duration">30 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹350 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Kids' Haircut</div><div class="svc-detail">Under 12 years</div></div>
+        <div class="svc-duration">25 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹250 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Blowdry &amp; Styling</div><div class="svc-detail">Professional blowout with round brush finish</div></div>
+        <div class="svc-duration">45 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹600 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Hair Straightening (Permanent)</div><div class="svc-detail">Rebonding / Relaxing — shoulder to long</div></div>
+        <div class="svc-duration">3–4 hrs<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹3,500 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLOR -->
+  <div class="svc-category reveal" data-cat="color" style="transition-delay:.1s">
+    <div class="cat-header">
+      <div class="cat-icon">◉</div>
+      <div class="cat-info">
+        <h2>Color &amp; Treatments</h2>
+        <p>Premium hair color, keratin &amp; spa</p>
+      </div>
+      <div class="cat-line"></div>
+    </div>
+    <div class="cat-photo-banner">
+      <img src="https://design.canva.ai/Eik3RiM2Z7JKqhd" alt="Color and Treatments">
+      <div class="cat-photo-label">
+        <h3>Color & Treatments</h3>
+        <p>Balayage · Keratin · Hair Spa</p>
+      </div>
+    </div>
+    <div class="svc-table">
+      <div class="svc-row">
+        <div><div class="svc-name">Balayage</div><div class="svc-detail">Freehand painting — natural sun-kissed effect</div></div>
+        <div class="svc-duration">2.5–3 hrs<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹4,000 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Global Color</div><div class="svc-detail">Full head single process color</div></div>
+        <div class="svc-duration">2 hrs<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹2,500 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Highlights / Ombre</div><div class="svc-detail">Partial or full foil highlights</div></div>
+        <div class="svc-duration">2–3 hrs<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹3,000 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Keratin Treatment</div><div class="svc-detail">Smoothing + frizz control — lasts 4–6 months</div></div>
+        <div class="svc-duration">3 hrs<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹5,000 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Hair Spa &amp; Mask</div><div class="svc-detail">Deep conditioning treatment with scalp massage</div></div>
+        <div class="svc-duration">75 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹1,500 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BRIDAL -->
+  <div class="svc-category reveal" data-cat="bridal" style="transition-delay:.15s">
+    <div class="cat-header">
+      <div class="cat-icon">♛</div>
+      <div class="cat-info">
+        <h2>Bridal Services</h2>
+        <p>Look flawless on your most special day</p>
+      </div>
+      <div class="cat-line"></div>
+    </div>
+    <div class="cat-photo-banner">
+      <img src="https://design.canva.ai/hbVKzwLnnoXJrZE" alt="Bridal Services">
+      <div class="cat-photo-label">
+        <h3>Bridal Services</h3>
+        <p>Hair · Makeup · Full Bridal Package</p>
+      </div>
+    </div>
+    <div class="svc-table">
+      <div class="svc-row">
+        <div><div class="svc-name">Bridal Hair Styling</div><div class="svc-detail">Trial + Day-of updo or blowout</div></div>
+        <div class="svc-duration">2 hrs<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹5,000 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Bridal Makeup</div><div class="svc-detail">HD / airbrush makeup — includes lashes</div></div>
+        <div class="svc-duration">2.5 hrs<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹6,000 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Full Bridal Package</div><div class="svc-detail">Hair + Makeup + Mehendi + Pre-bridal facial</div></div>
+        <div class="svc-duration">Full day<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹15,000 <small>package</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEN -->
+  <div class="svc-category reveal" data-cat="men" style="transition-delay:.2s">
+    <div class="cat-header">
+      <div class="cat-icon">✦</div>
+      <div class="cat-info">
+        <h2>Men's Grooming</h2>
+        <p>Precision services crafted for the modern man</p>
+      </div>
+      <div class="cat-line"></div>
+    </div>
+    <div class="cat-photo-banner">
+      <img src="https://design.canva.ai/lSda8hD6mzJZJtU" alt="Men's Grooming">
+      <div class="cat-photo-label">
+        <h3>Men's Grooming</h3>
+        <p>Haircut · Beard · Hot Towel Shave</p>
+      </div>
+    </div>
+    <div class="svc-table">
+      <div class="svc-row">
+        <div><div class="svc-name">Beard Trim &amp; Shape</div><div class="svc-detail">Scissors + straight razor finish</div></div>
+        <div class="svc-duration">20 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹300 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Hot Towel Shave</div><div class="svc-detail">Traditional wet shave with pre-shave oil</div></div>
+        <div class="svc-duration">40 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹450 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Men's Hair Color</div><div class="svc-detail">Natural black / fashion shades</div></div>
+        <div class="svc-duration">60 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹1,200 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Men's Facial</div><div class="svc-detail">Cleansing + exfoliation + moisturizing</div></div>
+        <div class="svc-duration">60 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹1,000 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKIN & NAILS -->
+  <div class="svc-category reveal" data-cat="skin" style="transition-delay:.25s">
+    <div class="cat-header">
+      <div class="cat-icon">◈</div>
+      <div class="cat-info">
+        <h2>Skin &amp; Nail Services</h2>
+        <p>Facials, nail art &amp; full body care</p>
+      </div>
+      <div class="cat-line"></div>
+    </div>
+    <div class="cat-photo-banner">
+      <img src="https://design.canva.ai/cZOZaOFK3QC8YQp" alt="Skin and Nail Services">
+      <div class="cat-photo-label">
+        <h3>Skin &amp; Nails</h3>
+        <p>Facial · Nail Art · Pedicure · Waxing</p>
+      </div>
+    </div>
+    <div class="svc-table">
+      <div class="svc-row">
+        <div><div class="svc-name">Luxury Facial</div><div class="svc-detail">Anti-aging / brightening / hydrating — customize</div></div>
+        <div class="svc-duration">75 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹2,000 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Nail Art (Hands)</div><div class="svc-detail">Gel polish + nail art design</div></div>
+        <div class="svc-duration">60 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹1,200 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Pedicure</div><div class="svc-detail">Luxury pedicure with massage + nail color</div></div>
+        <div class="svc-duration">60 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹1,000 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name">Waxing (Full Body)</div><div class="svc-detail">Rica / chocolate wax options</div></div>
+        <div class="svc-duration">90 min<span>duration</span></div>
+        <div class="svc-price-cell"><div class="svc-price">₹2,500 <small>onwards</small></div></div>
+        <a href="booking.html" class="svc-book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<section class="packages-section">
+  <div style="text-align:center;margin-bottom:20px" class="reveal">
+    <span style="font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold)">Value Bundles</span>
+    <h2 style="font-family:var(--serif);font-size:clamp(2rem,3.5vw,3.2rem);font-weight:300;color:var(--white);margin-top:10px">Curated <em style="font-style:italic;color:var(--gold)">Packages</em></h2>
+  </div>
+  <div class="packages-grid">
+    <div class="pkg-card reveal">
+      <div class="pkg-name">Refresh</div>
+      <div class="pkg-subtitle">Essential Care</div>
+      <div class="pkg-price">₹1,800</div>
+      <p class="pkg-desc">Perfect for a quick refresh and self-care day.</p>
+      <ul class="pkg-includes">
+        <li>Women's Haircut + Blowdry</li>
+        <li>Basic Facial</li>
+        <li>Nail Polish (Hands)</li>
+      </ul>
+      <a href="booking.html" class="pkg-cta">Book This Package</a>
+    </div>
+    <div class="pkg-card featured reveal" style="transition-delay:.12s">
+      <div class="pkg-badge">Most Popular</div>
+      <div class="pkg-name">Luxe Day</div>
+      <div class="pkg-subtitle">Complete Salon Experience</div>
+      <div class="pkg-price">₹5,500</div>
+      <p class="pkg-desc">Indulge in a full day of luxury treatments.</p>
+      <ul class="pkg-includes">
+        <li>Haircut + Blowdry + Styling</li>
+        <li>Balayage / Global Color</li>
+        <li>Luxury Facial</li>
+        <li>Manicure + Pedicure</li>
+        <li>Head Massage</li>
+      </ul>
+      <a href="booking.html" class="pkg-cta">Book This Package</a>
+    </div>
+    <div class="pkg-card reveal" style="transition-delay:.24s">
+      <div class="pkg-name">Royale Bridal</div>
+      <div class="pkg-subtitle">Bridal Preparation</div>
+      <div class="pkg-price">₹12,000</div>
+      <p class="pkg-desc">Everything you need for your perfect wedding look.</p>
+      <ul class="pkg-includes">
+        <li>Pre-Bridal Facial + Cleanup</li>
+        <li>Hair Spa + Keratin Treatment</li>
+        <li>Bridal Makeup (HD)</li>
+        <li>Bridal Hair Styling + Trial</li>
+        <li>Full Waxing + Nail Art</li>
+      </ul>
+      <a href="booking.html" class="pkg-cta">Book This Package</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-main">A ONE HAIR SALON</div>
+      <p>Mumbai's premier luxury unisex salon. Where every visit is a bespoke journey of beauty.</p>
+      <div class="socials" style="margin-top:20px">
+        <a href="#" class="social-btn">f</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">✦</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="booking.html">Book Now</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <ul>
+        <li><a href="#">Mon–Fri: 10am–8pm</a></li>
+        <li><a href="#">Saturday: 9am–9pm</a></li>
+        <li><a href="#">Sunday: 10am–6pm</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">+91 98765 43210</a></li>
+        <li><a href="#">hello@aonehairsalon.com</a></li>
+        <li><a href="#">Linking Road, Bandra, Mumbai</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 A One Hair Salon, Mumbai. All rights reserved.</p>
+    <p>Crafted with ✦ for luxury</p>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* Nav */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+/* Cursor */
+const ring = document.getElementById('cursorRing');
+const dot  = document.getElementById('cursorDot');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',(e)=>{
+  mx=e.clientX;my=e.clientY;
+  dot.style.left=mx+'px';dot.style.top=my+'px';
+  if(Math.random()>.9){
+    const s=document.createElement('div');s.className='cursor-spark';
+    const dx=(Math.random()-.5)*16;
+    s.style.cssText=`left:${mx}px;top:${my}px;--dx:${dx}px`;
+    document.body.appendChild(s);setTimeout(()=>s.remove(),850);
+  }
+});
+function animC(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animC)}
+animC();
+document.querySelectorAll('a,button,.pkg-card,.svc-row').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('expand'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('expand'));
+});
+
+/* Reveal */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});
+},{threshold:.08});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>io.observe(el));
+
+/* Filter tabs */
+const tabs = document.querySelectorAll('.filter-tab');
+const cats = document.querySelectorAll('.svc-category');
+tabs.forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    tabs.forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const cat=tab.dataset.cat;
+    cats.forEach(c=>{
+      if(cat==='all'||c.dataset.cat===cat){
+        c.style.display='block';
+        c.style.animation='fadeIn .5s ease';
+      } else {
+        c.style.display='none';
+      }
+    });
+  });
+});
+
+/* Page hero parallax */
+gsap.to('.page-hero-bg img',{
+  yPercent:15,ease:'none',
+  scrollTrigger:{trigger:'.page-hero',start:'top top',end:'bottom top',scrub:true}
+});
+</script>
+<script src="site.js"></script>
+</body>
+</html>
