@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — A One Hair Salon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c9a84c;--gold-lt:#f0d47a;--gold-dk:#8a6f2e;--bg:#08080a;--white:#f5f0e8;--muted:#706a7a;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.scene{text-align:center;position:relative;padding:40px 24px}
+.emblem{width:90px;height:90px;background:linear-gradient(135deg,var(--gold-lt),var(--gold),var(--gold-dk));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--bg);font-weight:900;font-family:var(--serif);box-shadow:0 0 60px rgba(201,168,76,.4);margin:0 auto 32px;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 40px rgba(201,168,76,.3)}50%{box-shadow:0 0 80px rgba(201,168,76,.6)}}
+.num{font-family:var(--serif);font-size:clamp(6rem,15vw,11rem);font-weight:300;color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.35);letter-spacing:.06em;line-height:1;user-select:none}
+.heading{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.8rem);font-weight:300;color:var(--white);margin:12px 0 16px;letter-spacing:.08em}
+.heading em{font-style:italic;color:var(--gold)}
+.sub{font-size:.78rem;color:var(--muted);max-width:340px;margin:0 auto 40px;line-height:1.8;letter-spacing:.04em}
+.links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.link-btn{padding:12px 28px;border:1px solid rgba(201,168,76,.4);color:var(--gold);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;transition:all .3s}
+.link-btn:hover{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.link-btn.primary{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.link-btn.primary:hover{background:var(--gold-lt)}
+.gold-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:32px auto}
+/* Floating particles */
+.particle{position:fixed;width:2px;height:2px;background:var(--gold);border-radius:50%;pointer-events:none;animation:pfloat linear infinite;opacity:0}
+@keyframes pfloat{0%{opacity:0;transform:translateY(100vh) translateX(0) scale(0)}10%{opacity:.6}90%{opacity:.2}100%{opacity:0;transform:translateY(-10vh) translateX(var(--drift)) scale(1.5)}}
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="emblem">A</div>
+  <div class="num">404</div>
+  <div class="gold-line"></div>
+  <h1 class="heading">Page <em>Not Found</em></h1>
+  <p class="sub">The page you're looking for has been moved or doesn't exist. Let us guide you back to luxury.</p>
+  <div class="links">
+    <a href="index.html" class="link-btn primary">Back to Home</a>
+    <a href="booking.html" class="link-btn">Book Appointment</a>
+    <a href="services.html" class="link-btn">Our Services</a>
+  </div>
+</div>
+
+<script>
+// Spawn floating gold particles
+for(let i=0;i<18;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.cssText=`left:${Math.random()*100}vw;animation-duration:${6+Math.random()*8}s;animation-delay:${Math.random()*6}s;--drift:${(Math.random()-.5)*120}px`;
+  document.body.appendChild(p);
+}
+</script>
+</body>
+</html>
