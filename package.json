@@ -1,0 +1,15 @@
+{
+  "name": "a-one-hair-salon",
+  "version": "1.0.0",
+  "description": "A One Hair Salon — Luxury Unisex Salon, London",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
