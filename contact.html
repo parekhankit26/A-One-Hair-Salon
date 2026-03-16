@@ -301,7 +301,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
         <div class="cc-icon">📍</div>
         <div class="cc-body">
           <div class="cc-label">Location</div>
-          <div class="cc-value">Shop 12, Linking Road<br>Bandra West, Mumbai 400050</div>
+          <div class="cc-value" data-cms="site.address_full">Shop 12, Linking Road, Bandra West, Mumbai 400050</div>
           <div class="cc-sub">Near Bandra Station, Maharashtra</div>
         </div>
       </div>
@@ -309,7 +309,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
         <div class="cc-icon">📞</div>
         <div class="cc-body">
           <div class="cc-label">Phone</div>
-          <div class="cc-value">+91 98765 43210</div>
+          <div class="cc-value" data-cms="site.phone">+91 98765 43210</div>
           <div class="cc-sub">Call or WhatsApp for appointments</div>
         </div>
       </div>
@@ -317,7 +317,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
         <div class="cc-icon">✉</div>
         <div class="cc-body">
           <div class="cc-label">Email</div>
-          <div class="cc-value">hello@aonehairsalon.com</div>
+          <div class="cc-value" data-cms="site.email">hello@aonehairsalon.com</div>
           <div class="cc-sub">We reply within 24 hours</div>
         </div>
       </div>
@@ -443,7 +443,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="logo-main">A ONE HAIR SALON</div>
-      <p>Mumbai's premier luxury unisex salon. Where every visit is a bespoke journey of beauty and self-care.</p>
+      <p data-cms="footer.tagline">Mumbai's premier luxury unisex salon. Where every visit is a bespoke journey of beauty and self-care.</p>
       <div class="socials" style="margin-top:20px">
         <a href="#" class="social-btn">f</a>
         <a href="#" class="social-btn">in</a>
@@ -473,16 +473,16 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <li><a href="#">+91 98765 43210</a></li>
-        <li><a href="#">hello@aonehairsalon.com</a></li>
-        <li><a href="#">Linking Road, Bandra, Mumbai</a></li>
-        <li><a href="#">Mon–Fri: 10am–8pm</a></li>
-        <li><a href="#">Sat: 9am–9pm · Sun: 10am–6pm</a></li>
+        <li><a href="#" data-cms="site.phone">+91 98765 43210</a></li>
+        <li><a href="#" data-cms="site.email">hello@aonehairsalon.com</a></li>
+        <li><a href="#" data-cms="site.address">Linking Road, Bandra, Mumbai</a></li>
+        <li><a href="#" data-cms="footer.hour_weekday">Mon–Fri: 10am–8pm</a></li>
+        <li><a href="#" data-cms="footer.hour_saturday">Sat: 9am–9pm</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 A One Hair Salon, Mumbai. All rights reserved.</p>
+    <p data-cms="footer.copyright">© 2026 A One Hair Salon, Mumbai. All rights reserved.</p>
     <p>Crafted with ✦ for luxury</p>
   </div>
 </footer>
@@ -541,6 +541,7 @@ function sendMessage(){
 }
 window.sendMessage = sendMessage;
 </script>
+<script src="cms.js"></script>
 <script src="site.js"></script>
 </body>
 </html>
