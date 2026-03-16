@@ -402,7 +402,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
         <h3>Choose a Service</h3>
         <p>Select the treatment you'd like to book</p>
       </div>
-      <div class="svc-pick-grid">
+      <div class="svc-pick-grid" id="cmsBookingServices">
         <div class="svc-pick-card" data-svc="Women's Haircut" data-price="₹800">
           <div class="spk-icon">✂</div>
           <div class="spk-name">Women's Haircut</div>
@@ -637,6 +637,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
   </div><!-- /booking-panel -->
 </div><!-- /booking-wrapper -->
 
+<script src="cms.js"></script>
 <script src="site.js"></script>
 <script>
 /* =====================================================
@@ -919,7 +920,7 @@ window.confirmBooking = confirmBooking;
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="logo-main">A ONE HAIR SALON</div>
-      <p>Mumbai's premier luxury unisex salon. Where every visit is a bespoke journey of beauty.</p>
+      <p data-cms="footer.tagline">Mumbai's premier luxury unisex salon. Where every visit is a bespoke journey of beauty.</p>
       <div class="socials" style="margin-top:20px">
         <a href="#" class="social-btn">f</a>
         <a href="#" class="social-btn">in</a>
@@ -939,22 +940,22 @@ window.confirmBooking = confirmBooking;
     <div class="footer-col">
       <h4>Hours</h4>
       <ul>
-        <li><a href="#">Mon-Fri: 10am - 8pm</a></li>
-        <li><a href="#">Saturday: 9am - 9pm</a></li>
-        <li><a href="#">Sunday: 10am - 6pm</a></li>
+        <li><a href="#" data-cms="footer.hour_weekday">Mon-Fri: 10am - 8pm</a></li>
+        <li><a href="#" data-cms="footer.hour_saturday">Saturday: 9am - 9pm</a></li>
+        <li><a href="#" data-cms="footer.hour_sunday">Sunday: 10am - 6pm</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <li><a href="#">+91 98765 43210</a></li>
-        <li><a href="#">hello@aonehairsalon.com</a></li>
-        <li><a href="#">Linking Road, Bandra, Mumbai</a></li>
+        <li><a href="#" data-cms="site.phone">+91 98765 43210</a></li>
+        <li><a href="#" data-cms="site.email">hello@aonehairsalon.com</a></li>
+        <li><a href="#" data-cms="site.address">Linking Road, Bandra, Mumbai</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&#169; 2026 A One Hair Salon, Mumbai. All rights reserved.</p>
+    <p data-cms="footer.copyright">&#169; 2026 A One Hair Salon, Mumbai. All rights reserved.</p>
     <p>Crafted with &#10022; for luxury</p>
   </div>
 </footer>
