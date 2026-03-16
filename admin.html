@@ -291,12 +291,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:14px;text-align:center">
       <div style="font-size:1.3rem;margin-bottom:6px">&#8679;</div>
       <div style="font-size:.75rem;color:var(--gold);font-weight:600;margin-bottom:4px">2. Deploy</div>
-      <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Click Deploy — pushes your changes to GitHub automatically</div>
+      <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Click Deploy — pushes your changes to GitHub, which triggers auto-deploy to Hostinger</div>
      </div>
      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:14px;text-align:center">
       <div style="font-size:1.3rem;margin-bottom:6px">&#127760;</div>
       <div style="font-size:.75rem;color:var(--gold);font-weight:600;margin-bottom:4px">3. Live</div>
-      <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Website updates in ~60 seconds. No laptop or files needed.</div>
+      <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Hostinger website updates in ~2 min via GitHub Actions. No laptop or files needed.</div>
      </div>
     </div>
    </div>
@@ -325,7 +325,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
     <div class="panel-section-title">Publish Changes</div>
     <p style="font-size:.78rem;color:var(--muted);margin-bottom:16px;line-height:1.7">
      Collects all your edits and pushes <code style="background:var(--bg);padding:2px 6px;border-radius:2px;color:var(--gold)">content.json</code> to GitHub.
-     The website fetches this file on every page load — so changes go live in ~60 seconds automatically.
+     GitHub Actions then automatically deploys the update to your <strong style="color:var(--white)">Hostinger website</strong> — live in ~2 minutes, no files needed.
     </p>
     <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
      <button class="btn btn-green" onclick="deployContentJson()" style="min-width:200px">&#8679; &nbsp;Deploy to GitHub → Live</button>
@@ -750,7 +750,8 @@ async function deployContentJson() {
   if (r.ok) {
    dlog(" ✓ content.json deployed successfully!","ds-ok");
    dlog("─".repeat(48));
-   dlog("✅ Live in ~60 seconds at https://"+owner+".github.io/"+repo+"/","ds-ok");
+   dlog("✅ GitHub updated! Your Hostinger site will auto-update in ~2 minutes.","ds-ok");
+   dlog("   (GitHub Actions is deploying the change to Hostinger now)","ds-ok");
    localStorage.setItem("aone_admin_draft",JSON.stringify(C));
    isDirty=false; document.getElementById("statDraft").textContent="✓ Deployed";
    toast("✓ Deployed! Site updates in ~60 seconds.","ok",5000);
@@ -901,11 +902,12 @@ function copyAdminUrl() {
 }
 
 function buildAdminUrl() {
+  /* Show the Hostinger domain admin URL if domain is set, else GitHub Pages fallback */
   const owner  = (document.getElementById('gh-owner').value.trim() || 'parekhankit26');
   const repo   = (document.getElementById('gh-repo').value.trim()  || 'A-One-Hair-Salon');
-  const url    = `https://${owner}.github.io/${repo}/admin-login.html`;
+  const ghUrl  = `https://${owner}.github.io/${repo}/admin-login.html`;
   const box    = document.getElementById('adminUrlBox');
-  if (box) box.textContent = url;
+  if (box) box.innerHTML = `<div style="margin-bottom:6px"><span style="color:var(--muted);font-size:.7rem">GitHub Pages:</span> ${ghUrl}</div><div><span style="color:var(--muted);font-size:.7rem">Your Domain (after Hostinger setup):</span> <span style="color:#6fcf97">https://YOUR-DOMAIN.com/admin-login.html</span></div>`;
 }
 
 /* Auto-save token when deploying */
