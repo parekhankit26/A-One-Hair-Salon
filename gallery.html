@@ -429,7 +429,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="logo-main">A ONE HAIR SALON</div>
-      <p>Mumbai's premier luxury unisex salon. Where every visit is a bespoke journey of beauty and self-care.</p>
+      <p data-cms="footer.tagline">Mumbai's premier luxury unisex salon. Where every visit is a bespoke journey of beauty and self-care.</p>
       <div class="socials" style="margin-top:24px">
         <a href="#" class="social-btn">f</a>
         <a href="#" class="social-btn">in</a>
@@ -460,20 +460,20 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
       <h4>Contact</h4>
       <div class="footer-contact-item">
         <span class="fc-icon">📍</span>
-        <span class="fc-text">Shop 12, Linking Road, Bandra West, Mumbai 400050</span>
+        <span class="fc-text" data-cms="site.address_full">Shop 12, Linking Road, Bandra West, Mumbai 400050</span>
       </div>
       <div class="footer-contact-item">
         <span class="fc-icon">📞</span>
-        <span class="fc-text">+91 98765 43210</span>
+        <span class="fc-text" data-cms="site.phone">+91 98765 43210</span>
       </div>
       <div class="footer-contact-item">
         <span class="fc-icon">✉</span>
-        <span class="fc-text">hello@aonehairsalon.com</span>
+        <span class="fc-text" data-cms="site.email">hello@aonehairsalon.com</span>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 A One Hair Salon, Mumbai. All rights reserved.</p>
+    <p data-cms="footer.copyright">© 2026 A One Hair Salon, Mumbai. All rights reserved.</p>
     <p>Crafted with ✦ for luxury</p>
   </div>
 </footer>
@@ -623,6 +623,7 @@ const style=document.createElement('style');
 style.textContent='@keyframes fadeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}';
 document.head.appendChild(style);
 </script>
+<script src="cms.js"></script>
 <script src="site.js"></script>
 </body>
 </html>
