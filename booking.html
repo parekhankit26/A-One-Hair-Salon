@@ -80,7 +80,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
   overflow-y:auto;
 }
 
-/* PROGRESS BAR */
+/* PROGRESS BAR — 3 steps */
 .progress-wrap{margin-bottom:50px}
 .progress-steps{display:flex;align-items:center;gap:0;margin-bottom:16px}
 .prog-step{
@@ -105,7 +105,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 .step-label{font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);transition:color .4s;white-space:nowrap}
 .prog-step.active .step-label{color:var(--gold)}
 
-/* FORM */
+/* FORM STEPS */
 .form-step{display:none}
 .form-step.active{display:block;animation:stepIn .5s var(--ease) both}
 @keyframes stepIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
@@ -135,23 +135,34 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 }
 .svc-pick-card.selected .spk-check{display:flex}
 
-/* DATE GRID */
-.date-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:28px}
-.date-cell{
-  padding:10px 4px;text-align:center;border:1px solid rgba(201,168,76,.22);
-  background:var(--bg3);cursor:none;transition:all .3s;
+/* DATE STRIP */
+.date-strip{
+  display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:28px;
+  scrollbar-width:thin;scrollbar-color:var(--gold) var(--bg2);
 }
-.date-cell:hover{border-color:rgba(201,168,76,.55);background:rgba(201,168,76,.1);color:var(--gold)}
-.date-cell.selected{border-color:var(--gold);background:rgba(201,168,76,.18);box-shadow:0 0 12px rgba(201,168,76,.15)}
-.date-cell.past{opacity:.3;pointer-events:none}
-.date-cell .dc-day{font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(201,168,76,.6);margin-bottom:4px}
-.date-cell .dc-num{font-family:var(--serif);font-size:1.2rem;color:var(--white)}
-.date-cell.selected .dc-num,.date-cell:hover .dc-num{color:var(--gold)}
-.date-month-label{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.date-strip::-webkit-scrollbar{height:3px}
+.date-strip::-webkit-scrollbar-thumb{background:var(--gold)}
+.date-chip{
+  flex-shrink:0;width:64px;padding:12px 6px;text-align:center;
+  border:1px solid rgba(201,168,76,.22);background:var(--bg3);
+  cursor:none;transition:all .3s;
+}
+.date-chip:hover{border-color:rgba(201,168,76,.55);background:rgba(201,168,76,.1)}
+.date-chip.selected{border-color:var(--gold);background:rgba(201,168,76,.18);box-shadow:0 0 12px rgba(201,168,76,.15)}
+.date-chip.past{opacity:.3;pointer-events:none}
+.date-chip .dc-day{font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(201,168,76,.6);margin-bottom:4px}
+.date-chip .dc-num{font-family:var(--serif);font-size:1.15rem;color:var(--white)}
+.date-chip.selected .dc-num,.date-chip:hover .dc-num{color:var(--gold)}
 
-.time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:32px}
+/* TIME GROUPS */
+.time-group{margin-bottom:20px}
+.time-group-label{
+  font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(201,168,76,.55);margin-bottom:10px;
+}
+.time-group-slots{display:flex;flex-wrap:wrap;gap:8px}
 .time-slot{
-  padding:12px 8px;text-align:center;border:1px solid rgba(201,168,76,.22);
+  padding:10px 14px;border:1px solid rgba(201,168,76,.22);
   background:var(--bg3);cursor:none;transition:all .3s;
   font-size:.75rem;color:rgba(245,240,232,.75);
 }
@@ -159,8 +170,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 .time-slot.selected{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.18);box-shadow:0 0 12px rgba(201,168,76,.15)}
 .time-slot.taken{opacity:.35;pointer-events:none;text-decoration:line-through}
 
+/* STYLIST CHIPS */
+.stylist-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px}
+.sty-chip{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;border:1px solid rgba(201,168,76,.22);background:var(--bg3);
+  cursor:none;transition:all .3s;
+}
+.sty-chip:hover{border-color:rgba(201,168,76,.55);background:rgba(30,30,40,.95)}
+.sty-chip.selected{border-color:var(--gold);background:rgba(201,168,76,.14);box-shadow:0 0 14px rgba(201,168,76,.1)}
+.sty-chip-av{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold-dk),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:.9rem;color:var(--bg);font-weight:700;
+}
+.sty-chip-name{font-size:.78rem;color:var(--white);white-space:nowrap}
+.sty-chip.selected .sty-chip-name{color:var(--gold)}
+.sty-chip-spec{font-size:.6rem;color:var(--muted)}
+.sty-chip.selected .sty-chip-spec{color:rgba(201,168,76,.6)}
+
 /* FORM FIELDS */
-.form-fields{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
+.form-fields{display:flex;flex-direction:column;gap:16px;margin-bottom:28px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .field-wrap{display:flex;flex-direction:column;gap:6px}
 .field-label{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
@@ -173,18 +204,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 .field-input::placeholder{color:rgba(112,106,122,.6)}
 .field-note{font-size:.62rem;color:var(--muted);margin-top:2px}
 
-/* SUMMARY */
-.booking-summary{
-  background:var(--bg2);border:1px solid var(--border);
-  padding:28px 24px;margin-bottom:32px;
+/* MINI SUMMARY */
+.mini-summary{
+  background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);
+  padding:18px 20px;margin-bottom:24px;
 }
-.summary-title{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
-.summary-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
-.summary-row:last-child{border-bottom:none;padding-top:16px}
-.sr-label{font-size:.72rem;color:var(--muted)}
-.sr-value{font-size:.8rem;color:var(--white);text-align:right}
-.sr-total .sr-label{font-family:var(--serif);font-size:1rem;color:var(--white)}
-.sr-total .sr-value{font-family:var(--serif);font-size:1.4rem;color:var(--gold)}
+.ms-title{font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.ms-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:7px 0;border-bottom:1px solid rgba(201,168,76,.1);font-size:.75rem;
+}
+.ms-row:last-child{border-bottom:none}
+.ms-label{color:var(--muted)}
+.ms-val{color:var(--white);text-align:right}
 
 /* NAVIGATION BUTTONS */
 .form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
@@ -203,30 +235,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 .btn-next-step:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(201,168,76,.4)}
 .btn-next-step:disabled{opacity:.4;transform:none;box-shadow:none;pointer-events:none}
 
-/* STYLIST CARDS */
-.stylist-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
-.stylist-card{
-  display:flex;align-items:center;gap:18px;
-  padding:18px 20px;border:1px solid rgba(201,168,76,.28);background:var(--bg3);
-  cursor:none;transition:all .3s;
+/* CONFIRM NOTE */
+.confirm-note{
+  background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);
+  padding:16px 20px;font-size:.78rem;color:rgba(245,240,232,.6);line-height:1.7;
+  margin-bottom:24px;
 }
-.stylist-card:hover{border-color:rgba(201,168,76,.6);background:rgba(30,30,40,.95)}
-.stylist-card.selected{border-color:var(--gold);background:rgba(201,168,76,.14);box-shadow:0 0 18px rgba(201,168,76,.12)}
-.stylist-card.selected{border-color:var(--gold)}
-.stylist-avatar{
-  width:52px;height:52px;border-radius:50%;flex-shrink:0;
-  background:linear-gradient(135deg,var(--gold-dk),var(--gold));
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--serif);font-size:1.4rem;color:var(--bg);font-weight:700;
-  border:2px solid var(--border);transition:border-color .3s;
-}
-.stylist-card.selected .stylist-avatar{border-color:var(--gold)}
-.stylist-info h4{font-family:var(--serif);font-size:1.05rem;color:var(--white)}
-.stylist-info p{font-size:.68rem;color:var(--muted);margin-top:3px}
-.stylist-badge{margin-left:auto;padding:4px 12px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);flex-shrink:0}
-.sty-check{margin-left:auto;width:22px;height:22px;border-radius:50%;background:var(--gold);color:var(--bg);display:none;align-items:center;justify-content:center;font-size:.7rem;font-weight:700}
-.stylist-card.selected .sty-check{display:flex}
-.stylist-card.selected .stylist-badge{display:none}
 
 /* SUCCESS */
 .success-view{
@@ -256,11 +270,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 .cd-row:last-child{border:none}
 .cd-label{color:var(--muted)}
 .cd-val{color:var(--white)}
-.confirm-note{
-  background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);
-  padding:16px 20px;font-size:.78rem;color:rgba(245,240,232,.6);line-height:1.7;
-  margin-bottom:24px;
-}
 
 /* MOBILE */
 @media(max-width:1100px){
@@ -275,8 +284,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
   .nav-links,.nav-back{display:none}
   .booking-panel{padding:90px 24px 60px}
   .svc-pick-grid{grid-template-columns:1fr}
-  .date-grid{grid-template-columns:repeat(7,1fr)}
-  .time-grid{grid-template-columns:repeat(3,1fr)}
   .form-row{grid-template-columns:1fr}
 }
 
@@ -339,7 +346,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
   <!-- BOOKING PANEL -->
   <div class="booking-panel">
 
-    <!-- Progress -->
+    <!-- Progress — 3 steps -->
     <div class="progress-wrap" id="progressWrap">
       <div class="progress-steps">
         <div class="prog-step active" id="ps1">
@@ -348,18 +355,10 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
         </div>
         <div class="prog-step" id="ps2">
           <div class="step-circle">2</div>
-          <div class="step-label">Stylist</div>
+          <div class="step-label">Schedule</div>
         </div>
         <div class="prog-step" id="ps3">
           <div class="step-circle">3</div>
-          <div class="step-label">Date</div>
-        </div>
-        <div class="prog-step" id="ps4">
-          <div class="step-circle">4</div>
-          <div class="step-label">Details</div>
-        </div>
-        <div class="prog-step" id="ps5">
-          <div class="step-circle">5</div>
           <div class="step-label">Confirm</div>
         </div>
       </div>
@@ -369,7 +368,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     <div class="form-step active" id="step1">
       <div class="step-heading">
         <h3>Choose a Service</h3>
-        <p>Select the service you'd like to book</p>
+        <p>Select the treatment you'd like to book</p>
       </div>
       <div class="svc-pick-grid">
         <div class="svc-pick-card" data-svc="Women's Haircut" data-price="₹800">
@@ -408,7 +407,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
           <div class="spk-price">from ₹5,000</div>
           <div class="spk-check">✓</div>
         </div>
-        <div class="svc-pick-card" data-svc="Facial" data-price="₹2,000">
+        <div class="svc-pick-card" data-svc="Luxury Facial" data-price="₹2,000">
           <div class="spk-icon">❋</div>
           <div class="spk-name">Luxury Facial</div>
           <div class="spk-price">from ₹2,000</div>
@@ -423,165 +422,147 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
       </div>
       <div class="form-nav">
         <span></span>
-        <button class="btn-next-step" id="next1" disabled onclick="nextStep(2)">Next: Choose Stylist →</button>
+        <button class="btn-next-step" id="next1" disabled onclick="goStep(2)">Next: Pick a Date →</button>
       </div>
     </div>
 
-    <!-- ── STEP 2: Stylist ── -->
+    <!-- ── STEP 2: Schedule (Date + Time + Stylist) ── -->
     <div class="form-step" id="step2">
       <div class="step-heading">
-        <h3>Select a Stylist</h3>
-        <p>Choose your preferred stylist</p>
+        <h3>Schedule</h3>
+        <p>Choose your date, time, and preferred stylist</p>
       </div>
-      <div class="stylist-grid">
-        <div class="stylist-card" data-stylist="Any Available">
-          <div class="stylist-avatar">A</div>
-          <div class="stylist-info"><h4>Any Available</h4><p>Best availability for your chosen time</p></div>
-          <div class="stylist-badge">Flexible</div>
-          <div class="sty-check">✓</div>
+
+      <!-- Date strip -->
+      <p style="font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Select a Date</p>
+      <div class="date-strip" id="dateStrip"></div>
+
+      <!-- Time slots grouped -->
+      <p style="font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Available Times</p>
+      <div id="timeGroupsWrap">
+        <div class="time-group">
+          <div class="time-group-label">Morning</div>
+          <div class="time-group-slots">
+            <div class="time-slot" data-time="10:00 AM">10:00 AM</div>
+            <div class="time-slot" data-time="10:30 AM">10:30 AM</div>
+            <div class="time-slot" data-time="11:00 AM">11:00 AM</div>
+            <div class="time-slot taken" data-time="11:30 AM">11:30 AM</div>
+          </div>
         </div>
-        <div class="stylist-card" data-stylist="Priya Sharma">
-          <div class="stylist-avatar">P</div>
-          <div class="stylist-info"><h4>Priya Sharma</h4><p>Hair Color Specialist · 6 yrs experience</p></div>
-          <div class="stylist-badge">Color Expert</div>
-          <div class="sty-check">✓</div>
+        <div class="time-group">
+          <div class="time-group-label">Afternoon</div>
+          <div class="time-group-slots">
+            <div class="time-slot taken" data-time="12:00 PM">12:00 PM</div>
+            <div class="time-slot" data-time="1:00 PM">1:00 PM</div>
+            <div class="time-slot" data-time="2:00 PM">2:00 PM</div>
+            <div class="time-slot" data-time="3:00 PM">3:00 PM</div>
+            <div class="time-slot" data-time="4:00 PM">4:00 PM</div>
+          </div>
         </div>
-        <div class="stylist-card" data-stylist="Rahul Mehta">
-          <div class="stylist-avatar">R</div>
-          <div class="stylist-info"><h4>Rahul Mehta</h4><p>Men's Grooming Specialist · 5 yrs</p></div>
-          <div class="stylist-badge">Grooming</div>
-          <div class="sty-check">✓</div>
-        </div>
-        <div class="stylist-card" data-stylist="Ayesha Khan">
-          <div class="stylist-avatar">A</div>
-          <div class="stylist-info"><h4>Ayesha Khan</h4><p>Bridal & Styling Specialist · 8 yrs</p></div>
-          <div class="stylist-badge">Bridal</div>
-          <div class="sty-check">✓</div>
+        <div class="time-group">
+          <div class="time-group-label">Evening</div>
+          <div class="time-group-slots">
+            <div class="time-slot" data-time="5:00 PM">5:00 PM</div>
+            <div class="time-slot" data-time="6:00 PM">6:00 PM</div>
+            <div class="time-slot taken" data-time="6:30 PM">6:30 PM</div>
+            <div class="time-slot" data-time="7:00 PM">7:00 PM</div>
+          </div>
         </div>
       </div>
+
+      <!-- Stylist chips -->
+      <p style="font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin:24px 0 12px">Choose Stylist</p>
+      <div class="stylist-row">
+        <div class="sty-chip" data-stylist="Any Available">
+          <div class="sty-chip-av">A</div>
+          <div>
+            <div class="sty-chip-name">Any Available</div>
+            <div class="sty-chip-spec">Best availability</div>
+          </div>
+        </div>
+        <div class="sty-chip" data-stylist="Priya Sharma">
+          <div class="sty-chip-av">P</div>
+          <div>
+            <div class="sty-chip-name">Priya Sharma</div>
+            <div class="sty-chip-spec">Color Expert</div>
+          </div>
+        </div>
+        <div class="sty-chip" data-stylist="Rahul Mehta">
+          <div class="sty-chip-av">R</div>
+          <div>
+            <div class="sty-chip-name">Rahul Mehta</div>
+            <div class="sty-chip-spec">Grooming</div>
+          </div>
+        </div>
+        <div class="sty-chip" data-stylist="Ayesha Khan">
+          <div class="sty-chip-av">AK</div>
+          <div>
+            <div class="sty-chip-name">Ayesha Khan</div>
+            <div class="sty-chip-spec">Bridal</div>
+          </div>
+        </div>
+      </div>
+
       <div class="form-nav">
-        <button class="btn-back-step" onclick="prevStep(1)">← Back</button>
-        <button class="btn-next-step" id="next2" disabled onclick="nextStep(3)">Next: Pick Date →</button>
+        <button class="btn-back-step" onclick="goStep(1)">← Back</button>
+        <button class="btn-next-step" id="next2" disabled onclick="goStep(3)">Next: Your Details →</button>
       </div>
     </div>
 
-    <!-- ── STEP 3: Date & Time ── -->
+    <!-- ── STEP 3: Details + Confirm ── -->
     <div class="form-step" id="step3">
       <div class="step-heading">
-        <h3>Date &amp; Time</h3>
-        <p>Select your preferred appointment slot</p>
-      </div>
-      <div class="date-month-label" id="dateMonthLabel">March 2026</div>
-      <div class="date-grid" id="dateGrid"></div>
-
-      <p style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Available Times</p>
-      <div class="time-grid">
-        <div class="time-slot" data-time="10:00 AM">10:00 AM</div>
-        <div class="time-slot" data-time="11:00 AM">11:00 AM</div>
-        <div class="time-slot taken" data-time="12:00 PM">12:00 PM</div>
-        <div class="time-slot" data-time="1:00 PM">1:00 PM</div>
-        <div class="time-slot taken" data-time="2:00 PM">2:00 PM</div>
-        <div class="time-slot" data-time="3:00 PM">3:00 PM</div>
-        <div class="time-slot" data-time="4:00 PM">4:00 PM</div>
-        <div class="time-slot" data-time="5:00 PM">5:00 PM</div>
-        <div class="time-slot taken" data-time="6:00 PM">6:00 PM</div>
-        <div class="time-slot" data-time="7:00 PM">7:00 PM</div>
-        <div class="time-slot" data-time="11:30 AM">11:30 AM</div>
-        <div class="time-slot" data-time="2:30 PM">2:30 PM</div>
-      </div>
-      <div class="form-nav">
-        <button class="btn-back-step" onclick="prevStep(2)">← Back</button>
-        <button class="btn-next-step" id="next3" disabled onclick="nextStep(4)">Next: Your Details →</button>
-      </div>
-    </div>
-
-    <!-- ── STEP 4: Contact ── -->
-    <div class="form-step" id="step4">
-      <div class="step-heading">
         <h3>Your Details</h3>
-        <p>We'll send confirmation to your email &amp; mobile</p>
+        <p>Fill in your information and confirm your booking</p>
       </div>
+
+      <!-- Mini summary of selections -->
+      <div class="mini-summary" id="miniSummary">
+        <div class="ms-title">Your Selection</div>
+        <div class="ms-row"><span class="ms-label">Service</span><span class="ms-val" id="ms-svc">—</span></div>
+        <div class="ms-row"><span class="ms-label">Date</span><span class="ms-val" id="ms-date">—</span></div>
+        <div class="ms-row"><span class="ms-label">Time</span><span class="ms-val" id="ms-time">—</span></div>
+        <div class="ms-row"><span class="ms-label">Stylist</span><span class="ms-val" id="ms-sty">—</span></div>
+        <div class="ms-row"><span class="ms-label">Est. Price</span><span class="ms-val" id="ms-price">—</span></div>
+      </div>
+
+      <!-- Contact fields -->
       <div class="form-fields">
         <div class="form-row">
           <div class="field-wrap">
             <label class="field-label">First Name *</label>
-            <input type="text" class="field-input" id="fname" placeholder="Priya" oninput="validateStep4()">
+            <input type="text" class="field-input" id="fname" placeholder="Priya" oninput="validateStep3()">
           </div>
           <div class="field-wrap">
             <label class="field-label">Last Name *</label>
-            <input type="text" class="field-input" id="lname" placeholder="Sharma" oninput="validateStep4()">
+            <input type="text" class="field-input" id="lname" placeholder="Sharma" oninput="validateStep3()">
           </div>
         </div>
         <div class="field-wrap">
-          <label class="field-label">Email Address *</label>
-          <input type="email" class="field-input" id="email" placeholder="you@example.com" oninput="validateStep4()">
-          <span class="field-note">Booking confirmation will be sent here</span>
+          <label class="field-label">Mobile Number *</label>
+          <input type="tel" class="field-input" id="mobile" placeholder="+91 98765 43210" oninput="validateStep3()">
+          <span class="field-note">We'll send a WhatsApp confirmation to this number</span>
         </div>
         <div class="field-wrap">
-          <label class="field-label">Mobile Number *</label>
-          <input type="tel" class="field-input" id="mobile" placeholder="+91 98765 43210" oninput="validateStep4()">
-          <span class="field-note">SMS reminder will be sent 1 hour before appointment</span>
+          <label class="field-label">Email Address *</label>
+          <input type="email" class="field-input" id="email" placeholder="you@example.com" oninput="validateStep3()">
+          <span class="field-note">Booking confirmation will be sent here</span>
         </div>
         <div class="field-wrap">
           <label class="field-label">Special Requests (Optional)</label>
           <textarea class="field-input" id="notes" rows="3" placeholder="Any allergies, preferences or notes for your stylist..."></textarea>
         </div>
       </div>
-      <div class="form-nav">
-        <button class="btn-back-step" onclick="prevStep(3)">← Back</button>
-        <button class="btn-next-step" id="next4" disabled onclick="nextStep(5)">Review Booking →</button>
-      </div>
-    </div>
 
-    <!-- ── STEP 5: Review ── -->
-    <div class="form-step" id="step5">
-      <div class="step-heading">
-        <h3>Review &amp; Confirm</h3>
-        <p>Please review your appointment details below</p>
-      </div>
-      <div class="booking-summary">
-        <div class="summary-title">Appointment Summary</div>
-        <div class="summary-row">
-          <span class="sr-label">Service</span>
-          <span class="sr-value" id="sum-svc">—</span>
-        </div>
-        <div class="summary-row">
-          <span class="sr-label">Stylist</span>
-          <span class="sr-value" id="sum-sty">—</span>
-        </div>
-        <div class="summary-row">
-          <span class="sr-label">Date</span>
-          <span class="sr-value" id="sum-date">—</span>
-        </div>
-        <div class="summary-row">
-          <span class="sr-label">Time</span>
-          <span class="sr-value" id="sum-time">—</span>
-        </div>
-        <div class="summary-row">
-          <span class="sr-label">Name</span>
-          <span class="sr-value" id="sum-name">—</span>
-        </div>
-        <div class="summary-row">
-          <span class="sr-label">Email</span>
-          <span class="sr-value" id="sum-email">—</span>
-        </div>
-        <div class="summary-row">
-          <span class="sr-label">Mobile</span>
-          <span class="sr-value" id="sum-mobile">—</span>
-        </div>
-        <div class="summary-row sr-total">
-          <span class="sr-label">Estimated Price</span>
-          <span class="sr-value" id="sum-price">—</span>
-        </div>
-      </div>
       <div class="confirm-note">
-        ✦ Confirmation will be sent via email and SMS immediately after booking.<br>
+        ✦ Confirmation will be sent via email and WhatsApp immediately after booking.<br>
         ✦ Please arrive 10 minutes before your appointment time.<br>
         ✦ Cancellations must be made at least 24 hours in advance.
       </div>
+
       <div class="form-nav">
-        <button class="btn-back-step" onclick="prevStep(4)">← Back</button>
-        <button class="btn-next-step" onclick="confirmBooking()">Confirm Appointment ✓</button>
+        <button class="btn-back-step" onclick="goStep(2)">← Back</button>
+        <button class="btn-next-step" id="confirmBtn" disabled onclick="confirmBooking()">Confirm Appointment ✓</button>
       </div>
     </div>
 
@@ -596,34 +577,32 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
         <div class="cd-row"><span class="cd-label">Stylist</span><span class="cd-val" id="cd-sty">—</span></div>
         <div class="cd-row"><span class="cd-label">Date &amp; Time</span><span class="cd-val" id="cd-dt">—</span></div>
         <div class="cd-row"><span class="cd-label">Confirmation sent to</span><span class="cd-val" id="cd-email">—</span></div>
-        <div class="cd-row"><span class="cd-label">SMS reminder to</span><span class="cd-val" id="cd-sms">—</span></div>
+        <div class="cd-row"><span class="cd-label">WhatsApp confirmation to</span><span class="cd-val" id="cd-sms">—</span></div>
       </div>
       <div class="confirm-note" id="emailStatusNote">
         See you soon at A One Hair Salon!
       </div>
       <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:24px">
         <a id="waSmsBtn" href="#" target="_blank" style="display:none;padding:14px 28px;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;font-weight:600;border:none;transition:all .4s;cursor:none">
-          WhatsApp SMS Confirmation
+          WhatsApp Confirmation
         </a>
         <a href="index.html" style="display:inline-block;padding:14px 36px;border:1px solid var(--gold);color:var(--gold);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;transition:all .4s;cursor:none" onmouseenter="this.style.background='var(--gold)';this.style.color='var(--bg)'" onmouseleave="this.style.background='transparent';this.style.color='var(--gold)'">Return to Home</a>
       </div>
     </div>
 
-  </div>
-</div>
+  </div><!-- /booking-panel -->
+</div><!-- /booking-wrapper -->
 
 <script src="site.js"></script>
 <script>
 /* =====================================================
-   A ONE SALON -- BOOKING ENGINE (Dynamic + EmailJS)
+   A ONE SALON — BOOKING ENGINE (3-Step)
    ===================================================== */
 
-/* -- EmailJS Config --
-   SETUP: Create a free account at https://www.emailjs.com
-   Then replace the 3 values below with your own:          */
-const EMAILJS_PUBLIC_KEY   = 'YOUR_PUBLIC_KEY';
-const EMAILJS_SERVICE_ID   = 'YOUR_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID  = 'YOUR_TEMPLATE_ID';
+/* -- EmailJS Config -- */
+const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
+const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
 const EMAIL_ENABLED = EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY';
 if (EMAIL_ENABLED) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
@@ -631,145 +610,135 @@ if (EMAIL_ENABLED) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 const B = { svc:'', price:'', stylist:'', date:'', time:'', fname:'', lname:'', email:'', mobile:'' };
 let currentStep = 1;
 
-/* Cursor */
+/* ── Cursor ── */
 const ring = document.getElementById('cursorRing');
 const dot  = document.getElementById('cursorDot');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',(e)=>{
-  mx=e.clientX;my=e.clientY;
-  dot.style.left=mx+'px';dot.style.top=my+'px';
+  mx=e.clientX; my=e.clientY;
+  dot.style.left=mx+'px'; dot.style.top=my+'px';
   if(Math.random()>.93){
-    const s=document.createElement('div');s.className='cursor-spark';
+    const s=document.createElement('div'); s.className='cursor-spark';
     const dx=(Math.random()-.5)*14;
     s.style.cssText=`left:${mx}px;top:${my}px;--dx:${dx}px`;
-    document.body.appendChild(s);setTimeout(()=>s.remove(),850);
+    document.body.appendChild(s); setTimeout(()=>s.remove(),850);
   }
 });
 function animC(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animC)}
 animC();
-document.querySelectorAll('a,button,.svc-pick-card,.stylist-card,.date-cell,.time-slot').forEach(el=>{
-  el.addEventListener('mouseenter',()=>ring.classList.add('expand'));
-  el.addEventListener('mouseleave',()=>ring.classList.remove('expand'));
-});
+function refreshCursorTargets(){
+  document.querySelectorAll('a,button,.svc-pick-card,.sty-chip,.date-chip,.time-slot').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('expand'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('expand'));
+  });
+}
+refreshCursorTargets();
 
-/* Step management */
+/* ── Step navigation ── */
 function goStep(n){
   document.querySelectorAll('.form-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('step'+n).classList.add('active');
-  for(let i=1;i<=5;i++){
-    const ps=document.getElementById('ps'+i);
+  for(let i=1;i<=3;i++){
+    const ps = document.getElementById('ps'+i);
     ps.classList.remove('active','done');
     if(i<n) ps.classList.add('done');
     else if(i===n) ps.classList.add('active');
-    const c=ps.querySelector('.step-circle');
-    c.textContent = i<n ? 'ok' : i;
+    const c = ps.querySelector('.step-circle');
+    c.textContent = i<n ? '✓' : i;
   }
-  currentStep=n;
+  currentStep = n;
+  if(n===3) populateMiniSummary();
   document.querySelector('.booking-panel').scrollTo({top:0,behavior:'smooth'});
 }
-function nextStep(n){ if(n<=5) goStep(n); }
-function prevStep(n){ if(n>=1) goStep(n); }
+window.goStep = goStep;
 
-/* Step 1: Service */
+/* ── Step 1: Service ── */
 document.querySelectorAll('.svc-pick-card').forEach(card=>{
   card.addEventListener('click',()=>{
     document.querySelectorAll('.svc-pick-card').forEach(c=>c.classList.remove('selected'));
     card.classList.add('selected');
-    B.svc = card.dataset.svc;
+    B.svc   = card.dataset.svc;
     B.price = card.dataset.price;
     document.getElementById('next1').disabled = false;
   });
 });
 
-/* Step 2: Stylist */
-document.querySelectorAll('.stylist-card').forEach(card=>{
-  card.addEventListener('click',()=>{
-    document.querySelectorAll('.stylist-card').forEach(c=>c.classList.remove('selected'));
-    card.classList.add('selected');
-    B.stylist = card.dataset.stylist;
-    document.getElementById('next2').disabled = false;
-  });
-});
-
-/* Step 3: Date -- live calendar */
-(function buildCalendar(){
-  const grid = document.getElementById('dateGrid');
+/* ── Step 2: Build date strip (next 14 days) ── */
+(function buildDateStrip(){
+  const strip = document.getElementById('dateStrip');
   const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const days=['S','M','T','W','T','F','S'];
-  document.getElementById('dateMonthLabel').textContent = months[month] + ' ' + year;
-
-  const dayLabels = days.map(d=>`<div class="date-cell" style="pointer-events:none;border:none;background:transparent"><div class="dc-day">${d}</div></div>`).join('');
-  const daysInMonth = new Date(year, month+1, 0).getDate();
-  const firstDay = new Date(year, month, 1).getDay();
-
-  let html = dayLabels;
-  for(let i=0;i<firstDay;i++) html += `<div class="date-cell past"><div class="dc-day"></div><div class="dc-num"></div></div>`;
-  for(let d=1;d<=daysInMonth;d++){
-    const dt = new Date(year,month,d);
-    const past = dt < new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    const label = months[month] + ' ' + d + ', ' + year;
-    html += `<div class="date-cell${past?' past':''}" data-date="${label}"><div class="dc-day">${days[dt.getDay()]}</div><div class="dc-num">${d}</div></div>`;
-  }
-  grid.innerHTML = html;
-
-  grid.querySelectorAll('.date-cell:not(.past)').forEach(cell=>{
-    if(!cell.dataset.date) return;
-    cell.addEventListener('click',()=>{
-      grid.querySelectorAll('.date-cell').forEach(c=>c.classList.remove('selected'));
-      cell.classList.add('selected');
-      B.date = cell.dataset.date;
-      checkStep3();
+  const dayNames  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for(let i=0;i<14;i++){
+    const d = new Date(today);
+    d.setDate(today.getDate()+i);
+    const chip = document.createElement('div');
+    chip.className = 'date-chip';
+    chip.dataset.date = monthNames[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
+    chip.innerHTML = `<div class="dc-day">${dayNames[d.getDay()]}</div><div class="dc-num">${d.getDate()}</div><div style="font-size:.5rem;color:var(--muted);margin-top:2px">${monthNames[d.getMonth()]}</div>`;
+    chip.addEventListener('click',()=>{
+      strip.querySelectorAll('.date-chip').forEach(c=>c.classList.remove('selected'));
+      chip.classList.add('selected');
+      B.date = chip.dataset.date;
+      checkStep2();
     });
-  });
+    strip.appendChild(chip);
+  }
+  refreshCursorTargets();
 })();
 
+/* ── Step 2: Time slots ── */
 document.querySelectorAll('.time-slot:not(.taken)').forEach(slot=>{
   slot.addEventListener('click',()=>{
     document.querySelectorAll('.time-slot').forEach(s=>s.classList.remove('selected'));
     slot.classList.add('selected');
     B.time = slot.dataset.time;
-    checkStep3();
+    checkStep2();
   });
 });
-function checkStep3(){ document.getElementById('next3').disabled = !(B.date && B.time); }
 
-/* Step 4: Contact */
-function validateStep4(){
-  B.fname = document.getElementById('fname').value.trim();
-  B.lname = document.getElementById('lname').value.trim();
-  B.email = document.getElementById('email').value.trim();
+/* ── Step 2: Stylist chips ── */
+document.querySelectorAll('.sty-chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('.sty-chip').forEach(c=>c.classList.remove('selected'));
+    chip.classList.add('selected');
+    B.stylist = chip.dataset.stylist;
+    checkStep2();
+  });
+});
+
+function checkStep2(){
+  document.getElementById('next2').disabled = !(B.date && B.time && B.stylist);
+}
+
+/* ── Step 3: Populate mini summary ── */
+function populateMiniSummary(){
+  document.getElementById('ms-svc').textContent   = B.svc   || '—';
+  document.getElementById('ms-date').textContent  = B.date  || '—';
+  document.getElementById('ms-time').textContent  = B.time  || '—';
+  document.getElementById('ms-sty').textContent   = B.stylist || '—';
+  document.getElementById('ms-price').textContent = B.price || '—';
+}
+
+/* ── Step 3: Validate contact fields ── */
+function validateStep3(){
+  B.fname  = document.getElementById('fname').value.trim();
+  B.lname  = document.getElementById('lname').value.trim();
   B.mobile = document.getElementById('mobile').value.trim();
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(B.email);
-  const mobileOk = B.mobile.length >= 10;
-  document.getElementById('next4').disabled = !(B.fname && B.lname && emailOk && mobileOk);
+  B.email  = document.getElementById('email').value.trim();
+  const emailOk  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(B.email);
+  const mobileOk = B.mobile.replace(/\D/g,'').length >= 10;
+  document.getElementById('confirmBtn').disabled = !(B.fname && B.lname && mobileOk && emailOk);
 }
-window.validateStep4 = validateStep4;
+window.validateStep3 = validateStep3;
 
-/* Step 5: Summary */
-function populateSummary(){
-  document.getElementById('sum-svc').textContent = B.svc || '--';
-  document.getElementById('sum-sty').textContent = B.stylist || '--';
-  document.getElementById('sum-date').textContent = B.date || '--';
-  document.getElementById('sum-time').textContent = B.time || '--';
-  document.getElementById('sum-name').textContent = (B.fname+' '+B.lname).trim() || '--';
-  document.getElementById('sum-email').textContent = B.email || '--';
-  document.getElementById('sum-mobile').textContent = B.mobile || '--';
-  document.getElementById('sum-price').textContent = B.price || '--';
-}
-window.nextStep = function(n){ if(n===5) populateSummary(); nextStep(n); };
-
-/* =====================================================
-   CONFIRM BOOKING -- Save + Email + WhatsApp SMS
-   ===================================================== */
+/* ── Confirm Booking ── */
 async function confirmBooking(){
-  const btn = document.querySelector('#step5 .btn-next-step');
+  const btn = document.getElementById('confirmBtn');
   btn.textContent = 'Processing...';
   btn.disabled = true;
 
-  /* 1. Save to localStorage DB */
+  /* Save to localStorage */
   let bid = '#AOH-00000';
   if (window.SalonDB) {
     bid = window.SalonDB.saveBooking({ ...B });
@@ -777,12 +746,12 @@ async function confirmBooking(){
     bid = '#AOH-' + Math.floor(Math.random()*90000+10000);
     try {
       const existing = JSON.parse(localStorage.getItem('salon_bookings')||'[]');
-      existing.unshift({ ...B, id: bid, timestamp: new Date().toISOString(), status: 'confirmed' });
+      existing.unshift({ ...B, id:bid, timestamp:new Date().toISOString(), status:'confirmed' });
       localStorage.setItem('salon_bookings', JSON.stringify(existing));
     } catch(e){}
   }
 
-  /* 2. Send Email via EmailJS */
+  /* Send Email via EmailJS */
   if (EMAIL_ENABLED) {
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
@@ -799,12 +768,10 @@ async function confirmBooking(){
         salon_phone: '+91 98765 43210',
         salon_addr:  'Linking Road, Bandra West, Mumbai'
       });
-    } catch(err) {
-      console.warn('EmailJS error:', err);
-    }
+    } catch(err){ console.warn('EmailJS error:', err); }
   }
 
-  /* 3. Build WhatsApp SMS link (auto-opens WhatsApp with confirmation) */
+  /* Build WhatsApp link */
   const waMsg = encodeURIComponent(
     'Hi! Your appointment at A One Hair Salon is confirmed.\n\n' +
     'Booking ID: ' + bid + '\n' +
@@ -815,37 +782,34 @@ async function confirmBooking(){
     'Estimated: ' + B.price + '\n\n' +
     'Please arrive 10 mins early. Call us: +91 98765 43210'
   );
-  const rawMobile = B.mobile.replace(/\D/g, '');
+  const rawMobile = B.mobile.replace(/\D/g,'');
   const waLink = 'https://wa.me/91' + rawMobile + '?text=' + waMsg;
 
-  /* 4. Show success */
-  document.getElementById('progressWrap').style.display='none';
+  /* Show success */
+  document.getElementById('progressWrap').style.display = 'none';
   document.querySelectorAll('.form-step').forEach(s=>s.style.display='none');
   const sv = document.getElementById('successView');
   sv.style.display = 'block';
-  document.getElementById('bookingId').textContent = bid;
-  document.getElementById('cd-svc').textContent = B.svc;
-  document.getElementById('cd-sty').textContent = B.stylist;
-  document.getElementById('cd-dt').textContent = B.date + ' at ' + B.time;
-  document.getElementById('cd-email').textContent = B.email;
-  document.getElementById('cd-sms').textContent = B.mobile;
+  document.getElementById('bookingId').textContent  = bid;
+  document.getElementById('cd-svc').textContent     = B.svc;
+  document.getElementById('cd-sty').textContent     = B.stylist;
+  document.getElementById('cd-dt').textContent      = B.date + ' at ' + B.time;
+  document.getElementById('cd-email').textContent   = B.email;
+  document.getElementById('cd-sms').textContent     = B.mobile;
 
-  /* 5. WhatsApp button */
   const waBtn = document.getElementById('waSmsBtn');
   if(waBtn){ waBtn.href = waLink; waBtn.style.display='inline-block'; }
 
-  /* 6. Email status */
   const emailNote = document.getElementById('emailStatusNote');
   if(emailNote){
     emailNote.textContent = EMAIL_ENABLED
       ? 'Confirmation email sent to ' + B.email
-      : 'Setup EmailJS to enable automatic email confirmations.';
+      : 'See you soon at A One Hair Salon, ' + B.fname + '!';
   }
 
   sv.scrollIntoView({behavior:'smooth',block:'start'});
 }
 window.confirmBooking = confirmBooking;
-window.prevStep = prevStep;
 </script>
 
 <!-- FOOTER -->
@@ -893,6 +857,5 @@ window.prevStep = prevStep;
   </div>
 </footer>
 
-<script src="site.js"></script>
 </body>
 </html>
