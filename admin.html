@@ -3,964 +3,945 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard — A One Hair Salon</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Admin Panel — A One Hair Salon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --gold:#c9a84c; --gold-lt:#f0d47a; --gold-dk:#8a6f2e; --gold-glow:rgba(201,168,76,.35);
-  --bg:#08080a; --bg1:#0f0f14; --bg2:#171720; --bg3:#1e1e28;
-  --white:#f5f0e8; --muted:#706a7a; --border:rgba(201,168,76,.15);
-  --green:rgba(86,198,96,.8); --red:rgba(220,80,80,.8);
-  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
-  --ease:cubic-bezier(.23,1,.32,1);
+:root{
+ --gold:#c9a84c;--gold-lt:#f0d47a;--gold-dk:#8a6f2e;
+ --bg:#08080a;--bg1:#0f0f14;--bg2:#171720;--bg3:#1e1e28;
+ --white:#f5f0e8;--muted:#706a7a;--border:rgba(201,168,76,.18);
+ --green:#4caf79;--red:#e57373;
+ --serif:"Cormorant Garamond",Georgia,serif;
+ --sans:"Inter",system-ui,sans-serif;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;font-size:16px}
-body{background:var(--bg);color:var(--white);font-family:var(--sans);overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-input,select,textarea,button{font-family:var(--sans)}
-::-webkit-scrollbar{width:4px}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--white);font-family:var(--sans);display:flex}
+/* SIDEBAR */
+.sidebar{width:240px;flex-shrink:0;background:var(--bg1);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh;overflow-y:auto}
+.sidebar-logo{padding:28px 24px 20px;border-bottom:1px solid var(--border)}
+.sl-name{font-family:var(--serif);font-size:1.1rem;color:var(--gold);letter-spacing:.08em}
+.sl-sub{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.sl-badge{display:inline-block;margin-top:10px;padding:3px 10px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.nav-section{padding:16px 0 8px;border-bottom:1px solid var(--border)}
+.nav-section-label{padding:0 20px 8px;font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;transition:all .25s;font-size:.78rem;color:rgba(245,240,232,.55);border-left:2px solid transparent}
+.nav-item:hover{background:rgba(201,168,76,.06);color:var(--white)}
+.nav-item.active{background:rgba(201,168,76,.1);color:var(--gold);border-left-color:var(--gold)}
+.ni-icon{font-size:1rem;width:18px;text-align:center}
+.sidebar-footer{margin-top:auto;padding:20px;border-top:1px solid var(--border)}
+.sidebar-footer a{font-size:.7rem;color:var(--muted);transition:color .2s;text-decoration:none}
+.sidebar-footer a:hover{color:var(--gold)}
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.topbar{padding:18px 36px;background:var(--bg1);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.topbar-title{font-family:var(--serif);font-size:1.4rem;font-weight:300;color:var(--white)}
+.topbar-actions{display:flex;gap:10px;align-items:center}
+.btn{padding:9px 22px;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;border:none;cursor:pointer;transition:all .3s;font-family:var(--sans)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--muted)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--bg);box-shadow:0 4px 18px rgba(201,168,76,.28)}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(201,168,76,.4)}
+.btn-green{background:linear-gradient(135deg,var(--green),#2e7d52);color:#fff}
+.btn-green:hover{transform:translateY(-1px)}
+.btn-red{background:transparent;border:1px solid rgba(229,115,115,.4);color:var(--red)}
+.btn-red:hover{background:rgba(229,115,115,.1)}
+.btn-sm{padding:6px 14px;font-size:.62rem}
+.content{flex:1;overflow-y:auto;padding:32px 36px 60px}
+/* PANELS */
+.panel{display:none}
+.panel.active{display:block}
+.panel-section{background:var(--bg2);border:1px solid var(--border);padding:28px 28px 24px;margin-bottom:20px}
+.panel-section-title{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.panel-section-title::after{content:"";flex:1;height:1px;background:var(--border)}
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-grid.col3{grid-template-columns:1fr 1fr 1fr}
+.form-grid.col1{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:7px}
+.field-full{grid-column:1/-1}
+.field label{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.field input,.field textarea{padding:11px 14px;background:var(--bg3);border:1px solid rgba(201,168,76,.2);color:var(--white);font-size:.83rem;font-family:var(--sans);outline:none;transition:border-color .3s}
+.field input:focus,.field textarea:focus{border-color:var(--gold)}
+.field textarea{resize:vertical;min-height:80px}
+.field .field-note{font-size:.6rem;color:var(--muted);line-height:1.5}
+/* LISTS */
+.item-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.item-row{background:var(--bg3);border:1px solid rgba(201,168,76,.15);padding:16px 18px}
+.item-row-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.item-row-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.item-row-actions{display:flex;gap:8px}
+.item-icon-preview{font-size:1.2rem;width:36px;height:36px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* TOAST */
+.toast{position:fixed;bottom:28px;right:28px;z-index:9999;padding:14px 22px;font-size:.78rem;display:none;max-width:340px;line-height:1.5}
+.toast.ok{background:rgba(76,175,121,.15);border:1px solid var(--green);color:var(--green)}
+.toast.err{background:rgba(229,115,115,.12);border:1px solid var(--red);color:var(--red)}
+.toast.info{background:rgba(201,168,76,.12);border:1px solid var(--gold);color:var(--gold)}
+/* DEPLOY */
+.deploy-status-bar{padding:16px 20px;margin-bottom:16px;font-size:.72rem;line-height:1.8;border:1px solid var(--border);background:var(--bg3);height:220px;overflow-y:auto;font-family:"Courier New",monospace}
+.ds-ok{color:var(--green)}.ds-err{color:var(--red)}.ds-info{color:var(--gold)}
+.deploy-progress{height:4px;background:var(--bg3);margin-bottom:20px}
+.deploy-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-lt));width:0;transition:width .3s}
+/* DASHBOARD */
+.welcome-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);padding:22px 24px}
+.sc-num{font-family:var(--serif);font-size:2rem;color:var(--gold);font-weight:300}
+.sc-label{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.quick-links{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.ql{padding:10px 18px;background:var(--bg2);border:1px solid var(--border);font-size:.7rem;color:var(--muted);cursor:pointer;transition:all .3s;letter-spacing:.08em}
+.ql:hover{border-color:var(--gold);color:var(--gold)}
+.changed-badge{display:inline-block;margin-left:8px;padding:2px 7px;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.4);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);vertical-align:middle}
+::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:var(--bg1)}
-::-webkit-scrollbar-thumb{background:var(--gold)}
-button{cursor:pointer}
-
-/* ── LOGIN ── */
-.login-screen {
-  position:fixed;inset:0;z-index:99999;
-  background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-}
-.login-box {
-  width:380px;padding:50px 44px;
-  background:var(--bg2);border:1px solid var(--border);
-  position:relative;
-}
-.login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold-lt),var(--gold),var(--gold-dk))}
-.login-logo{text-align:center;margin-bottom:32px}
-.login-emblem{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold-lt),var(--gold),var(--gold-dk));display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--bg);font-weight:900;font-family:var(--serif);margin:0 auto 14px;box-shadow:0 0 30px var(--gold-glow)}
-.login-logo h2{font-family:var(--serif);font-size:1.4rem;font-weight:300;color:var(--white)}
-.login-logo p{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-top:4px}
-.login-field{margin-bottom:18px}
-.login-field label{display:block;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.login-field input{width:100%;padding:12px 16px;background:var(--bg3);border:1px solid var(--border);color:var(--white);font-size:.9rem;outline:none;transition:border-color .3s}
-.login-field input:focus{border-color:var(--gold)}
-.login-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--bg);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;font-weight:600;border:none;margin-top:8px;transition:all .3s}
-.login-btn:hover{filter:brightness(1.1)}
-.login-error{font-size:.72rem;color:var(--red);text-align:center;margin-top:10px;min-height:20px}
-.login-hint{font-size:.62rem;color:var(--muted);text-align:center;margin-top:16px}
-
-/* ── ADMIN LAYOUT ── */
-.admin-wrap{display:flex;min-height:100vh}
-.sidebar{
-  width:250px;flex-shrink:0;
-  background:var(--bg1);
-  border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
-  position:sticky;top:0;height:100vh;overflow-y:auto;
-}
-.sidebar-logo{padding:28px 24px;border-bottom:1px solid var(--border)}
-.sidebar-logo .s-name{font-family:var(--serif);font-size:1.1rem;font-weight:600;letter-spacing:.1em;color:var(--white)}
-.sidebar-logo .s-tag{font-size:.55rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-top:2px}
-.sidebar-nav{flex:1;padding:20px 0}
-.nav-section{padding:0 16px;margin-bottom:24px}
-.nav-section-label{font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);padding:0 8px;margin-bottom:8px}
-.nav-item{
-  display:flex;align-items:center;gap:12px;
-  padding:10px 14px;border-radius:6px;
-  font-size:.78rem;color:var(--muted);
-  transition:all .3s;cursor:pointer;margin-bottom:2px;
-}
-.nav-item:hover{background:rgba(201,168,76,.08);color:var(--white)}
-.nav-item.active{background:rgba(201,168,76,.12);color:var(--gold);border-left:3px solid var(--gold);padding-left:11px}
-.nav-item .ni-icon{font-size:1.1rem;flex-shrink:0}
-.sidebar-footer{padding:20px 24px;border-top:1px solid var(--border)}
-.logout-btn{
-  width:100%;padding:9px;border:1px solid var(--border);background:transparent;
-  color:var(--muted);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
-  transition:all .3s;
-}
-.logout-btn:hover{border-color:var(--red);color:var(--red)}
-.visit-site{
-  display:block;margin-top:10px;
-  padding:9px;border:1px solid rgba(201,168,76,.3);background:transparent;
-  color:var(--gold);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
-  text-align:center;transition:all .3s;
-}
-.visit-site:hover{background:rgba(201,168,76,.1)}
-
-/* ── MAIN ── */
-.admin-main{flex:1;overflow-y:auto}
-.admin-page{display:none;padding:40px 50px}
-.admin-page.active{display:block}
-.admin-header{margin-bottom:40px;border-bottom:1px solid var(--border);padding-bottom:28px}
-.admin-header h1{font-family:var(--serif);font-size:2.2rem;font-weight:300;color:var(--white)}
-.admin-header p{font-size:.78rem;color:var(--muted);margin-top:6px}
-
-/* ── STATS ── */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
-.stat-card{
-  background:var(--bg2);border:1px solid var(--border);
-  padding:24px 22px;position:relative;overflow:hidden;
-  transition:border-color .3s;
-}
-.stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
-.stat-card:hover{border-color:rgba(201,168,76,.4)}
-.stat-label{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.stat-value{font-family:var(--serif);font-size:2.4rem;font-weight:700;color:var(--gold);line-height:1}
-.stat-sub{font-size:.68rem;color:var(--muted);margin-top:6px}
-.stat-icon{position:absolute;top:18px;right:18px;font-size:1.6rem;opacity:.25}
-
-/* ── BOOKINGS TABLE ── */
-.table-controls{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
-.search-input{
-  padding:9px 16px;background:var(--bg2);border:1px solid var(--border);
-  color:var(--white);font-size:.8rem;outline:none;width:280px;
-  transition:border-color .3s;
-}
-.search-input:focus{border-color:var(--gold)}
-.filter-select{
-  padding:9px 14px;background:var(--bg2);border:1px solid var(--border);
-  color:var(--muted);font-size:.75rem;outline:none;
-}
-.btn-clear{padding:8px 20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;transition:all .3s}
-.btn-clear:hover{border-color:var(--red);color:var(--red)}
-.data-table{width:100%;border-collapse:collapse}
-.data-table th{
-  padding:12px 16px;text-align:left;
-  font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--gold);border-bottom:1px solid var(--gold);
-  background:var(--bg1);
-}
-.data-table td{
-  padding:14px 16px;font-size:.78rem;color:var(--white);
-  border-bottom:1px solid var(--border);vertical-align:middle;
-  background:var(--bg2);
-}
-.data-table tr:hover td{background:var(--bg3)}
-.badge{
-  padding:3px 10px;border-radius:20px;font-size:.58rem;letter-spacing:.12em;
-  text-transform:uppercase;font-weight:600;
-}
-.badge-confirmed{background:rgba(86,198,96,.15);color:var(--green);border:1px solid rgba(86,198,96,.3)}
-.badge-pending{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
-.badge-cancelled{background:rgba(220,80,80,.15);color:var(--red);border:1px solid rgba(220,80,80,.3)}
-.action-btn{
-  padding:5px 12px;border:1px solid var(--border);background:transparent;
-  color:var(--muted);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
-  transition:all .3s;margin-right:4px;
-}
-.action-btn:hover{border-color:var(--gold);color:var(--gold)}
-.action-btn.danger:hover{border-color:var(--red);color:var(--red)}
-.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
-.empty-state .es-icon{font-size:3rem;margin-bottom:16px;opacity:.4}
-.empty-state p{font-size:.85rem}
-
-/* ── SERVICES EDITOR ── */
-.services-editor{}
-.svc-edit-card{
-  background:var(--bg2);border:1px solid var(--border);
-  padding:24px 28px;margin-bottom:8px;
-  display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 120px;
-  align-items:center;gap:14px;
-  transition:border-color .3s;
-}
-.svc-edit-card:hover{border-color:rgba(201,168,76,.3)}
-.sec-name-field,.sec-price-field,.sec-detail-field,.sec-duration-field{
-  padding:9px 12px;background:var(--bg3);border:1px solid var(--border);
-  color:var(--white);font-size:.8rem;outline:none;width:100%;
-  transition:border-color .3s;
-}
-.sec-name-field:focus,.sec-price-field:focus,.sec-detail-field:focus,.sec-duration-field:focus{border-color:var(--gold)}
-.sec-cat-badge{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);color:var(--muted)}
-.btn-save-svc{
-  padding:9px 18px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));
-  color:var(--bg);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;
-  font-weight:600;border:none;width:100%;transition:all .3s;
-}
-.btn-save-svc:hover{filter:brightness(1.1)}
-.services-save-all{
-  margin-top:24px;padding:13px 36px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-dk));
-  color:var(--bg);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
-  font-weight:600;border:none;transition:all .3s;
-  box-shadow:0 6px 24px rgba(201,168,76,.25);
-}
-.services-save-all:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(201,168,76,.4)}
-
-/* ── GALLERY MANAGER ── */
-.gallery-manager{}
-.gallery-mgr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
-.gmg-item{
-  position:relative;aspect-ratio:1;overflow:hidden;
-  border:1px solid var(--border);border-radius:4px;background:var(--bg2);
-}
-.gmg-item img{width:100%;height:100%;object-fit:cover}
-.gmg-item .gmg-overlay{
-  position:absolute;inset:0;background:rgba(8,8,10,.7);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  opacity:0;transition:opacity .3s;
-}
-.gmg-item:hover .gmg-overlay{opacity:1}
-.gmg-btn{padding:6px 14px;border:1px solid rgba(245,240,232,.3);background:transparent;color:var(--white);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;transition:all .3s}
-.gmg-btn:hover{border-color:var(--gold);color:var(--gold)}
-.gmg-btn.del:hover{border-color:var(--red);color:var(--red)}
-.gmg-label{font-size:.62rem;color:var(--muted);text-align:center;margin-top:4px;padding:0 6px}
-
-.add-photo-form{
-  background:var(--bg2);border:1px solid var(--border);
-  padding:28px 24px;margin-bottom:24px;
-}
-.add-photo-form h3{font-family:var(--serif);font-size:1.3rem;font-weight:300;color:var(--white);margin-bottom:20px}
-.apf-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;align-items:end}
-.apf-field label{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
-.apf-field input,.apf-field select{width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);color:var(--white);font-size:.82rem;outline:none;transition:border-color .3s}
-.apf-field input:focus,.apf-field select:focus{border-color:var(--gold)}
-.btn-add-photo{width:100%;padding:11px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--bg);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;border:none;transition:all .3s}
-.btn-add-photo:hover{filter:brightness(1.1)}
-
-/* ── SETTINGS ── */
-.settings-form{max-width:680px}
-.settings-section{background:var(--bg2);border:1px solid var(--border);padding:32px 28px;margin-bottom:16px;position:relative}
-.settings-section::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--gold-lt),var(--gold))}
-.settings-section h3{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--white);margin-bottom:20px}
-.sf-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.sf-field label{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
-.sf-field input,.sf-field textarea{width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);color:var(--white);font-size:.82rem;outline:none;transition:border-color .3s;font-family:var(--sans)}
-.sf-field input:focus,.sf-field textarea:focus{border-color:var(--gold)}
-.sf-field.full{grid-column:1/-1}
-.btn-save-settings{
-  margin-top:20px;padding:13px 36px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-dk));
-  color:var(--bg);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
-  font-weight:600;border:none;transition:all .3s;
-  box-shadow:0 6px 24px rgba(201,168,76,.25);
-}
-.btn-save-settings:hover{transform:translateY(-2px)}
-.save-toast{
-  display:none;
-  background:rgba(86,198,96,.15);border:1px solid rgba(86,198,96,.4);
-  color:var(--green);padding:12px 20px;font-size:.75rem;margin-top:14px;
-}
-.save-toast.show{display:block;animation:toastIn .4s ease both}
-@keyframes toastIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-
-/* ── EMAIL SETUP ── */
-.email-setup{max-width:680px}
-.email-card{background:var(--bg2);border:1px solid var(--border);padding:32px 28px;margin-bottom:16px}
-.email-card h3{font-family:var(--serif);font-size:1.2rem;color:var(--white);margin-bottom:6px}
-.email-card p{font-size:.78rem;color:var(--muted);margin-bottom:20px;line-height:1.7}
-.email-steps{display:flex;flex-direction:column;gap:14px}
-.email-step{display:flex;gap:14px;align-items:flex-start}
-.es-num{width:28px;height:28px;border-radius:50%;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--gold);flex-shrink:0}
-.es-text h4{font-size:.8rem;color:var(--white);margin-bottom:3px}
-.es-text p{font-size:.72rem;color:var(--muted);line-height:1.6}
-.es-text a{color:var(--gold)}
-.code-snippet{
-  background:var(--bg);border:1px solid var(--border);
-  padding:10px 14px;margin-top:8px;font-size:.7rem;color:var(--gold-lt);
-  font-family:monospace;overflow-x:auto;white-space:pre;
-}
-.emailjs-config{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:16px}
-.ecf label{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
-.ecf input{width:100%;padding:10px 12px;background:var(--bg3);border:1px solid var(--border);color:var(--white);font-size:.78rem;outline:none;transition:border-color .3s}
-.ecf input:focus{border-color:var(--gold)}
-.btn-test-email{margin-top:16px;padding:11px 24px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;transition:all .3s}
-.btn-test-email:hover{background:var(--gold);color:var(--bg)}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  .sidebar{display:none}
-  .admin-page{padding:24px}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .svc-edit-card{grid-template-columns:1fr 1fr;gap:10px}
-  .gallery-mgr-grid{grid-template-columns:repeat(3,1fr)}
-}
+::-webkit-scrollbar-thumb{background:var(--gold-dk)}
+@media(max-width:800px){.sidebar{display:none}.form-grid{grid-template-columns:1fr}.welcome-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
-<div class="login-screen" id="loginScreen">
-  <div class="login-box">
-    <div class="login-logo">
-      <div class="login-emblem">A</div>
-      <h2>A One Hair Salon</h2>
-      <p>Admin Dashboard</p>
-    </div>
-    <div class="login-field">
-      <label>Username</label>
-      <input type="text" id="loginUser" placeholder="admin" autocomplete="off">
-    </div>
-    <div class="login-field">
-      <label>Password</label>
-      <input type="password" id="loginPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
-    </div>
-    <button class="login-btn" onclick="doLogin()">Sign In to Dashboard</button>
-    <div class="login-error" id="loginErr"></div>
-    <p class="login-hint">Default: admin / salon2026</p>
+<aside class="sidebar">
+ <div class="sidebar-logo">
+  <div class="sl-name">A ONE HAIR SALON</div>
+  <div class="sl-sub">Admin Panel</div>
+  <div class="sl-badge">Content Manager</div>
+ </div>
+ <nav>
+  <div class="nav-section">
+   <div class="nav-section-label">Overview</div>
+   <div class="nav-item active" data-panel="dashboard"><span class="ni-icon">&#8962;</span> Dashboard</div>
   </div>
+  <div class="nav-section">
+   <div class="nav-section-label">Site Content</div>
+   <div class="nav-item" data-panel="siteinfo"><span class="ni-icon">&#10022;</span> Salon Info</div>
+   <div class="nav-item" data-panel="footer"><span class="ni-icon">&#9636;</span> Footer &amp; Hours</div>
+   <div class="nav-item" data-panel="homepage"><span class="ni-icon">&#9672;</span> Home Page</div>
+   <div class="nav-item" data-panel="pagetitles"><span class="ni-icon">&#9671;</span> Page Titles</div>
+   <div class="nav-item" data-panel="servicespage"><span class="ni-icon">&#9998;</span> Services Detail</div>
+   <div class="nav-item" data-panel="bookingsettings"><span class="ni-icon">&#128197;</span> Booking Settings</div>
+  </div>
+  <div class="nav-section">
+   <div class="nav-section-label">Dynamic Data</div>
+   <div class="nav-item" data-panel="services"><span class="ni-icon">&#9986;</span> Services</div>
+   <div class="nav-item" data-panel="testimonials"><span class="ni-icon">"</span> Testimonials</div>
+  </div>
+  <div class="nav-section">
+   <div class="nav-section-label">Publish</div>
+   <div class="nav-item" data-panel="deploy"><span class="ni-icon">&#8679;</span> Deploy to Site</div>
+  </div>
+  <div class="nav-section">
+   <div class="nav-section-label">Account</div>
+   <div class="nav-item" data-panel="security"><span class="ni-icon">&#128274;</span> Security</div>
+  </div>
+ </nav>
+ <div class="sidebar-footer">
+  <div style="font-size:.68rem;color:var(--muted);letter-spacing:.08em;margin-bottom:10px;text-transform:uppercase">Logged in as<br><span id="sidebarUser" style="color:var(--gold)">—</span></div>
+  <a href="index.html" target="_blank" style="display:block;margin-bottom:8px">&#8592; View Website</a>
+  <a href="#" id="logoutBtn" style="color:#e88;font-size:.7rem">&#10005; Log Out</a>
+ </div>
+</aside>
+
+<div class="main">
+ <div class="topbar">
+  <div class="topbar-title" id="topbarTitle">Dashboard</div>
+  <div class="topbar-actions">
+   <button class="btn btn-outline" onclick="loadFromGitHub()">&#8595; Reload from GitHub</button>
+   <button class="btn btn-gold" onclick="saveDraft()">Save Draft</button>
+  </div>
+ </div>
+
+ <div class="content">
+
+  <!-- DASHBOARD -->
+  <div class="panel active" id="panel-dashboard">
+   <div class="welcome-grid">
+    <div class="stat-card"><div class="sc-num" id="statSvcCount">8</div><div class="sc-label">Services Listed</div></div>
+    <div class="stat-card"><div class="sc-num" id="statTestiCount">3</div><div class="sc-label">Testimonials</div></div>
+    <div class="stat-card"><div class="sc-num" id="statDraft">&#8212;</div><div class="sc-label">Draft Status</div></div>
+   </div>
+   <div class="quick-links">
+    <div class="ql" onclick="gotoPanel('siteinfo')">&#10022; Edit Salon Info</div>
+    <div class="ql" onclick="gotoPanel('footer')">&#9636; Edit Hours</div>
+    <div class="ql" onclick="gotoPanel('services')">&#9986; Edit Services</div>
+    <div class="ql" onclick="gotoPanel('testimonials')">" Edit Testimonials</div>
+    <div class="ql" onclick="gotoPanel('deploy')">&#8679; Deploy Changes</div>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">How It Works</div>
+    <p style="font-size:.8rem;color:var(--muted);line-height:1.9">
+     1. Edit any section using the left sidebar navigation.<br>
+     2. Click <strong style="color:var(--white)">Save Draft</strong> to store your changes in this browser.<br>
+     3. Go to <strong style="color:var(--white)">Deploy to Site</strong> and click <strong style="color:var(--gold)">Deploy to GitHub</strong> to publish live.<br>
+     4. Your website updates within 60 seconds after deploying.<br><br>
+     <span style="color:rgba(245,240,232,.4)">All content is stored in content.json — the single source of truth for your entire website.</span>
+    </p>
+   </div>
+  </div>
+
+  <!-- SALON INFO -->
+  <div class="panel" id="panel-siteinfo">
+   <div class="panel-section">
+    <div class="panel-section-title">Salon Identity</div>
+    <div class="form-grid">
+     <div class="field"><label>Salon Display Name</label><input type="text" id="si-name" placeholder="A ONE"><span class="field-note">Shown in navigation logo on all pages</span></div>
+     <div class="field"><label>Tagline (under logo)</label><input type="text" id="si-tagline" placeholder="Hair Salon"></div>
+    </div>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">Contact Details</div>
+    <div class="form-grid">
+     <div class="field"><label>Phone Number</label><input type="text" id="si-phone" placeholder="+91 98765 43210"><span class="field-note">Shown in footer and contact page</span></div>
+     <div class="field"><label>Email Address</label><input type="email" id="si-email" placeholder="hello@aonehairsalon.com"></div>
+     <div class="field"><label>Short Address</label><input type="text" id="si-address" placeholder="12 King Street, London"><span class="field-note">Used in footer and contact page address line</span></div>
+     <div class="field"><label>Full Address</label><input type="text" id="si-address-full" placeholder="Shop 12, 12 King Street, London"></div>
+    </div>
+   </div>
+  </div>
+
+  <!-- FOOTER & HOURS -->
+  <div class="panel" id="panel-footer">
+   <div class="panel-section">
+    <div class="panel-section-title">Opening Hours</div>
+    <div class="form-grid col3">
+     <div class="field"><label>Monday &ndash; Friday</label><input type="text" id="ft-weekday" placeholder="Mon-Fri: 10am - 8pm"></div>
+     <div class="field"><label>Saturday</label><input type="text" id="ft-saturday" placeholder="Saturday: 9am - 9pm"></div>
+     <div class="field"><label>Sunday</label><input type="text" id="ft-sunday" placeholder="Sunday: 10am - 6pm"></div>
+    </div>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">Footer Text</div>
+    <div class="form-grid col1">
+     <div class="field"><label>Footer Tagline</label><textarea id="ft-tagline" rows="2" placeholder="London's premier luxury unisex salon..."></textarea></div>
+     <div class="field"><label>Copyright Text</label><input type="text" id="ft-copyright" placeholder="&copy; 2026 A One Hair Salon. All rights reserved."></div>
+    </div>
+   </div>
+  </div>
+
+  <!-- HOME PAGE -->
+  <div class="panel" id="panel-homepage">
+   <div class="panel-section">
+    <div class="panel-section-title">Hero Section</div>
+    <div class="form-grid col1">
+     <div class="field"><label>Hero Tag (small text above title)</label><input type="text" id="hp-hero-tag" placeholder="Premier Luxury Salon"><span class="field-note">Short tagline shown above the main heading on home page</span></div>
+     <div class="field"><label>Hero Subtitle</label><input type="text" id="hp-hero-sub" placeholder="Where Art Meets Elegance"></div>
+    </div>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">About Section</div>
+    <div class="form-grid col1">
+     <div class="field"><label>About Paragraph 1</label><textarea id="hp-about1" rows="3" placeholder="Welcome to A One Hair Salon..."></textarea></div>
+     <div class="field"><label>About Paragraph 2</label><textarea id="hp-about2" rows="3" placeholder="From precision cuts and vibrant color..."></textarea></div>
+     <div class="field"><label>About Section Label</label><input type="text" id="hp-about-label" placeholder="About Us"></div>
+     <div class="field"><label>About Section Title</label><input type="text" id="hp-about-title" placeholder="Luxury Hair Care, Perfected"></div>
+    </div>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">Services Section</div>
+    <div class="form-grid col1">
+     <div class="field"><label>Services Section Label</label><input type="text" id="hp-svc-label" placeholder="Our Services"></div>
+     <div class="field"><label>Services Section Title</label><input type="text" id="hp-svc-title" placeholder="Signature Services"></div>
+    </div>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">Testimonials Section</div>
+    <div class="form-grid col1">
+     <div class="field"><label>Testimonials Label</label><input type="text" id="hp-testi-label" placeholder="What Our Clients Say"></div>
+     <div class="field"><label>Testimonials Title</label><input type="text" id="hp-testi-title" placeholder="Trusted by Hundreds"></div>
+    </div>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">Booking CTA</div>
+    <div class="form-grid col1">
+     <div class="field"><label>Booking CTA Title</label><input type="text" id="hp-cta-title" placeholder="Ready for Your Transformation?"></div>
+     <div class="field"><label>Booking CTA Text</label><textarea id="hp-cta-text" rows="2" placeholder="Book your appointment today..."></textarea></div>
+    </div>
+   </div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="panel" id="panel-services">
+   <div class="panel-section">
+    <div class="panel-section-title">Booking Services <span class="changed-badge" id="svcBadge" style="display:none">unsaved</span></div>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">These services appear in the <strong style="color:var(--white)">Booking Form</strong> for clients to choose from. Edit names, prices and icons freely.</p>
+    <div class="item-list" id="svcList"></div>
+    <button class="btn btn-outline btn-sm" onclick="addService()">+ Add Service</button>
+   </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="panel" id="panel-testimonials">
+   <div class="panel-section">
+    <div class="panel-section-title">Client Testimonials <span class="changed-badge" id="testiBadge" style="display:none">unsaved</span></div>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">These 3 testimonials appear on the <strong style="color:var(--white)">Home Page</strong>. Edit the quote, client name, and city.</p>
+    <div class="item-list" id="testiList"></div>
+   </div>
+  </div>
+
+  <!-- DEPLOY -->
+  <div class="panel" id="panel-deploy">
+
+   <!-- HOW IT WORKS -->
+   <div class="panel-section">
+    <div class="panel-section-title">&#9729; Cloud Workflow — No Files Needed</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:4px">
+     <div style="background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:14px;text-align:center">
+      <div style="font-size:1.3rem;margin-bottom:6px">&#9998;</div>
+      <div style="font-size:.75rem;color:var(--gold);font-weight:600;margin-bottom:4px">1. Edit</div>
+      <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Update any content from this admin panel — from anywhere, any device</div>
+     </div>
+     <div style="background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:14px;text-align:center">
+      <div style="font-size:1.3rem;margin-bottom:6px">&#8679;</div>
+      <div style="font-size:.75rem;color:var(--gold);font-weight:600;margin-bottom:4px">2. Deploy</div>
+      <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Click Deploy — pushes your changes to GitHub automatically</div>
+     </div>
+     <div style="background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:14px;text-align:center">
+      <div style="font-size:1.3rem;margin-bottom:6px">&#127760;</div>
+      <div style="font-size:.75rem;color:var(--gold);font-weight:600;margin-bottom:4px">3. Live</div>
+      <div style="font-size:.7rem;color:var(--muted);line-height:1.5">Website updates in ~60 seconds. No laptop or files needed.</div>
+     </div>
+    </div>
+   </div>
+
+   <!-- GITHUB SETTINGS -->
+   <div class="panel-section">
+    <div class="panel-section-title">GitHub Connection</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:14px;line-height:1.7">Your token is saved <strong style="color:var(--white)">only in this browser</strong> — it is never stored in any file or sent anywhere except GitHub.</p>
+    <div class="form-grid">
+     <div class="field"><label>GitHub Username</label><input type="text" id="gh-owner" value="parekhankit26"></div>
+     <div class="field"><label>Repository Name</label><input type="text" id="gh-repo" value="A-One-Hair-Salon"></div>
+     <div class="field"><label>Branch</label><input type="text" id="gh-branch" value="main"></div>
+     <div class="field">
+      <label>Personal Access Token <span style="color:var(--muted);font-weight:400;letter-spacing:0">(saved in browser)</span></label>
+      <div style="display:flex;gap:8px;align-items:center">
+       <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="flex:1">
+       <button class="btn btn-outline" onclick="saveTokenToStorage()" style="white-space:nowrap;flex-shrink:0">&#128274; Save Token</button>
+      </div>
+      <span class="field-note" id="tokenStatus" style="color:var(--muted)">No token saved yet.</span>
+     </div>
+    </div>
+   </div>
+
+   <!-- PUBLISH -->
+   <div class="panel-section">
+    <div class="panel-section-title">Publish Changes</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:16px;line-height:1.7">
+     Collects all your edits and pushes <code style="background:var(--bg);padding:2px 6px;border-radius:2px;color:var(--gold)">content.json</code> to GitHub.
+     The website fetches this file on every page load — so changes go live in ~60 seconds automatically.
+    </p>
+    <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+     <button class="btn btn-green" onclick="deployContentJson()" style="min-width:200px">&#8679; &nbsp;Deploy to GitHub → Live</button>
+     <button class="btn btn-outline" onclick="downloadJson()">&#8595; Download JSON</button>
+     <button class="btn btn-outline" onclick="previewJson()">{ } Preview</button>
+    </div>
+    <div class="deploy-progress"><div class="deploy-progress-fill" id="deployFill"></div></div>
+    <div class="deploy-status-bar" id="deployLog"><span class="ds-info">Ready. Click Deploy to publish your changes live.</span></div>
+   </div>
+
+   <!-- ADMIN URL -->
+   <div class="panel-section">
+    <div class="panel-section-title">&#128279; Your Admin Panel URL (Bookmark This)</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px;line-height:1.7">Once deployed, access your admin panel from any device — no files needed:</p>
+    <div id="adminUrlBox" style="background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:12px 16px;font-size:.8rem;color:var(--gold);font-family:monospace;word-break:break-all"></div>
+    <button class="btn btn-outline" onclick="copyAdminUrl()" style="margin-top:10px;font-size:.75rem">&#128203; Copy URL</button>
+   </div>
+
+  </div>
+
+  <!-- PAGE TITLES -->
+  <div class="panel" id="panel-pagetitles">
+   <div class="panel-section">
+    <div class="panel-section-title">Page Hero Titles & Intros</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Control the heading and intro text shown at the top of each page.</p>
+    <div class="form-grid">
+     <div class="field"><label>Services Page — Hero Title</label><input type="text" id="pt-svc-title" placeholder="Services & Pricing"></div>
+     <div class="field"><label>Services Page — Intro Text</label><textarea id="pt-svc-intro" rows="2" placeholder="Discover our full range..."></textarea></div>
+     <div class="field"><label>Gallery Page — Hero Title</label><input type="text" id="pt-gal-title" placeholder="Our Gallery"></div>
+     <div class="field"><label>Gallery Page — Intro Text</label><input type="text" id="pt-gal-intro" placeholder="A glimpse into the artistry..."></div>
+     <div class="field"><label>Contact Page — Hero Title</label><input type="text" id="pt-con-title" placeholder="Contact Us"></div>
+     <div class="field"><label>Contact Page — Section Label</label><input type="text" id="pt-con-label" placeholder="Get In Touch"></div>
+     <div class="field"><label>Contact Page — Section Title</label><input type="text" id="pt-con-sectitle" placeholder="We'd Love to Hear From You"></div>
+     <div class="field"><label>Contact Page — Intro Text</label><textarea id="pt-con-intro" rows="2" placeholder="Whether you want to book..."></textarea></div>
+     <div class="field"><label>Booking Page — Visual Title</label><input type="text" id="pt-book-title" placeholder="Book Your Experience"></div>
+     <div class="field"><label>Booking Page — Visual Subtitle</label><textarea id="pt-book-sub" rows="2" placeholder="Reserve your appointment..."></textarea></div>
+     <div class="field"><label>Booking Form — Title</label><input type="text" id="bk-vis-title" placeholder="Book Your Experience"></div>
+     <div class="field"><label>Booking Form — Subtitle</label><textarea id="bk-vis-sub" rows="2" placeholder="Reserve your appointment..."></textarea></div>
+    </div>
+    <button class="btn btn-gold" onclick="saveDraft()">&#10003; Save Draft</button>
+   </div>
+  </div>
+
+  <!-- SERVICES DETAIL PAGE -->
+  <div class="panel" id="panel-servicespage">
+   <div class="panel-section">
+    <div class="panel-section-title">Services Page — Categories & Items</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Manage the detailed service listings shown on the Services page. Each category has a title, description, and service items with name, detail, price and duration.</p>
+    <div id="svcPageCategories"></div>
+    <button class="btn btn-outline" onclick="saveDraft()" style="margin-top:16px">&#10003; Save Draft</button>
+   </div>
+  </div>
+
+  <!-- BOOKING SETTINGS -->
+  <div class="panel" id="panel-bookingsettings">
+   <div class="panel-section">
+    <div class="panel-section-title">Booking — Stylist Management</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Manage the stylists clients can choose from in the booking form. Add, edit, or remove stylists as your team changes.</p>
+    <div id="stylistsList"></div>
+    <button class="btn btn-outline" onclick="addStylist()" style="margin-top:12px">+ Add Stylist</button>
+    <button class="btn btn-gold" onclick="saveDraft()" style="margin-top:12px;margin-left:8px">&#10003; Save Draft</button>
+   </div>
+  </div>
+
+  <!-- SECURITY -->
+  <div class="panel" id="panel-security">
+   <div class="panel-section">
+    <div class="panel-section-title">Account Information</div>
+    <div class="form-grid" style="margin-bottom:0">
+     <div class="field"><label>Logged in as</label><input type="text" id="sec-current-user" readonly style="opacity:.6;cursor:default"></div>
+    </div>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">Change Password</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Enter your current password to verify, then set your new password. Changes take effect immediately in this browser.</p>
+    <div class="form-grid">
+     <div class="field"><label>Current Password</label><input type="password" id="sec-current-pass" placeholder="Enter current password"></div>
+     <div class="field"><label>New Password</label><input type="password" id="sec-new-pass" placeholder="Min 8 characters"></div>
+     <div class="field"><label>Confirm New Password</label><input type="password" id="sec-confirm-pass" placeholder="Repeat new password"></div>
+    </div>
+    <div id="sec-msg" style="display:none;margin-bottom:14px;padding:10px 14px;border-radius:2px;font-size:.8rem"></div>
+    <button class="btn btn-gold" onclick="changePassword()">&#128274; Update Password</button>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">Session</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:16px;line-height:1.7">Your session is active in this browser tab. Closing the tab will require you to log in again.</p>
+    <button class="btn" style="background:#c0392b;color:#fff;border:none" onclick="logout()">&#10005; Log Out Now</button>
+   </div>
+  </div>
+
+ </div>
 </div>
 
-<!-- ADMIN WRAP -->
-<div class="admin-wrap" id="adminWrap" style="display:none">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <div class="s-name">A ONE SALON</div>
-      <div class="s-tag">Admin Panel</div>
-    </div>
-    <nav class="sidebar-nav">
-      <div class="nav-section">
-        <div class="nav-section-label">Overview</div>
-        <div class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard">
-          <span class="ni-icon">◈</span> Dashboard
-        </div>
-        <div class="nav-item" onclick="showPage('bookings')" id="nav-bookings">
-          <span class="ni-icon">📅</span> Bookings
-        </div>
-      </div>
-      <div class="nav-section">
-        <div class="nav-section-label">Content</div>
-        <div class="nav-item" onclick="showPage('services')" id="nav-services">
-          <span class="ni-icon">✂</span> Services & Prices
-        </div>
-        <div class="nav-item" onclick="showPage('gallery')" id="nav-gallery">
-          <span class="ni-icon">🖼</span> Gallery
-        </div>
-      </div>
-      <div class="nav-section">
-        <div class="nav-section-label">Configuration</div>
-        <div class="nav-item" onclick="showPage('settings')" id="nav-settings">
-          <span class="ni-icon">⚙</span> Salon Settings
-        </div>
-        <div class="nav-item" onclick="showPage('email')" id="nav-email">
-          <span class="ni-icon">✉</span> Email Setup
-        </div>
-      </div>
-    </nav>
-    <div class="sidebar-footer">
-      <a href="index.html" class="visit-site">View Live Site →</a>
-      <button class="logout-btn" onclick="doLogout()">Sign Out</button>
-    </div>
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <main class="admin-main">
-
-    <!-- ═══ DASHBOARD ═══ -->
-    <div class="admin-page active" id="page-dashboard">
-      <div class="admin-header">
-        <h1>Dashboard</h1>
-        <p>Welcome back! Here's what's happening at A One Hair Salon.</p>
-      </div>
-      <div class="stats-grid" id="statsGrid">
-        <div class="stat-card">
-          <div class="stat-icon">📅</div>
-          <div class="stat-label">Total Bookings</div>
-          <div class="stat-value" id="statTotal">0</div>
-          <div class="stat-sub">All time</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">✦</div>
-          <div class="stat-label">Today's Bookings</div>
-          <div class="stat-value" id="statToday">0</div>
-          <div class="stat-sub" id="statTodayDate">—</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">♛</div>
-          <div class="stat-label">This Week</div>
-          <div class="stat-value" id="statWeek">0</div>
-          <div class="stat-sub">Last 7 days</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">◉</div>
-          <div class="stat-label">Services</div>
-          <div class="stat-value" id="statServices">15</div>
-          <div class="stat-sub">Active</div>
-        </div>
-      </div>
-
-      <!-- Recent bookings -->
-      <h3 style="font-family:var(--serif);font-size:1.4rem;font-weight:300;margin-bottom:18px;color:var(--white)">Recent Bookings</h3>
-      <div id="recentBookings"></div>
-    </div>
-
-    <!-- ═══ BOOKINGS ═══ -->
-    <div class="admin-page" id="page-bookings">
-      <div class="admin-header">
-        <h1>All Bookings</h1>
-        <p>Manage and track all salon appointments</p>
-      </div>
-      <div class="table-controls">
-        <input type="text" class="search-input" id="bookingSearch" placeholder="Search by name, email, service..." oninput="filterBookings()">
-        <div style="display:flex;gap:8px">
-          <select class="filter-select" id="statusFilter" onchange="filterBookings()">
-            <option value="">All Status</option>
-            <option value="confirmed">Confirmed</option>
-            <option value="pending">Pending</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
-          <button class="btn-clear" onclick="clearBookings()">Clear All</button>
-        </div>
-      </div>
-      <div id="bookingsTable"></div>
-    </div>
-
-    <!-- ═══ SERVICES ═══ -->
-    <div class="admin-page" id="page-services">
-      <div class="admin-header">
-        <h1>Services &amp; Prices</h1>
-        <p>Edit service names, prices, and descriptions. Changes reflect instantly on the website.</p>
-      </div>
-      <div class="services-editor" id="servicesEditor"></div>
-      <button class="services-save-all" onclick="saveAllServices()">Save All Changes</button>
-      <div class="save-toast" id="servicesSaved">Services saved successfully!</div>
-    </div>
-
-    <!-- ═══ GALLERY ═══ -->
-    <div class="admin-page" id="page-gallery">
-      <div class="admin-header">
-        <h1>Gallery Manager</h1>
-        <p>Add, remove, and reorder photos shown in the gallery.</p>
-      </div>
-      <div class="add-photo-form">
-        <h3>Add New Photo</h3>
-        <div class="apf-grid">
-          <div class="apf-field">
-            <label>Image URL</label>
-            <input type="url" id="newPhotoUrl" placeholder="https://images.unsplash.com/... or any public image URL">
-          </div>
-          <div class="apf-field">
-            <label>Title</label>
-            <input type="text" id="newPhotoTitle" placeholder="e.g. Balayage Result">
-          </div>
-          <div class="apf-field">
-            <label>Category</label>
-            <select id="newPhotoCat">
-              <option value="interior">Salon Interior</option>
-              <option value="hair">Hair Styling</option>
-              <option value="color">Color</option>
-              <option value="bridal">Bridal</option>
-              <option value="grooming">Grooming</option>
-              <option value="nails">Nails</option>
-              <option value="skin">Skin</option>
-            </select>
-          </div>
-        </div>
-        <button class="btn-add-photo" style="margin-top:14px;max-width:220px" onclick="addGalleryPhoto()">+ Add Photo</button>
-      </div>
-      <div class="gallery-mgr-grid" id="galleryMgrGrid"></div>
-      <div class="save-toast" id="gallerySaved">Gallery updated!</div>
-    </div>
-
-    <!-- ═══ SETTINGS ═══ -->
-    <div class="admin-page" id="page-settings">
-      <div class="admin-header">
-        <h1>Salon Settings</h1>
-        <p>Update your salon's name, contact info, and hours. Changes appear across the whole site.</p>
-      </div>
-      <div class="settings-form">
-        <div class="settings-section">
-          <h3>Salon Identity</h3>
-          <div class="sf-row">
-            <div class="sf-field"><label>Salon Name</label><input type="text" id="sName" placeholder="A One Hair Salon"></div>
-            <div class="sf-field"><label>Tagline</label><input type="text" id="sTagline" placeholder="Where Art Meets Elegance"></div>
-          </div>
-          <div class="sf-row">
-            <div class="sf-field"><label>City / Location</label><input type="text" id="sCity" placeholder="Bandra, Mumbai"></div>
-            <div class="sf-field"><label>Website</label><input type="text" id="sWebsite" placeholder="www.aonehairsalon.com"></div>
-          </div>
-        </div>
-        <div class="settings-section">
-          <h3>Contact Details</h3>
-          <div class="sf-row">
-            <div class="sf-field"><label>Phone / WhatsApp</label><input type="text" id="sPhone" placeholder="+91 98765 43210"></div>
-            <div class="sf-field"><label>Email</label><input type="email" id="sEmail" placeholder="hello@aonehairsalon.com"></div>
-          </div>
-          <div class="sf-row">
-            <div class="sf-field full"><label>Full Address</label><input type="text" id="sAddress" placeholder="Shop 12, Linking Road, Bandra West, Mumbai 400050"></div>
-          </div>
-        </div>
-        <div class="settings-section">
-          <h3>Opening Hours</h3>
-          <div class="sf-row">
-            <div class="sf-field"><label>Mon – Fri</label><input type="text" id="hWeekday" placeholder="10:00 AM – 8:00 PM"></div>
-            <div class="sf-field"><label>Saturday</label><input type="text" id="hSat" placeholder="9:00 AM – 9:00 PM"></div>
-          </div>
-          <div class="sf-row">
-            <div class="sf-field"><label>Sunday</label><input type="text" id="hSun" placeholder="10:00 AM – 6:00 PM"></div>
-            <div class="sf-field"><label>Holidays</label><input type="text" id="hHol" placeholder="Closed"></div>
-          </div>
-        </div>
-        <div class="settings-section">
-          <h3>Admin Access</h3>
-          <div class="sf-row">
-            <div class="sf-field"><label>Admin Username</label><input type="text" id="adminUser" placeholder="admin"></div>
-            <div class="sf-field"><label>Admin Password</label><input type="password" id="adminPass" placeholder="New password"></div>
-          </div>
-          <p style="font-size:.68rem;color:var(--muted);margin-top:6px">Leave password blank to keep the current one.</p>
-        </div>
-        <button class="btn-save-settings" onclick="saveSettings()">Save All Settings</button>
-        <div class="save-toast" id="settingsSaved">Settings saved! Changes will appear on the website.</div>
-      </div>
-    </div>
-
-    <!-- ═══ EMAIL SETUP ═══ -->
-    <div class="admin-page" id="page-email">
-      <div class="admin-header">
-        <h1>Email Setup</h1>
-        <p>Configure EmailJS to send real booking confirmation emails to clients.</p>
-      </div>
-      <div class="email-setup">
-        <div class="email-card">
-          <h3>How to Enable Booking Emails</h3>
-          <p>EmailJS lets you send emails directly from the browser — no server required. Free tier: 200 emails/month.</p>
-          <div class="email-steps">
-            <div class="email-step">
-              <div class="es-num">1</div>
-              <div class="es-text">
-                <h4>Create a free account</h4>
-                <p>Go to <a href="https://www.emailjs.com" target="_blank">emailjs.com</a> and sign up for a free account.</p>
-              </div>
-            </div>
-            <div class="email-step">
-              <div class="es-num">2</div>
-              <div class="es-text">
-                <h4>Add an Email Service</h4>
-                <p>In your EmailJS dashboard, go to "Email Services" and connect Gmail, Outlook, or any SMTP provider.</p>
-              </div>
-            </div>
-            <div class="email-step">
-              <div class="es-num">3</div>
-              <div class="es-text">
-                <h4>Create an Email Template</h4>
-                <p>Go to "Email Templates" and create a template. Use these variables in your template:</p>
-                <div class="code-snippet">To: {{to_email}}
-Subject: Your Booking at A One Hair Salon ({{booking_id}})
-
-Dear {{to_name}},
-
-Your appointment is confirmed!
-Booking ID: {{booking_id}}
-Service: {{service}}
-Stylist: {{stylist}}
-Date: {{date}} at {{time}}
-Estimated Price: {{price}}
-
-See you at {{salon_name}}!
-{{salon_addr}} | {{salon_phone}}</div>
-              </div>
-            </div>
-            <div class="email-step">
-              <div class="es-num">4</div>
-              <div class="es-text">
-                <h4>Copy your credentials below</h4>
-                <p>Get your Public Key from Account settings, and paste your Service ID and Template ID here:</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="email-card">
-          <h3>Your EmailJS Credentials</h3>
-          <p>Paste your credentials here. They are saved locally and used in booking.html.</p>
-          <div class="emailjs-config">
-            <div class="ecf"><label>Public Key</label><input type="text" id="ejPublic" placeholder="user_xxxxxxxxxxxx"></div>
-            <div class="ecf"><label>Service ID</label><input type="text" id="ejService" placeholder="service_xxxxxxx"></div>
-            <div class="ecf"><label>Template ID</label><input type="text" id="ejTemplate" placeholder="template_xxxxxxx"></div>
-          </div>
-          <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap">
-            <button class="btn-save-settings" onclick="saveEmailConfig()" style="margin-top:0;padding:11px 28px">Save Credentials</button>
-            <button class="btn-test-email" onclick="testEmail()">Send Test Email</button>
-          </div>
-          <div class="save-toast" id="emailSaved">Email config saved! Update booking.html with your credentials.</div>
-        </div>
-        <div class="email-card">
-          <h3>WhatsApp SMS (Free, No Setup Needed)</h3>
-          <p>WhatsApp confirmation is already built in. After a booking, clients see a button to receive their booking details on WhatsApp. No API key needed — works instantly for Indian phone numbers.</p>
-          <div style="padding:14px 16px;background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.2);font-size:.78rem;color:rgba(37,211,102,.9);margin-top:8px">
-            WhatsApp SMS is enabled and active in booking.html.
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </main>
-</div>
+<div class="toast" id="toast"></div>
 
 <script>
-/* ============================================================
-   ADMIN -- Data Store + Auth
-============================================================ */
-const STORE = {
-  get: (k,d) => { try{const v=localStorage.getItem('salon_'+k);return v?JSON.parse(v):d}catch(e){return d} },
-  set: (k,v) => { try{localStorage.setItem('salon_'+k,JSON.stringify(v))}catch(e){} }
+/* ══════════════════════════════════════
+   AUTH GUARD — redirect if not logged in
+══════════════════════════════════════ */
+const SESSION_KEY = 'aone_admin_token';
+const CREDS_KEY   = 'aone_admin_creds';
+const DEFAULT_USER = 'Umang680';
+const DEFAULT_HASH = '3436d6da21557f8ba6248b58cc68b9f658862a71a9c8eed620491b44e7689194';
+
+if (!sessionStorage.getItem(SESSION_KEY)) {
+  window.location.replace('admin-login.html');
+}
+
+/* Set logged-in username display */
+const _loggedUser = sessionStorage.getItem('aone_admin_user') || DEFAULT_USER;
+document.getElementById('sidebarUser').textContent = _loggedUser;
+const _secUser = document.getElementById('sec-current-user');
+if (_secUser) _secUser.value = _loggedUser;
+
+/* SHA-256 helper */
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+/* Logout */
+function logout() {
+  sessionStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem('aone_admin_user');
+  window.location.replace('admin-login.html');
+}
+document.getElementById('logoutBtn').addEventListener('click', (e) => { e.preventDefault(); logout(); });
+
+/* Change Password */
+async function changePassword() {
+  const curPass  = document.getElementById('sec-current-pass').value;
+  const newPass  = document.getElementById('sec-new-pass').value;
+  const confPass = document.getElementById('sec-confirm-pass').value;
+  const msgEl    = document.getElementById('sec-msg');
+
+  function showMsg(txt, ok) {
+    msgEl.textContent = txt;
+    msgEl.style.display = 'block';
+    msgEl.style.background = ok ? 'rgba(76,175,119,.12)' : 'rgba(220,60,60,.1)';
+    msgEl.style.border = ok ? '1px solid rgba(76,175,119,.3)' : '1px solid rgba(220,60,60,.3)';
+    msgEl.style.color  = ok ? '#6fcf97' : '#e88';
+  }
+
+  if (!curPass || !newPass || !confPass) { showMsg('Please fill in all fields.', false); return; }
+  if (newPass.length < 8)               { showMsg('New password must be at least 8 characters.', false); return; }
+  if (newPass !== confPass)             { showMsg('New passwords do not match.', false); return; }
+
+  const stored    = JSON.parse(localStorage.getItem(CREDS_KEY) || 'null');
+  const validUser = stored ? stored.username : DEFAULT_USER;
+  const validHash = stored ? stored.password_hash : DEFAULT_HASH;
+  const curHash   = await sha256(curPass);
+
+  if (curHash !== validHash) { showMsg('Current password is incorrect.', false); return; }
+
+  const newHash = await sha256(newPass);
+  localStorage.setItem(CREDS_KEY, JSON.stringify({ username: validUser, password_hash: newHash }));
+  showMsg('Password updated successfully! Use your new password next time you log in.', true);
+  document.getElementById('sec-current-pass').value = '';
+  document.getElementById('sec-new-pass').value = '';
+  document.getElementById('sec-confirm-pass').value = '';
+}
+
+let C = {};
+let isDirty = false;
+
+function gotoPanel(id) {
+ document.querySelectorAll(".nav-item").forEach(el => el.classList.toggle("active", el.dataset.panel === id));
+ document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+ const pan = document.getElementById("panel-" + id);
+ if (pan) pan.classList.add("active");
+ const titles = {dashboard:"Dashboard",siteinfo:"Salon Info",footer:"Footer & Hours",homepage:"Home Page",pagetitles:"Page Titles",servicespage:"Services Detail",bookingsettings:"Booking Settings",services:"Services",testimonials:"Testimonials",deploy:"Deploy to Site",security:"Security & Account"};
+ document.getElementById("topbarTitle").textContent = titles[id] || id;
+}
+document.querySelectorAll(".nav-item[data-panel]").forEach(el => el.addEventListener("click", () => gotoPanel(el.dataset.panel)));
+
+function toast(msg, type, dur) {
+ type = type || "info"; dur = dur || 3200;
+ const t = document.getElementById("toast");
+ t.textContent = msg; t.className = "toast " + type; t.style.display = "block";
+ clearTimeout(t._tid); t._tid = setTimeout(() => t.style.display = "none", dur);
+}
+
+function getDefaults() {
+ return {
+  site:{name:"A ONE",tagline:"Hair Salon",phone:"+91 98765 43210",email:"hello@aonehairsalon.com",address:"12 King Street, London",address_full:"Shop 12, 12 King Street, London"},
+  footer:{tagline:"London's premier luxury unisex salon. Where every visit is a bespoke journey of beauty and self-care.",hour_weekday:"Mon-Fri: 10am - 8pm",hour_saturday:"Saturday: 9am - 9pm",hour_sunday:"Sunday: 10am - 6pm",copyright:"© 2026 A One Hair Salon. All rights reserved."},
+  home:{hero_tag:"Premier Luxury Salon",hero_sub:"Where Art Meets Elegance",about_text1:"Welcome to A One Hair Salon — a premier unisex luxury salon. With 8+ years of artistry and an unwavering commitment to excellence, every visit is a bespoke experience crafted just for you.",about_text2:"From precision cuts and vibrant color to rejuvenating spa treatments and flawless bridal styling, our salon is where beauty is elevated to an art form.",about_label:"About Us",about_title:"Luxury Hair Care, Perfected",services_label:"Our Services",services_title:"Signature Services",testimonials_label:"What Our Clients Say",testimonials_title:"Trusted by Hundreds",booking_cta_title:"Ready for Your Transformation?",booking_cta_text:"Book your appointment today and experience luxury hair care like never before."},
+  pages:{services:{hero_title:"Services & Pricing",intro:"Discover our full range of premium hair services designed for your unique needs."},gallery:{hero_title:"Our Gallery",intro:"A glimpse into the artistry and craftsmanship of A One Hair Salon."},contact:{hero_title:"Contact Us",section_label:"Get In Touch",section_title:"We'd Love to Hear From You",intro:"Whether you want to book an appointment or have any questions, we're here to help."},booking:{hero_title:"Book Your Experience",hero_sub:"Reserve your appointment and discover the A One difference."}},
+  services_page:{categories:[{id:"cuts",title:"Hair Cuts & Styling",desc:"Precision cuts tailored to your face shape and style",items:[{name:"Women's Haircut",detail:"Professional cut with styling",price:"from ₹800",duration:"45 min"},{name:"Men's Haircut",detail:"Clean precision cut",price:"from ₹350",duration:"30 min"},{name:"Kids Haircut",detail:"Gentle, professional cut for children",price:"from ₹300",duration:"25 min"}]},{id:"color",title:"Color & Highlights",desc:"Rich, vibrant colors that enhance your natural beauty",items:[{name:"Full Head Color",detail:"Complete hair coloring service",price:"from ₹3,000",duration:"90 min"},{name:"Balayage & Highlights",detail:"Artful highlights and dimension",price:"from ₹4,000",duration:"120 min"},{name:"Root Touch-up",detail:"Blend and refresh your roots",price:"from ₹1,500",duration:"60 min"}]},{id:"treatments",title:"Hair Treatments",desc:"Rejuvenating treatments for healthy, lustrous hair",items:[{name:"Hair Spa",detail:"Deep moisturizing spa treatment",price:"from ₹1,500",duration:"50 min"},{name:"Keratin Treatment",detail:"Smoothing and strengthening treatment",price:"from ₹5,000",duration:"120 min"},{name:"Protein Therapy",detail:"Intensive protein infusion",price:"from ₹2,500",duration:"60 min"}]},{id:"specialty",title:"Specialty Services",desc:"Special occasions and advanced techniques",items:[{name:"Bridal Styling",detail:"Full bridal package with trial",price:"from ₹5,000",duration:"120 min"},{name:"Event Styling",detail:"Professional styling for special events",price:"from ₹2,500",duration:"90 min"},{name:"Luxury Facial",detail:"Premium facial treatment",price:"from ₹2,000",duration:"60 min"}]},{id:"additional",title:"Additional Services",desc:"Complementary services to enhance your look",items:[{name:"Nail Art",detail:"Creative nail designs",price:"from ₹1,200",duration:"45 min"},{name:"Threading",detail:"Precision eyebrow threading",price:"from ₹200",duration:"15 min"},{name:"Makeup Application",detail:"Professional makeup for events",price:"from ₹1,500",duration:"45 min"}]}]},
+  booking:{visual_title:"Book Your Experience",visual_sub:"Reserve your appointment and discover the A One difference.",stylists:[{name:"Any Available",specialty:"All services"},{name:"Priya Sharma",specialty:"Color & Styling"},{name:"Rahul Mehta",specialty:"Cuts & Grooming"},{name:"Ayesha Khan",specialty:"Bridal & Treatments"}]},
+  services:[
+   {icon:"✂",name:"Women's Haircut",price:"from ₹800"},
+   {icon:"✦",name:"Men's Haircut",price:"from ₹350"},
+   {icon:"◉",name:"Balayage & Color",price:"from ₹4,000"},
+   {icon:"♛",name:"Bridal Styling",price:"from ₹5,000"},
+   {icon:"◈",name:"Hair Spa",price:"from ₹1,500"},
+   {icon:"✿",name:"Keratin Treatment",price:"from ₹5,000"},
+   {icon:"❋",name:"Luxury Facial",price:"from ₹2,000"},
+   {icon:"◆",name:"Nail Art",price:"from ₹1,200"}
+  ],
+  testimonials:[
+   {text:"The balayage treatment transformed my hair completely. Absolutely loved the result — the salon has a magical ambiance.",name:"Priya Sharma",location:"West End, London",initial:"P"},
+   {text:"Best men's haircut I've ever gotten. Clean, precise, and the hot towel shave was incredibly relaxing. Worth every rupee.",name:"Rohan Mehta",location:"Mayfair, London",initial:"R"},
+   {text:"My bridal look was beyond perfection. The team understood exactly what I wanted. I felt like royalty on my wedding day!",name:"Ayesha Khan",location:"Chelsea, London",initial:"A"}
+  ]
+ };
+}
+
+function setVal(id, val) { const el = document.getElementById(id); if (el && val != null) el.value = val; }
+
+function populateAll() {
+ const S = C.site||{}, F = C.footer||{}, H = C.home||{};
+ setVal("si-name",S.name); setVal("si-tagline",S.tagline); setVal("si-phone",S.phone);
+ setVal("si-email",S.email); setVal("si-address",S.address); setVal("si-address-full",S.address_full);
+ setVal("ft-weekday",F.hour_weekday); setVal("ft-saturday",F.hour_saturday); setVal("ft-sunday",F.hour_sunday);
+ setVal("ft-tagline",F.tagline); setVal("ft-copyright",F.copyright);
+ setVal("hp-hero-tag",H.hero_tag); setVal("hp-hero-sub",H.hero_sub);
+ setVal("hp-about1",H.about_text1); setVal("hp-about2",H.about_text2);
+ setVal("hp-about-label",H.about_label); setVal("hp-about-title",H.about_title);
+ setVal("hp-svc-label",H.services_label); setVal("hp-svc-title",H.services_title);
+ setVal("hp-testi-label",H.testimonials_label); setVal("hp-testi-title",H.testimonials_title);
+ setVal("hp-cta-title",H.booking_cta_title); setVal("hp-cta-text",H.booking_cta_text);
+ setVal("pt-svc-title",C.pages && C.pages.services && C.pages.services.hero_title);
+ setVal("pt-svc-intro",C.pages && C.pages.services && C.pages.services.intro);
+ setVal("pt-gal-title",C.pages && C.pages.gallery && C.pages.gallery.hero_title);
+ setVal("pt-gal-intro",C.pages && C.pages.gallery && C.pages.gallery.intro);
+ setVal("pt-con-title",C.pages && C.pages.contact && C.pages.contact.hero_title);
+ setVal("pt-con-label",C.pages && C.pages.contact && C.pages.contact.section_label);
+ setVal("pt-con-sectitle",C.pages && C.pages.contact && C.pages.contact.section_title);
+ setVal("pt-con-intro",C.pages && C.pages.contact && C.pages.contact.intro);
+ setVal("pt-book-title",C.pages && C.pages.booking && C.pages.booking.hero_title);
+ setVal("pt-book-sub",C.pages && C.pages.booking && C.pages.booking.hero_sub);
+ renderServices(); renderTestimonials(); renderSvcPageCategories(); renderStylists(); updateDashboard();
+ isDirty = false; document.getElementById("statDraft").textContent = "Saved";
+}
+
+function collectAll() {
+ C.site = {
+  name:document.getElementById("si-name").value.trim()||C.site.name,
+  tagline:document.getElementById("si-tagline").value.trim()||C.site.tagline,
+  phone:document.getElementById("si-phone").value.trim()||C.site.phone,
+  email:document.getElementById("si-email").value.trim()||C.site.email,
+  address:document.getElementById("si-address").value.trim()||C.site.address,
+  address_full:document.getElementById("si-address-full").value.trim()||C.site.address_full
+ };
+ C.footer = {
+  hour_weekday:document.getElementById("ft-weekday").value.trim()||C.footer.hour_weekday,
+  hour_saturday:document.getElementById("ft-saturday").value.trim()||C.footer.hour_saturday,
+  hour_sunday:document.getElementById("ft-sunday").value.trim()||C.footer.hour_sunday,
+  tagline:document.getElementById("ft-tagline").value.trim()||C.footer.tagline,
+  copyright:document.getElementById("ft-copyright").value.trim()||C.footer.copyright
+ };
+ C.home = {
+  hero_tag:document.getElementById("hp-hero-tag").value.trim()||C.home.hero_tag,
+  hero_sub:document.getElementById("hp-hero-sub").value.trim()||C.home.hero_sub,
+  about_text1:document.getElementById("hp-about1").value.trim()||C.home.about_text1,
+  about_text2:document.getElementById("hp-about2").value.trim()||C.home.about_text2,
+  about_label:document.getElementById("hp-about-label") && document.getElementById("hp-about-label").value || '',
+  about_title:document.getElementById("hp-about-title") && document.getElementById("hp-about-title").value || '',
+  services_label:document.getElementById("hp-svc-label") && document.getElementById("hp-svc-label").value || '',
+  services_title:document.getElementById("hp-svc-title") && document.getElementById("hp-svc-title").value || '',
+  testimonials_label:document.getElementById("hp-testi-label") && document.getElementById("hp-testi-label").value || '',
+  testimonials_title:document.getElementById("hp-testi-title") && document.getElementById("hp-testi-title").value || '',
+  booking_cta_title:document.getElementById("hp-cta-title") && document.getElementById("hp-cta-title").value || '',
+  booking_cta_text:document.getElementById("hp-cta-text") && document.getElementById("hp-cta-text").value || ''
+ };
+ if (!C.pages) C.pages = {};
+ if (!C.pages.services) C.pages.services = {};
+ C.pages.services.hero_title = document.getElementById("pt-svc-title") && document.getElementById("pt-svc-title").value || '';
+ C.pages.services.intro = document.getElementById("pt-svc-intro") && document.getElementById("pt-svc-intro").value || '';
+ if (!C.pages.gallery) C.pages.gallery = {};
+ C.pages.gallery.hero_title = document.getElementById("pt-gal-title") && document.getElementById("pt-gal-title").value || '';
+ C.pages.gallery.intro = document.getElementById("pt-gal-intro") && document.getElementById("pt-gal-intro").value || '';
+ if (!C.pages.contact) C.pages.contact = {};
+ C.pages.contact.hero_title = document.getElementById("pt-con-title") && document.getElementById("pt-con-title").value || '';
+ C.pages.contact.section_label = document.getElementById("pt-con-label") && document.getElementById("pt-con-label").value || '';
+ C.pages.contact.section_title = document.getElementById("pt-con-sectitle") && document.getElementById("pt-con-sectitle").value || '';
+ C.pages.contact.intro = document.getElementById("pt-con-intro") && document.getElementById("pt-con-intro").value || '';
+ if (!C.pages.booking) C.pages.booking = {};
+ C.pages.booking.hero_title = document.getElementById("pt-book-title") && document.getElementById("pt-book-title").value || '';
+ C.pages.booking.hero_sub = document.getElementById("pt-book-sub") && document.getElementById("pt-book-sub").value || '';
+ if (!C.booking) C.booking = {};
+ C.booking.visual_title = document.getElementById("bk-vis-title") && document.getElementById("bk-vis-title").value || '';
+ C.booking.visual_sub = document.getElementById("bk-vis-sub") && document.getElementById("bk-vis-sub").value || '';
+ C.services_page = C.services_page || {};
+ C.services_page.categories = collectSvcCategories();
+ C.booking.stylists = collectStylists();
+ return C;
+}
+
+function saveDraft() {
+ collectAll();
+ localStorage.setItem("aone_admin_draft", JSON.stringify(C));
+ isDirty = false; document.getElementById("statDraft").textContent = "✓ Saved";
+ toast("✓ Draft saved. Go to Deploy to publish live.", "ok");
+}
+
+function updateDashboard() {
+ document.getElementById("statSvcCount").textContent = (C.services||[]).length;
+ document.getElementById("statTestiCount").textContent = (C.testimonials||[]).length;
+}
+
+function renderServices() {
+ const list = document.getElementById("svcList");
+ const svcs = C.services||[];
+ list.innerHTML = svcs.map((s,i) =>
+  "<div class='item-row' id='svc-row-" + i + "'>" +
+  "<div class='item-row-header'><div style='display:flex;align-items:center;gap:10px'>" +
+  "<div class='item-icon-preview' id='svc-prev-" + i + "'>" + s.icon + "</div>" +
+  "<span class='item-row-label'>Service " + (i+1) + "</span></div>" +
+  "<div class='item-row-actions'><button class='btn btn-red btn-sm' onclick='removeService(" + i + ")'>Remove</button></div></div>" +
+  "<div class='form-grid col3'>" +
+  "<div class='field'><label>Icon / Symbol</label><input type='text' id='svc-icon-" + i + "' value='" + s.icon + "' oninput='updateService(" + i + ")' style='font-size:1.2rem;text-align:center'></div>" +
+  "<div class='field'><label>Service Name</label><input type='text' id='svc-name-" + i + "' value='" + s.name.replace(/'/g,"&#39;") + "' oninput='updateService(" + i + ")'></div>" +
+  "<div class='field'><label>Price</label><input type='text' id='svc-price-" + i + "' value='" + s.price.replace(/'/g,"&#39;") + "' oninput='updateService(" + i + ")'></div>" +
+  "</div></div>"
+ ).join("");
+}
+
+function updateService(i) {
+ if (!C.services) C.services = [];
+ C.services[i] = {
+  icon:document.getElementById("svc-icon-"+i).value,
+  name:document.getElementById("svc-name-"+i).value,
+  price:document.getElementById("svc-price-"+i).value
+ };
+ const prev = document.getElementById("svc-prev-"+i);
+ if (prev) prev.textContent = C.services[i].icon;
+ isDirty = true;
+ document.getElementById("svcBadge").style.display = "inline-block";
+ document.getElementById("statDraft").textContent = "● Unsaved";
+}
+
+function addService() {
+ if (!C.services) C.services = [];
+ C.services.push({icon:"✦",name:"New Service",price:"from ₹0"});
+ renderServices(); isDirty = true;
+ toast("Service added — fill in the details above", "info");
+}
+
+function removeService(i) {
+ if (!confirm("Remove this service?")) return;
+ C.services.splice(i,1); renderServices(); isDirty = true;
+}
+
+function renderTestimonials() {
+ const list = document.getElementById("testiList");
+ const ts = C.testimonials||[];
+ list.innerHTML = ts.map((t,i) =>
+  "<div class='item-row'>" +
+  "<div class='item-row-header'><div style='display:flex;align-items:center;gap:10px'>" +
+  "<div class='item-icon-preview' style='font-family:Georgia;font-size:1.4rem;color:var(--gold)'>“</div>" +
+  "<span class='item-row-label'>Testimonial " + (i+1) + "</span></div></div>" +
+  "<div class='form-grid col1'><div class='field'><label>Client Quote</label>" +
+  "<textarea id='testi-text-" + i + "' rows='3' oninput='updateTesti(" + i + ")'>" + t.text + "</textarea></div></div>" +
+  "<div class='form-grid' style='margin-top:10px'>" +
+  "<div class='field'><label>Client Name</label><input type='text' id='testi-name-" + i + "' value='" + t.name.replace(/'/g,"&#39;") + "' oninput='updateTesti(" + i + ")'></div>" +
+  "<div class='field'><label>Location</label><input type='text' id='testi-loc-" + i + "' value='" + t.location.replace(/'/g,"&#39;") + "' oninput='updateTesti(" + i + ")'></div>" +
+  "<div class='field'><label>Avatar Initial</label><input type='text' id='testi-init-" + i + "' value='" + t.initial + "' maxlength='2' oninput='updateTesti(" + i + ")' style='text-align:center'></div>" +
+  "</div></div>"
+ ).join("");
+}
+
+function updateTesti(i) {
+ if (!C.testimonials) C.testimonials = [];
+ C.testimonials[i] = {
+  text:document.getElementById("testi-text-"+i).value,
+  name:document.getElementById("testi-name-"+i).value,
+  location:document.getElementById("testi-loc-"+i).value,
+  initial:document.getElementById("testi-init-"+i).value
+ };
+ isDirty = true;
+ document.getElementById("testiBadge").style.display = "inline-block";
+ document.getElementById("statDraft").textContent = "● Unsaved";
+}
+
+function dlog(msg, cls) {
+ const el = document.getElementById("deployLog");
+ const line = document.createElement("div");
+ if (cls) line.className = cls; line.textContent = msg;
+ el.appendChild(line); el.scrollTop = el.scrollHeight;
+}
+
+async function getFileSha(owner, repo, path, token) {
+ try {
+  const r = await fetch("https://api.github.com/repos/"+owner+"/"+repo+"/contents/"+path,
+   {headers:{Authorization:"token "+token,Accept:"application/vnd.github.v3+json"}});
+  if (r.ok) return (await r.json()).sha;
+ } catch(e) {} return null;
+}
+
+async function deployContentJson() {
+ collectAll();
+ const owner=document.getElementById("gh-owner").value.trim();
+ const repo=document.getElementById("gh-repo").value.trim();
+ const branch=document.getElementById("gh-branch").value.trim();
+ const token=document.getElementById("gh-token").value.trim();
+ if (!token) { toast("Please enter your GitHub token","err"); return; }
+ const log = document.getElementById("deployLog");
+ log.innerHTML = "";
+ document.getElementById("deployFill").style.width = "0%";
+ dlog("Starting deploy…","ds-info");
+ dlog("Collecting current content…");
+ const json = JSON.stringify(C,null,2);
+ const b64 = btoa(unescape(encodeURIComponent(json)));
+ document.getElementById("deployFill").style.width = "25%";
+ dlog("Checking for existing content.json…");
+ const sha = await getFileSha(owner,repo,"content.json",token);
+ if (sha) dlog(" Found existing file");
+ else dlog(" Will create new file");
+ document.getElementById("deployFill").style.width = "55%";
+ dlog("Uploading content.json…");
+ const body = {message:"Admin: update content.json",content:b64,branch:branch};
+ if (sha) body.sha = sha;
+ try {
+  const r = await fetch("https://api.github.com/repos/"+owner+"/"+repo+"/contents/content.json",{
+   method:"PUT",
+   headers:{Authorization:"token "+token,Accept:"application/vnd.github.v3+json","Content-Type":"application/json"},
+   body:JSON.stringify(body)
+  });
+  document.getElementById("deployFill").style.width = "100%";
+  if (r.ok) {
+   dlog(" ✓ content.json deployed successfully!","ds-ok");
+   dlog("─".repeat(48));
+   dlog("✅ Live in ~60 seconds at https://"+owner+".github.io/"+repo+"/","ds-ok");
+   localStorage.setItem("aone_admin_draft",JSON.stringify(C));
+   isDirty=false; document.getElementById("statDraft").textContent="✓ Deployed";
+   toast("✓ Deployed! Site updates in ~60 seconds.","ok",5000);
+  } else {
+   const err = await r.text();
+   dlog(" ✗ Failed: "+err.substring(0,200),"ds-err");
+   toast("Deploy failed — check token permissions","err",5000);
+  }
+ } catch(e) {
+  dlog(" ✗ Network error: "+e.message,"ds-err");
+  toast("Network error","err");
+ }
+}
+
+function downloadJson() {
+ collectAll();
+ const blob=new Blob([JSON.stringify(C,null,2)],{type:"application/json"});
+ const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+ a.download="content.json"; a.click();
+}
+
+function previewJson() {
+ collectAll();
+ const w=window.open("","_blank");
+ w.document.write("<pre style='background:#08080a;color:#c9a84c;padding:20px;font-size:13px;line-height:1.6'>"+JSON.stringify(C,null,2)+"</pre>");
+}
+
+async function loadFromGitHub() {
+ toast("Loading content.json from GitHub…","info");
+ try {
+  const owner=document.getElementById("gh-owner").value.trim()||"parekhankit26";
+  const repo=document.getElementById("gh-repo").value.trim()||"A-One-Hair-Salon";
+  const token=document.getElementById("gh-token").value.trim();
+  const headers={Accept:"application/vnd.github.v3+json"};
+  if (token) headers.Authorization="token "+token;
+  const r=await fetch("https://api.github.com/repos/"+owner+"/"+repo+"/contents/content.json",{headers});
+  if (!r.ok) throw new Error("HTTP "+r.status);
+  const meta=await r.json();
+  C=JSON.parse(atob(meta.content.replace(/
+/g,"")));
+  populateAll(); toast("✓ Loaded from GitHub","ok");
+ } catch(e) {
+  try {
+   const r=await fetch("./content.json?v="+Date.now());
+   if (r.ok) { C=await r.json(); populateAll(); toast("✓ Loaded from local file","ok"); }
+   else throw new Error();
+  } catch(e2) { C=getDefaults(); populateAll(); toast("Using defaults","info"); }
+ }
+}
+
+/* ── Services Page Categories renderer ── */
+function renderSvcPageCategories() {
+  const wrap = document.getElementById('svcPageCategories');
+  if (!wrap || !C.services_page || !C.services_page.categories) return;
+  wrap.innerHTML = '';
+  C.services_page.categories.forEach((cat, ci) => {
+    const sec = document.createElement('div');
+    sec.className = 'panel-section';
+    sec.style.borderTop = '1px solid var(--border)';
+    sec.style.paddingTop = '20px';
+    sec.style.marginTop = '20px';
+    const itemRows = cat.items.map((item, ii) => `
+      <div class="svc-item-row" style="display:grid;grid-template-columns:2fr 2fr 1fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px">
+        <input type="text" value="${item.name}" placeholder="Service name" onchange="updateSvcItem(${ci},${ii},'name',this.value)">
+        <input type="text" value="${item.detail}" placeholder="Description" onchange="updateSvcItem(${ci},${ii},'detail',this.value)">
+        <input type="text" value="${item.price}" placeholder="Price" onchange="updateSvcItem(${ci},${ii},'price',this.value)">
+        <input type="text" value="${item.duration}" placeholder="Duration" onchange="updateSvcItem(${ci},${ii},'duration',this.value)">
+        <button class="btn btn-outline" style="padding:6px 10px;color:#e88;border-color:#e88" onclick="removeSvcItem(${ci},${ii})">✕</button>
+      </div>`).join('');
+    sec.innerHTML = `
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div style="flex:1">
+          <div class="field" style="margin-bottom:8px"><label>Category Title</label><input type="text" value="${cat.title}" onchange="updateSvcCat(${ci},'title',this.value)"></div>
+          <div class="field"><label>Category Description</label><input type="text" value="${cat.desc}" onchange="updateSvcCat(${ci},'desc',this.value)"></div>
+        </div>
+        <button class="btn btn-outline" style="color:#e88;border-color:#e88;white-space:nowrap" onclick="removeSvcCat(${ci})">✕ Remove Category</button>
+      </div>
+      <div style="font-size:.68rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">Services in this category:</div>
+      <div style="font-size:.65rem;color:var(--muted);margin-bottom:8px;display:grid;grid-template-columns:2fr 2fr 1fr 1fr auto;gap:8px"><span>Name</span><span>Description</span><span>Price</span><span>Duration</span><span></span></div>
+      <div id="svcItems_${ci}">${itemRows}</div>
+      <button class="btn btn-outline" onclick="addSvcItem(${ci})" style="margin-top:8px;font-size:.75rem">+ Add Service Item</button>`;
+    wrap.appendChild(sec);
+  });
+  const addBtn = document.createElement('button');
+  addBtn.className = 'btn btn-outline';
+  addBtn.style.marginTop = '16px';
+  addBtn.textContent = '+ Add Category';
+  addBtn.onclick = addSvcCat;
+  wrap.appendChild(addBtn);
+}
+function updateSvcCat(ci, field, val) { if(C.services_page && C.services_page.categories[ci]) C.services_page.categories[ci][field]=val; isDirty=true; }
+function updateSvcItem(ci, ii, field, val) { if(C.services_page && C.services_page.categories[ci] && C.services_page.categories[ci].items[ii]) { C.services_page.categories[ci].items[ii][field]=val; isDirty=true; } }
+function removeSvcItem(ci, ii) { C.services_page.categories[ci].items.splice(ii,1); renderSvcPageCategories(); isDirty=true; }
+function addSvcItem(ci) { C.services_page.categories[ci].items.push({name:'New Service',detail:'Description',price:'from ₹0',duration:'30 min'}); renderSvcPageCategories(); isDirty=true; }
+function removeSvcCat(ci) { if(confirm('Remove this category?')) { C.services_page.categories.splice(ci,1); renderSvcPageCategories(); isDirty=true; } }
+function addSvcCat() { if(!C.services_page) C.services_page={}; if(!C.services_page.categories) C.services_page.categories=[]; C.services_page.categories.push({id:'new',title:'New Category',desc:'Category description',items:[]}); renderSvcPageCategories(); isDirty=true; }
+function collectSvcCategories() { return (C.services_page && C.services_page.categories) ? C.services_page.categories : []; }
+
+/* ── Stylists renderer ── */
+function renderStylists() {
+  const wrap = document.getElementById('stylistsList');
+  if (!wrap || !C.booking || !C.booking.stylists) return;
+  wrap.innerHTML = C.booking.stylists.map((st, i) => `
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+      <input type="text" value="${st.name}" placeholder="Stylist name" style="flex:1" onchange="updateStylist(${i},'name',this.value)">
+      <input type="text" value="${st.specialty}" placeholder="Specialty" style="flex:1" onchange="updateStylist(${i},'specialty',this.value)">
+      <button class="btn btn-outline" style="padding:8px 12px;color:#e88;border-color:#e88;flex-shrink:0" onclick="removeStylist(${i})">✕</button>
+    </div>`).join('');
+}
+function updateStylist(i, field, val) { if(C.booking && C.booking.stylists[i]) { C.booking.stylists[i][field]=val; isDirty=true; } }
+function removeStylist(i) { if(confirm('Remove this stylist?')) { C.booking.stylists.splice(i,1); renderStylists(); isDirty=true; } }
+function addStylist() { if(!C.booking) C.booking={}; if(!C.booking.stylists) C.booking.stylists=[]; C.booking.stylists.push({name:'New Stylist',specialty:'All services'}); renderStylists(); isDirty=true; }
+function collectStylists() { return (C.booking && C.booking.stylists) ? C.booking.stylists : []; }
+
+/* ══════════════════════════════════════
+   TOKEN & ADMIN URL MANAGEMENT
+══════════════════════════════════════ */
+const TOKEN_KEY = 'aone_gh_token';
+
+function saveTokenToStorage() {
+  const token = document.getElementById('gh-token').value.trim();
+  if (!token) { toast('Please enter a token first', 'err'); return; }
+  localStorage.setItem(TOKEN_KEY, token);
+  document.getElementById('gh-token').value = token;
+  document.getElementById('tokenStatus').textContent = '✓ Token saved in this browser.';
+  document.getElementById('tokenStatus').style.color = '#6fcf97';
+  toast('Token saved in browser ✓', 'ok');
+}
+
+function loadTokenFromStorage() {
+  const saved = localStorage.getItem(TOKEN_KEY);
+  const inp   = document.getElementById('gh-token');
+  const status = document.getElementById('tokenStatus');
+  if (saved) {
+    inp.value = saved;
+    status.textContent = '✓ Token loaded from browser storage.';
+    status.style.color = '#6fcf97';
+  } else {
+    status.textContent = 'No token saved yet. Enter your GitHub PAT and click Save Token.';
+    status.style.color = '';
+  }
+}
+
+function copyAdminUrl() {
+  const url = document.getElementById('adminUrlBox').textContent;
+  navigator.clipboard.writeText(url).then(() => toast('Admin URL copied!', 'ok'))
+    .catch(() => { prompt('Copy this URL:', url); });
+}
+
+function buildAdminUrl() {
+  const owner  = (document.getElementById('gh-owner').value.trim() || 'parekhankit26');
+  const repo   = (document.getElementById('gh-repo').value.trim()  || 'A-One-Hair-Salon');
+  const url    = `https://${owner}.github.io/${repo}/admin-login.html`;
+  const box    = document.getElementById('adminUrlBox');
+  if (box) box.textContent = url;
+}
+
+/* Auto-save token when deploying */
+const _origDeploy = deployContentJson;
+deployContentJson = async function() {
+  const token = document.getElementById('gh-token').value.trim();
+  if (token) localStorage.setItem(TOKEN_KEY, token);
+  return _origDeploy();
 };
 
-/* DEFAULT SERVICES DATA */
-const DEFAULT_SERVICES = [
-  {id:'wh1',cat:'hair',name:"Women's Haircut & Blowdry",price:'800',priceNote:'onwards',duration:'60 min',detail:'Consultation + shampoo + style finish'},
-  {id:'mh1',cat:'men',name:"Men's Haircut",price:'350',priceNote:'onwards',duration:'30 min',detail:'Scissor cut / machine cut + styling'},
-  {id:'kh1',cat:'hair',name:"Kids' Haircut",price:'250',priceNote:'onwards',duration:'25 min',detail:'Under 12 years'},
-  {id:'bl1',cat:'color',name:'Balayage',price:'4000',priceNote:'onwards',duration:'2.5-3 hrs',detail:'Freehand painting - natural sun-kissed effect'},
-  {id:'gc1',cat:'color',name:'Global Color',price:'2500',priceNote:'onwards',duration:'2 hrs',detail:'Full head single process color'},
-  {id:'hi1',cat:'color',name:'Highlights / Ombre',price:'3000',priceNote:'onwards',duration:'2-3 hrs',detail:'Partial or full foil highlights'},
-  {id:'kt1',cat:'color',name:'Keratin Treatment',price:'5000',priceNote:'onwards',duration:'3 hrs',detail:'Smoothing + frizz control - lasts 4-6 months'},
-  {id:'hs1',cat:'hair',name:'Hair Spa & Mask',price:'1500',priceNote:'onwards',duration:'75 min',detail:'Deep conditioning with scalp massage'},
-  {id:'br1',cat:'bridal',name:'Bridal Hair Styling',price:'5000',priceNote:'onwards',duration:'2 hrs',detail:'Trial + Day-of updo or blowout'},
-  {id:'bm1',cat:'bridal',name:'Bridal Makeup',price:'6000',priceNote:'onwards',duration:'2.5 hrs',detail:'HD / airbrush makeup - includes lashes'},
-  {id:'bt1',cat:'men',name:'Beard Trim & Shape',price:'300',priceNote:'onwards',duration:'20 min',detail:'Scissors + straight razor finish'},
-  {id:'hw1',cat:'men',name:'Hot Towel Shave',price:'450',priceNote:'onwards',duration:'40 min',detail:'Traditional wet shave with pre-shave oil'},
-  {id:'fc1',cat:'skin',name:'Luxury Facial',price:'2000',priceNote:'onwards',duration:'75 min',detail:'Anti-aging / brightening / hydrating'},
-  {id:'na1',cat:'nails',name:'Nail Art (Hands)',price:'1200',priceNote:'onwards',duration:'60 min',detail:'Gel polish + nail art design'},
-  {id:'pd1',cat:'skin',name:'Pedicure',price:'1000',priceNote:'onwards',duration:'60 min',detail:'Luxury pedicure with massage + nail color'},
-];
-
-/* ============================================================
-   AUTH
-============================================================ */
-function doLogin(){
-  const u = document.getElementById('loginUser').value.trim();
-  const p = document.getElementById('loginPass').value;
-  const creds = STORE.get('admin_creds', {user:'admin', pass:'salon2026'});
-  if(u === creds.user && p === creds.pass){
-    STORE.set('admin_session', Date.now());
-    document.getElementById('loginScreen').style.display='none';
-    document.getElementById('adminWrap').style.display='flex';
-    initAdmin();
-  } else {
-    const err = document.getElementById('loginErr');
-    err.textContent = 'Incorrect username or password.';
-    setTimeout(()=>err.textContent='', 3000);
-  }
-}
-function doLogout(){
-  STORE.set('admin_session','');
-  document.getElementById('loginScreen').style.display='flex';
-  document.getElementById('adminWrap').style.display='none';
-}
-window.doLogin = doLogin;
-window.doLogout = doLogout;
-document.getElementById('loginPass').addEventListener('keydown', e => {
-  if(e.key==='Enter') doLogin();
-});
-
-/* Auto-login if recent session */
-const session = STORE.get('admin_session', 0);
-if(session && Date.now() - session < 8 * 60 * 60 * 1000){
-  document.getElementById('loginScreen').style.display='none';
-  document.getElementById('adminWrap').style.display='flex';
-  initAdmin();
-}
-
-/* ============================================================
-   PAGE NAVIGATION
-============================================================ */
-function showPage(page){
-  document.querySelectorAll('.admin-page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  document.getElementById('nav-'+page).classList.add('active');
-}
-window.showPage = showPage;
-
-/* ============================================================
+/* ══════════════════════════════════════
    INIT
-============================================================ */
-function initAdmin(){
-  renderDashboard();
-  renderBookingsTable();
-  renderServicesEditor();
-  renderGalleryManager();
-  loadSettings();
-  loadEmailConfig();
-}
+══════════════════════════════════════ */
+(async function init() {
+ /* Load token from localStorage */
+ loadTokenFromStorage();
+ buildAdminUrl();
 
-/* ============================================================
-   DASHBOARD
-============================================================ */
-function renderDashboard(){
-  const bookings = STORE.get('bookings', []);
-  const today = new Date().toDateString();
-  const weekAgo = Date.now() - 7*24*60*60*1000;
-  const todayCount = bookings.filter(b => new Date(b.timestamp).toDateString()===today).length;
-  const weekCount = bookings.filter(b => new Date(b.timestamp) > new Date(weekAgo)).length;
-  document.getElementById('statTotal').textContent = bookings.length;
-  document.getElementById('statToday').textContent = todayCount;
-  document.getElementById('statWeek').textContent = weekCount;
-  document.getElementById('statTodayDate').textContent = new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
-  const services = STORE.get('services', DEFAULT_SERVICES);
-  document.getElementById('statServices').textContent = services.length;
+ /* Load content */
+ const draft = localStorage.getItem("aone_admin_draft");
+ if (draft) {
+  try {
+   C = JSON.parse(draft);
+   populateAll();
+   toast("Draft loaded from browser", "info");
+   return;
+  } catch(e) {}
+ }
+ await loadFromGitHub();
+})();
 
-  /* Recent bookings */
-  const recent = bookings.slice(0,5);
-  const el = document.getElementById('recentBookings');
-  if(!recent.length){
-    el.innerHTML = '<div class="empty-state"><div class="es-icon">[calendar]</div><p>No bookings yet. They will appear here after clients book appointments.</p></div>';
-    return;
-  }
-  el.innerHTML = buildBookingTable(recent);
-}
-
-/* ============================================================
-   BOOKINGS
-============================================================ */
-function renderBookingsTable(){
-  const bookings = STORE.get('bookings', []);
-  const el = document.getElementById('bookingsTable');
-  if(!bookings.length){
-    el.innerHTML = '<div class="empty-state"><div class="es-icon">[calendar]</div><p>No bookings yet. When clients book appointments they will appear here.</p></div>';
-    return;
-  }
-  el.innerHTML = buildBookingTable(bookings);
-}
-function buildBookingTable(list){
-  if(!list.length) return '<div class="empty-state"><p>No results</p></div>';
-  return `<table class="data-table">
-    <thead>
-      <tr>
-        <th>Booking ID</th><th>Client</th><th>Service</th>
-        <th>Date & Time</th><th>Stylist</th><th>Status</th><th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-    ${list.map(b=>`
-      <tr>
-        <td style="font-family:var(--serif);color:var(--gold)">${b.id}</td>
-        <td>
-          <div style="font-weight:500">${b.fname} ${b.lname}</div>
-          <div style="font-size:.68rem;color:var(--muted)">${b.email}</div>
-          <div style="font-size:.65rem;color:var(--muted)">${b.mobile}</div>
-        </td>
-        <td>
-          <div>${b.svc}</div>
-          <div style="font-size:.68rem;color:var(--gold)">${b.price}</div>
-        </td>
-        <td>
-          <div>${b.date}</div>
-          <div style="font-size:.7rem;color:var(--muted)">${b.time}</div>
-        </td>
-        <td>${b.stylist}</td>
-        <td><span class="badge badge-${b.status||'confirmed'}">${b.status||'confirmed'}</span></td>
-        <td>
-          <button class="action-btn" onclick="cancelBooking('${b.id}')">Cancel</button>
-          <button class="action-btn danger" onclick="deleteBooking('${b.id}')">Delete</button>
-        </td>
-      </tr>
-    `).join('')}
-    </tbody>
-  </table>`;
-}
-function filterBookings(){
-  const q = document.getElementById('bookingSearch').value.toLowerCase();
-  const status = document.getElementById('statusFilter').value;
-  let bookings = STORE.get('bookings', []);
-  if(q) bookings = bookings.filter(b =>
-    (b.fname+b.lname+b.email+b.svc+b.mobile).toLowerCase().includes(q)
-  );
-  if(status) bookings = bookings.filter(b => (b.status||'confirmed') === status);
-  document.getElementById('bookingsTable').innerHTML = buildBookingTable(bookings);
-}
-function cancelBooking(id){
-  let bookings = STORE.get('bookings', []);
-  bookings = bookings.map(b => b.id===id ? {...b, status:'cancelled'} : b);
-  STORE.set('bookings', bookings);
-  renderBookingsTable();
-  renderDashboard();
-}
-function deleteBooking(id){
-  if(!confirm('Delete booking ' + id + '?')) return;
-  let bookings = STORE.get('bookings', []);
-  bookings = bookings.filter(b => b.id !== id);
-  STORE.set('bookings', bookings);
-  renderBookingsTable();
-  renderDashboard();
-}
-function clearBookings(){
-  if(!confirm('Clear ALL bookings? This cannot be undone.')) return;
-  STORE.set('bookings', []);
-  renderBookingsTable();
-  renderDashboard();
-}
-window.filterBookings = filterBookings;
-window.cancelBooking = cancelBooking;
-window.deleteBooking = deleteBooking;
-window.clearBookings = clearBookings;
-
-/* ============================================================
-   SERVICES EDITOR
-============================================================ */
-function renderServicesEditor(){
-  const services = STORE.get('services', DEFAULT_SERVICES);
-  const catLabels = {hair:'Hair',color:'Color',bridal:'Bridal',men:"Men's",skin:'Skin',nails:'Nails'};
-  const el = document.getElementById('servicesEditor');
-  el.innerHTML = services.map((s,i)=>`
-    <div class="svc-edit-card" data-idx="${i}">
-      <div>
-        <input type="text" class="sec-name-field" value="${s.name}" placeholder="Service name" data-field="name">
-        <input type="text" class="sec-detail-field" value="${s.detail||''}" placeholder="Description" data-field="detail" style="margin-top:6px;font-size:.72rem;color:var(--muted)">
-      </div>
-      <input type="text" class="sec-price-field" value="${s.price}" placeholder="Price in INR" data-field="price">
-      <input type="text" class="sec-duration-field" value="${s.duration||''}" placeholder="Duration" data-field="duration">
-      <div class="sec-cat-badge">${catLabels[s.cat]||s.cat}</div>
-      <button class="btn-save-svc" onclick="saveSingleService(${i})">Save</button>
-    </div>
-  `).join('');
-}
-function saveSingleService(i){
-  const services = STORE.get('services', DEFAULT_SERVICES);
-  const card = document.querySelector(`.svc-edit-card[data-idx="${i}"]`);
-  card.querySelectorAll('[data-field]').forEach(input=>{
-    services[i][input.dataset.field] = input.value.trim();
-  });
-  STORE.set('services', services);
-  const toast = document.getElementById('servicesSaved');
-  toast.textContent = 'Service saved!';
-  toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'), 2500);
-}
-function saveAllServices(){
-  const services = STORE.get('services', DEFAULT_SERVICES);
-  document.querySelectorAll('.svc-edit-card').forEach((card,i)=>{
-    card.querySelectorAll('[data-field]').forEach(input=>{
-      if(services[i]) services[i][input.dataset.field] = input.value.trim();
-    });
-  });
-  STORE.set('services', services);
-  const toast = document.getElementById('servicesSaved');
-  toast.textContent = 'All services saved!';
-  toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'), 2500);
-}
-window.saveSingleService = saveSingleService;
-window.saveAllServices = saveAllServices;
-
-/* ============================================================
-   GALLERY MANAGER
-============================================================ */
-const DEFAULT_GALLERY = [
-  {url:'https://design.canva.ai/sTlJQ7Xvd8wRt8m',title:'Luxury Salon Interior',cat:'interior'},
-  {url:'https://design.canva.ai/Eik3RiM2Z7JKqhd',title:'Balayage Color',cat:'color'},
-  {url:'https://design.canva.ai/lSda8hD6mzJZJtU',title:'Men\'s Grooming',cat:'grooming'},
-  {url:'https://design.canva.ai/kXoByhk1edGgvlF',title:'Hair Spa',cat:'hair'},
-  {url:'https://design.canva.ai/GHA3ChbutvbeHbn',title:'Bold Fashion Color',cat:'color'},
-  {url:'https://design.canva.ai/hbVKzwLnnoXJrZE',title:'Bridal Elegance',cat:'bridal'},
-  {url:'https://design.canva.ai/Vcy6RUp02Nr9iEW',title:'Nail Art',cat:'nails'},
-  {url:'https://design.canva.ai/cZOZaOFK3QC8YQp',title:'Luxury Facial',cat:'skin'},
-  {url:'https://design.canva.ai/27ZxuRVCje6yOL3',title:'Wash & Refresh Station',cat:'interior'},
-  {url:'https://design.canva.ai/Ssm_8HUAiJck1I6',title:'Premium Wash Experience',cat:'hair'},
-  {url:'https://design.canva.ai/GBPs0oAWDlnOW1f',title:'Shampoo Suite',cat:'interior'},
-  {url:'https://design.canva.ai/jaRxOKnlMZQ1HRl',title:'Hair Care Ritual',cat:'hair'},
-];
-function renderGalleryManager(){
-  const gallery = STORE.get('gallery', DEFAULT_GALLERY);
-  const el = document.getElementById('galleryMgrGrid');
-  el.innerHTML = gallery.map((item,i)=>`
-    <div class="gmg-item">
-      <img src="${item.url}" alt="${item.title}" onerror="this.style.display='none'">
-      <div class="gmg-overlay">
-        <button class="gmg-btn del" onclick="removeGalleryItem(${i})">Remove</button>
-      </div>
-      <div class="gmg-label">${item.title} <br><span style="color:var(--gold);font-size:.55rem">${item.cat}</span></div>
-    </div>
-  `).join('');
-}
-function addGalleryPhoto(){
-  const url = document.getElementById('newPhotoUrl').value.trim();
-  const title = document.getElementById('newPhotoTitle').value.trim() || 'New Photo';
-  const cat = document.getElementById('newPhotoCat').value;
-  if(!url){ alert('Please enter an image URL.'); return; }
-  const gallery = STORE.get('gallery', DEFAULT_GALLERY);
-  gallery.push({url, title, cat});
-  STORE.set('gallery', gallery);
-  document.getElementById('newPhotoUrl').value='';
-  document.getElementById('newPhotoTitle').value='';
-  renderGalleryManager();
-  const toast = document.getElementById('gallerySaved');
-  toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'), 2000);
-}
-function removeGalleryItem(i){
-  if(!confirm('Remove this photo?')) return;
-  const gallery = STORE.get('gallery', DEFAULT_GALLERY);
-  gallery.splice(i,1);
-  STORE.set('gallery', gallery);
-  renderGalleryManager();
-}
-window.addGalleryPhoto = addGalleryPhoto;
-window.removeGalleryItem = removeGalleryItem;
-
-/* ============================================================
-   SETTINGS
-============================================================ */
-function loadSettings(){
-  const s = STORE.get('settings', {});
-  const fields = {sName:'salonName',sTagline:'tagline',sCity:'city',sWebsite:'website',sPhone:'phone',sEmail:'email',sAddress:'address',hWeekday:'hoursWeekday',hSat:'hoursSat',hSun:'hoursSun',hHol:'hoursHol'};
-  Object.entries(fields).forEach(([id,key])=>{
-    const el=document.getElementById(id);
-    if(el&&s[key]) el.value=s[key];
-  });
-  const creds = STORE.get('admin_creds',{user:'admin',pass:'salon2026'});
-  document.getElementById('adminUser').value = creds.user;
-}
-function saveSettings(){
-  const s = {
-    salonName: document.getElementById('sName').value,
-    tagline: document.getElementById('sTagline').value,
-    city: document.getElementById('sCity').value,
-    website: document.getElementById('sWebsite').value,
-    phone: document.getElementById('sPhone').value,
-    email: document.getElementById('sEmail').value,
-    address: document.getElementById('sAddress').value,
-    hoursWeekday: document.getElementById('hWeekday').value,
-    hoursSat: document.getElementById('hSat').value,
-    hoursSun: document.getElementById('hSun').value,
-    hoursHol: document.getElementById('hHol').value,
-  };
-  STORE.set('settings', s);
-  const newUser = document.getElementById('adminUser').value.trim();
-  const newPass = document.getElementById('adminPass').value;
-  if(newUser){
-    const creds = STORE.get('admin_creds',{user:'admin',pass:'salon2026'});
-    STORE.set('admin_creds',{user:newUser,pass:newPass||creds.pass});
-  }
-  const toast = document.getElementById('settingsSaved');
-  toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'),3000);
-}
-window.saveSettings = saveSettings;
-
-/* ============================================================
-   EMAIL CONFIG
-============================================================ */
-function loadEmailConfig(){
-  const cfg = STORE.get('emailjs',{});
-  if(cfg.publicKey) document.getElementById('ejPublic').value=cfg.publicKey;
-  if(cfg.serviceId) document.getElementById('ejService').value=cfg.serviceId;
-  if(cfg.templateId) document.getElementById('ejTemplate').value=cfg.templateId;
-}
-function saveEmailConfig(){
-  const cfg = {
-    publicKey: document.getElementById('ejPublic').value.trim(),
-    serviceId: document.getElementById('ejService').value.trim(),
-    templateId: document.getElementById('ejTemplate').value.trim(),
-  };
-  STORE.set('emailjs', cfg);
-  const toast = document.getElementById('emailSaved');
-  toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'),3000);
-}
-function testEmail(){
-  const cfg = STORE.get('emailjs',{});
-  if(!cfg.publicKey || cfg.publicKey==='YOUR_PUBLIC_KEY'){
-    alert('Please save your EmailJS credentials first.');
-    return;
-  }
-  alert('To send a test email, make a booking on booking.html and the email will be sent automatically.');
-}
-window.saveEmailConfig = saveEmailConfig;
-window.testEmail = testEmail;
+document.querySelectorAll("input,textarea").forEach(el => {
+ el.addEventListener("input", () => {
+  if (!isDirty) { isDirty=true; document.getElementById("statDraft").textContent="● Unsaved"; }
+ });
+});
 </script>
 </body>
 </html>
