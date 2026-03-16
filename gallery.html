@@ -10,11 +10,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <style>
 :root {
-  --gold:#c9a84c; --gold-lt:#f0d47a; --gold-dk:#8a6f2e; --gold-glow:rgba(201,168,76,.35);
-  --bg:#08080a; --bg1:#0f0f14; --bg2:#171720; --bg3:#1e1e28;
-  --white:#f5f0e8; --muted:#706a7a; --border:rgba(201,168,76,.15);
-  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
-  --ease:cubic-bezier(.23,1,.32,1);
+ --gold:#c9a84c; --gold-lt:#f0d47a; --gold-dk:#8a6f2e; --gold-glow:rgba(201,168,76,.35);
+ --bg:#08080a; --bg1:#0f0f14; --bg2:#171720; --bg3:#1e1e28;
+ --white:#f5f0e8; --muted:#706a7a; --border:rgba(201,168,76,.15);
+ --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+ --ease:cubic-bezier(.23,1,.32,1);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -63,22 +63,22 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 
 /* FILTER BAR */
 .filter-bar{
-  background:var(--bg1); padding:32px 70px;
-  display:flex; justify-content:space-between; align-items:center;
-  border-bottom:1px solid var(--border); gap:20px; flex-wrap:wrap;
+ background:var(--bg1); padding:32px 70px;
+ display:flex; justify-content:space-between; align-items:center;
+ border-bottom:1px solid var(--border); gap:20px; flex-wrap:wrap;
 }
 .filter-tabs{display:flex;gap:4px;flex-wrap:wrap}
 .ftab{
-  padding:8px 20px;border:1px solid var(--border);background:transparent;
-  color:var(--muted);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
-  cursor:none;transition:all .3s;
+ padding:8px 20px;border:1px solid var(--border);background:transparent;
+ color:var(--muted);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+ cursor:none;transition:all .3s;
 }
 .ftab.active,.ftab:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
 .view-toggle{display:flex;gap:8px}
 .vtog{
-  width:36px;height:36px;border:1px solid var(--border);background:transparent;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--muted);transition:all .3s;cursor:none;font-size:1rem;
+ width:36px;height:36px;border:1px solid var(--border);background:transparent;
+ display:flex;align-items:center;justify-content:center;
+ color:var(--muted);transition:all .3s;cursor:none;font-size:1rem;
 }
 .vtog.active{border-color:var(--gold);color:var(--gold)}
 .count-info{font-size:.65rem;letter-spacing:.12em;color:var(--muted)}
@@ -87,29 +87,29 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 /* GALLERY GRID */
 .gallery-main{padding:60px 70px 100px;background:var(--bg)}
 .gallery-grid{
-  display:grid;
-  gap:8px;
-  transition:all .5s var(--ease);
+ display:grid;
+ gap:8px;
+ transition:all .5s var(--ease);
 }
 .gallery-grid.masonry{
-  grid-template-columns:repeat(4,1fr);
-  grid-auto-rows:260px;
-  grid-auto-flow:dense;
+ grid-template-columns:repeat(4,1fr);
+ grid-auto-rows:260px;
+ grid-auto-flow:dense;
 }
 .gallery-grid.grid-view{
-  grid-template-columns:repeat(3,1fr);
-  grid-auto-rows:320px;
+ grid-template-columns:repeat(3,1fr);
+ grid-auto-rows:320px;
 }
 .gallery-grid.list-view{
-  grid-template-columns:1fr;
-  grid-auto-rows:auto;
+ grid-template-columns:1fr;
+ grid-auto-rows:auto;
 }
 
 /* Gallery item */
 .gal-item {
-  position:relative; overflow:hidden;
-  cursor:none; border-radius:3px;
-  transition:opacity .4s, transform .4s var(--ease);
+ position:relative; overflow:hidden;
+ cursor:none; border-radius:3px;
+ transition:opacity .4s, transform .4s var(--ease);
 }
 .gal-item.hidden{opacity:0;transform:scale(.96);pointer-events:none;position:absolute;visibility:hidden}
 .gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease),filter .6s;filter:brightness(1.05) saturate(1.1) contrast(1.02)}
@@ -120,10 +120,10 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 
 /* Overlay — display:none = truly invisible, cannot bleed over images */
 .gal-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(to top, rgba(8,8,10,.88) 0%, rgba(8,8,10,.25) 35%, transparent 55%);
-  flex-direction:column;justify-content:flex-end;
-  padding:24px;display:none;
+ position:absolute;inset:0;
+ background:linear-gradient(to top, rgba(8,8,10,.88) 0%, rgba(8,8,10,.25) 35%, transparent 55%);
+ flex-direction:column;justify-content:flex-end;
+ padding:24px;display:none;
 }
 .gal-item:hover .gal-overlay{display:flex;animation:galOverlayIn .35s ease both}
 @keyframes galOverlayIn{from{opacity:0}to{opacity:1}}
@@ -132,23 +132,23 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 @keyframes galTitleIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .gal-cat{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
 .gal-expand{
-  position:absolute;top:16px;right:16px;
-  width:38px;height:38px;border:1px solid rgba(245,240,232,.4);
-  border-radius:50%;display:flex;align-items:center;justify-content:center;
-  color:var(--white);font-size:1rem;
-  transform:scale(0);transition:transform .3s var(--ease);
-  background:rgba(8,8,10,.3);
+ position:absolute;top:16px;right:16px;
+ width:38px;height:38px;border:1px solid rgba(245,240,232,.4);
+ border-radius:50%;display:flex;align-items:center;justify-content:center;
+ color:var(--white);font-size:1rem;
+ transform:scale(0);transition:transform .3s var(--ease);
+ background:rgba(8,8,10,.3);
 }
 .gal-item:hover .gal-expand{transform:scale(1)}
 
 /* List view item */
 .gallery-grid.list-view .gal-item{
-  height:200px;display:grid;grid-template-columns:280px 1fr;
-  border:1px solid var(--border);
+ height:200px;display:grid;grid-template-columns:280px 1fr;
+ border:1px solid var(--border);
 }
 .gallery-grid.list-view .gal-overlay{
-  position:static;background:var(--bg2);display:flex;padding:32px 40px;
-  flex-direction:column;justify-content:center;animation:none;
+ position:static;background:var(--bg2);display:flex;padding:32px 40px;
+ flex-direction:column;justify-content:center;animation:none;
 }
 .gallery-grid.list-view .gal-title{font-size:1.6rem;transform:none}
 .gallery-grid.list-view .gal-expand{display:none}
@@ -156,48 +156,48 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 
 /* LIGHTBOX */
 .lightbox{
-  position:fixed;inset:0;z-index:9999;
-  background:rgba(8,8,10,.97);
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;pointer-events:none;transition:opacity .4s;
+ position:fixed;inset:0;z-index:9999;
+ background:rgba(8,8,10,.97);
+ display:flex;align-items:center;justify-content:center;
+ opacity:0;pointer-events:none;transition:opacity .4s;
 }
 .lightbox.open{opacity:1;pointer-events:all}
 .lb-img-wrap{
-  position:relative;max-width:80vw;max-height:85vh;
-  transform:scale(.92);transition:transform .4s var(--ease);
+ position:relative;max-width:80vw;max-height:85vh;
+ transform:scale(.92);transition:transform .4s var(--ease);
 }
 .lightbox.open .lb-img-wrap{transform:scale(1)}
 .lb-img{
-  max-width:80vw;max-height:82vh;object-fit:contain;
-  display:block;border-radius:4px;
-  box-shadow:0 40px 100px rgba(0,0,0,.8);
+ max-width:80vw;max-height:82vh;object-fit:contain;
+ display:block;border-radius:4px;
+ box-shadow:0 40px 100px rgba(0,0,0,.8);
 }
 .lb-close{
-  position:absolute;top:24px;right:24px;
-  width:44px;height:44px;border:1px solid var(--border);
-  border-radius:50%;display:flex;align-items:center;justify-content:center;
-  color:var(--muted);font-size:1.2rem;cursor:none;
-  transition:all .3s;background:rgba(8,8,10,.5);
+ position:absolute;top:24px;right:24px;
+ width:44px;height:44px;border:1px solid var(--border);
+ border-radius:50%;display:flex;align-items:center;justify-content:center;
+ color:var(--muted);font-size:1.2rem;cursor:none;
+ transition:all .3s;background:rgba(8,8,10,.5);
 }
 .lb-close:hover{border-color:var(--gold);color:var(--gold)}
 .lb-nav{
-  position:absolute;top:50%;transform:translateY(-50%);
-  width:52px;height:52px;border:1px solid rgba(201,168,76,.4);
-  background:rgba(8,8,10,.5);display:flex;align-items:center;justify-content:center;
-  color:var(--gold);font-size:1.4rem;cursor:none;transition:all .3s;
-  border-radius:50%;
+ position:absolute;top:50%;transform:translateY(-50%);
+ width:52px;height:52px;border:1px solid rgba(201,168,76,.4);
+ background:rgba(8,8,10,.5);display:flex;align-items:center;justify-content:center;
+ color:var(--gold);font-size:1.4rem;cursor:none;transition:all .3s;
+ border-radius:50%;
 }
 .lb-nav:hover{background:var(--gold);color:var(--bg);border-color:var(--gold)}
 .lb-prev{left:-70px}
 .lb-next{right:-70px}
 .lb-caption{
-  position:absolute;bottom:-60px;left:0;right:0;text-align:center;
+ position:absolute;bottom:-60px;left:0;right:0;text-align:center;
 }
 .lb-caption-title{font-family:var(--serif);font-size:1.3rem;color:var(--white)}
 .lb-caption-cat{font-size:.6rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-top:4px}
 .lb-counter{
-  position:absolute;top:24px;left:24px;
-  font-size:.65rem;letter-spacing:.2em;color:var(--muted);
+ position:absolute;top:24px;left:24px;
+ font-size:.65rem;letter-spacing:.2em;color:var(--muted);
 }
 
 /* FOOTER */
@@ -222,20 +222,20 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
 
 /* MOBILE */
 @media(max-width:1100px){
-  nav,.page-hero,.filter-bar,.gallery-main,footer{padding-left:40px;padding-right:40px}
-  nav.scrolled{padding-left:40px;padding-right:40px}
-  .gallery-grid.masonry{grid-template-columns:repeat(3,1fr)}
+ nav,.page-hero,.filter-bar,.gallery-main,footer{padding-left:40px;padding-right:40px}
+ nav.scrolled{padding-left:40px;padding-right:40px}
+ .gallery-grid.masonry{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:768px){
-  body{cursor:auto}.cursor-ring,.cursor-dot,.cursor-spark{display:none!important}
-  nav,.page-hero,.filter-bar,.gallery-main,footer{padding-left:24px;padding-right:24px}
-  nav.scrolled{padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px}
-  nav{padding-top:18px;padding-bottom:18px}
-  .nav-links,.nav-book{display:none}
-  .gallery-grid.masonry,.gallery-grid.grid-view{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px}
-  .gal-item.wide{grid-column:span 1}
-  .lb-prev{left:-10px}.lb-next{right:-10px}
-  .lb-img{max-width:95vw}
+ body{cursor:auto}.cursor-ring,.cursor-dot,.cursor-spark{display:none!important}
+ nav,.page-hero,.filter-bar,.gallery-main,footer{padding-left:24px;padding-right:24px}
+ nav.scrolled{padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px}
+ nav{padding-top:18px;padding-bottom:18px}
+ .nav-links,.nav-book{display:none}
+ .gallery-grid.masonry,.gallery-grid.grid-view{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px}
+ .gal-item.wide{grid-column:span 1}
+ .lb-prev{left:-10px}.lb-next{right:-10px}
+ .lb-img{max-width:95vw}
 }
 </style>
 </head>
@@ -245,237 +245,237 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
 <div class="cursor-dot" id="cursorDot"></div>
 
 <nav id="mainNav">
-  <div class="nav-logo">
-    <div class="logo-emblem">A</div>
-    <div class="logo-text">
-      <div class="logo-main">A ONE</div>
-      <div class="logo-sub">Hair Salon · Mumbai</div>
-    </div>
+ <div class="nav-logo">
+  <div class="logo-emblem">A</div>
+  <div class="logo-text">
+   <div class="logo-main">A ONE</div>
+   <div class="logo-sub">Hair Salon</div>
   </div>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="gallery.html" class="active">Gallery</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <a href="booking.html" class="nav-book">Book Now</a>
+ </div>
+ <ul class="nav-links">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="services.html">Services</a></li>
+  <li><a href="gallery.html" class="active">Gallery</a></li>
+  <li><a href="contact.html">Contact</a></li>
+ </ul>
+ <a href="booking.html" class="nav-book">Book Now</a>
 </nav>
 
 <!-- PAGE HERO -->
 <div class="page-hero">
-  <div class="page-hero-bg">
-    <img src="https://design.canva.ai/GHA3ChbutvbeHbn" alt="Gallery">
-  </div>
-  <div class="page-hero-content">
-    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Gallery</div>
-    <h1 class="page-title">Our <em>Gallery</em></h1>
-  </div>
+ <div class="page-hero-bg">
+  <img src="https://design.canva.ai/GHA3ChbutvbeHbn" alt="Gallery">
+ </div>
+ <div class="page-hero-content">
+  <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Gallery</div>
+  <h1 class="page-title">Our <em>Gallery</em></h1>
+ </div>
 </div>
 
 <!-- FILTER BAR -->
 <div class="filter-bar">
-  <div class="filter-tabs">
-    <button class="ftab active" data-filter="all">All</button>
-    <button class="ftab" data-filter="interior">Salon Interior</button>
-    <button class="ftab" data-filter="hair">Hair Styling</button>
-    <button class="ftab" data-filter="color">Color</button>
-    <button class="ftab" data-filter="bridal">Bridal</button>
-    <button class="ftab" data-filter="grooming">Grooming</button>
-    <button class="ftab" data-filter="nails">Nails</button>
-    <button class="ftab" data-filter="skin">Skin</button>
+ <div class="filter-tabs">
+  <button class="ftab active" data-filter="all">All</button>
+  <button class="ftab" data-filter="interior">Salon Interior</button>
+  <button class="ftab" data-filter="hair">Hair Styling</button>
+  <button class="ftab" data-filter="color">Color</button>
+  <button class="ftab" data-filter="bridal">Bridal</button>
+  <button class="ftab" data-filter="grooming">Grooming</button>
+  <button class="ftab" data-filter="nails">Nails</button>
+  <button class="ftab" data-filter="skin">Skin</button>
+ </div>
+ <div style="display:flex;align-items:center;gap:20px">
+  <span class="count-info"><span id="countNum">12</span> photos</span>
+  <div class="view-toggle">
+   <button class="vtog active" data-view="masonry" title="Masonry">⊞</button>
+   <button class="vtog" data-view="grid-view" title="Grid">▦</button>
+   <button class="vtog" data-view="list-view" title="List">☰</button>
   </div>
-  <div style="display:flex;align-items:center;gap:20px">
-    <span class="count-info"><span id="countNum">12</span> photos</span>
-    <div class="view-toggle">
-      <button class="vtog active" data-view="masonry" title="Masonry">⊞</button>
-      <button class="vtog" data-view="grid-view" title="Grid">▦</button>
-      <button class="vtog" data-view="list-view" title="List">☰</button>
-    </div>
-  </div>
+ </div>
 </div>
 
 <!-- GALLERY -->
 <div class="gallery-main">
-  <div class="gallery-grid masonry" id="galleryGrid">
+ <div class="gallery-grid masonry" id="galleryGrid">
 
-    <div class="gal-item wide" data-cat="interior">
-      <img src="https://design.canva.ai/sTlJQ7Xvd8wRt8m" alt="Luxury Salon Interior">
-      <div class="gal-overlay">
-        <div class="gal-cat">Salon Interior</div>
-        <div class="gal-title">Luxury Salon Interior</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
-    <div class="gal-item tall" data-cat="color">
-      <img src="https://design.canva.ai/Eik3RiM2Z7JKqhd" alt="Balayage">
-      <div class="gal-overlay">
-        <div class="gal-cat">Color</div>
-        <div class="gal-title">Balayage Color</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
-    <div class="gal-item" data-cat="grooming">
-      <img src="https://design.canva.ai/lSda8hD6mzJZJtU" alt="Men's Grooming">
-      <div class="gal-overlay">
-        <div class="gal-cat">Men's Grooming</div>
-        <div class="gal-title">Precision Grooming</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
-    <div class="gal-item" data-cat="hair">
-      <img src="https://design.canva.ai/kXoByhk1edGgvlF" alt="Hair Spa">
-      <div class="gal-overlay">
-        <div class="gal-cat">Hair Styling</div>
-        <div class="gal-title">Rejuvenating Hair Spa</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
-    <div class="gal-item tall" data-cat="color">
-      <img src="https://design.canva.ai/GHA3ChbutvbeHbn" alt="Bold Color">
-      <div class="gal-overlay">
-        <div class="gal-cat">Color</div>
-        <div class="gal-title">Bold Fashion Color</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
-    <div class="gal-item wide" data-cat="bridal">
-      <img src="https://design.canva.ai/hbVKzwLnnoXJrZE" alt="Bridal Styling">
-      <div class="gal-overlay">
-        <div class="gal-cat">Bridal</div>
-        <div class="gal-title">Bridal Elegance</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
-    <div class="gal-item" data-cat="nails">
-      <img src="https://design.canva.ai/Vcy6RUp02Nr9iEW" alt="Nail Art">
-      <div class="gal-overlay">
-        <div class="gal-cat">Nails</div>
-        <div class="gal-title">Artistic Nail Design</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
-    <div class="gal-item" data-cat="skin">
-      <img src="https://design.canva.ai/cZOZaOFK3QC8YQp" alt="Facial Treatment">
-      <div class="gal-overlay">
-        <div class="gal-cat">Skin</div>
-        <div class="gal-title">Luxury Facial</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
-    <div class="gal-item wide" data-cat="interior">
-      <img src="https://design.canva.ai/27ZxuRVCje6yOL3" alt="Wash Station">
-      <div class="gal-overlay">
-        <div class="gal-cat">Salon Interior</div>
-        <div class="gal-title">Wash &amp; Refresh Station</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
-    <div class="gal-item tall" data-cat="hair">
-      <img src="https://design.canva.ai/Ssm_8HUAiJck1I6" alt="Premium Hair Wash">
-      <div class="gal-overlay">
-        <div class="gal-cat">Hair Styling</div>
-        <div class="gal-title">Premium Wash Experience</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
-    <div class="gal-item" data-cat="interior">
-      <img src="https://design.canva.ai/GBPs0oAWDlnOW1f" alt="Shampoo Suite">
-      <div class="gal-overlay">
-        <div class="gal-cat">Salon Interior</div>
-        <div class="gal-title">Shampoo Suite</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
-    <div class="gal-item" data-cat="hair">
-      <img src="https://design.canva.ai/jaRxOKnlMZQ1HRl" alt="Hair Care Ritual">
-      <div class="gal-overlay">
-        <div class="gal-cat">Hair Styling</div>
-        <div class="gal-title">Hair Care Ritual</div>
-      </div>
-      <button class="gal-expand">⤢</button>
-    </div>
-
+  <div class="gal-item wide" data-cat="interior">
+   <img src="https://design.canva.ai/sTlJQ7Xvd8wRt8m" alt="Luxury Salon Interior">
+   <div class="gal-overlay">
+    <div class="gal-cat">Salon Interior</div>
+    <div class="gal-title">Luxury Salon Interior</div>
+   </div>
+   <button class="gal-expand">⤢</button>
   </div>
+
+  <div class="gal-item tall" data-cat="color">
+   <img src="https://design.canva.ai/Eik3RiM2Z7JKqhd" alt="Balayage">
+   <div class="gal-overlay">
+    <div class="gal-cat">Color</div>
+    <div class="gal-title">Balayage Color</div>
+   </div>
+   <button class="gal-expand">⤢</button>
+  </div>
+
+  <div class="gal-item" data-cat="grooming">
+   <img src="https://design.canva.ai/lSda8hD6mzJZJtU" alt="Men's Grooming">
+   <div class="gal-overlay">
+    <div class="gal-cat">Men's Grooming</div>
+    <div class="gal-title">Precision Grooming</div>
+   </div>
+   <button class="gal-expand">⤢</button>
+  </div>
+
+  <div class="gal-item" data-cat="hair">
+   <img src="https://design.canva.ai/kXoByhk1edGgvlF" alt="Hair Spa">
+   <div class="gal-overlay">
+    <div class="gal-cat">Hair Styling</div>
+    <div class="gal-title">Rejuvenating Hair Spa</div>
+   </div>
+   <button class="gal-expand">⤢</button>
+  </div>
+
+  <div class="gal-item tall" data-cat="color">
+   <img src="https://design.canva.ai/GHA3ChbutvbeHbn" alt="Bold Color">
+   <div class="gal-overlay">
+    <div class="gal-cat">Color</div>
+    <div class="gal-title">Bold Fashion Color</div>
+   </div>
+   <button class="gal-expand">⤢</button>
+  </div>
+
+  <div class="gal-item wide" data-cat="bridal">
+   <img src="https://design.canva.ai/hbVKzwLnnoXJrZE" alt="Bridal Styling">
+   <div class="gal-overlay">
+    <div class="gal-cat">Bridal</div>
+    <div class="gal-title">Bridal Elegance</div>
+   </div>
+   <button class="gal-expand">⤢</button>
+  </div>
+
+  <div class="gal-item" data-cat="nails">
+   <img src="https://design.canva.ai/Vcy6RUp02Nr9iEW" alt="Nail Art">
+   <div class="gal-overlay">
+    <div class="gal-cat">Nails</div>
+    <div class="gal-title">Artistic Nail Design</div>
+   </div>
+   <button class="gal-expand">⤢</button>
+  </div>
+
+  <div class="gal-item" data-cat="skin">
+   <img src="https://design.canva.ai/cZOZaOFK3QC8YQp" alt="Facial Treatment">
+   <div class="gal-overlay">
+    <div class="gal-cat">Skin</div>
+    <div class="gal-title">Luxury Facial</div>
+   </div>
+   <button class="gal-expand">⤢</button>
+  </div>
+
+  <div class="gal-item wide" data-cat="interior">
+   <img src="https://design.canva.ai/27ZxuRVCje6yOL3" alt="Wash Station">
+   <div class="gal-overlay">
+    <div class="gal-cat">Salon Interior</div>
+    <div class="gal-title">Wash &amp; Refresh Station</div>
+   </div>
+   <button class="gal-expand">⤢</button>
+  </div>
+
+  <div class="gal-item tall" data-cat="hair">
+   <img src="https://design.canva.ai/Ssm_8HUAiJck1I6" alt="Premium Hair Wash">
+   <div class="gal-overlay">
+    <div class="gal-cat">Hair Styling</div>
+    <div class="gal-title">Premium Wash Experience</div>
+   </div>
+   <button class="gal-expand">⤢</button>
+  </div>
+
+  <div class="gal-item" data-cat="interior">
+   <img src="https://design.canva.ai/GBPs0oAWDlnOW1f" alt="Shampoo Suite">
+   <div class="gal-overlay">
+    <div class="gal-cat">Salon Interior</div>
+    <div class="gal-title">Shampoo Suite</div>
+   </div>
+   <button class="gal-expand">⤢</button>
+  </div>
+
+  <div class="gal-item" data-cat="hair">
+   <img src="https://design.canva.ai/jaRxOKnlMZQ1HRl" alt="Hair Care Ritual">
+   <div class="gal-overlay">
+    <div class="gal-cat">Hair Styling</div>
+    <div class="gal-title">Hair Care Ritual</div>
+   </div>
+   <button class="gal-expand">⤢</button>
+  </div>
+
+ </div>
 </div>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
-  <div class="lb-counter" id="lbCounter">1 / 8</div>
-  <button class="lb-close" id="lbClose">✕</button>
-  <div class="lb-img-wrap">
-    <button class="lb-nav lb-prev" id="lbPrev">‹</button>
-    <img class="lb-img" id="lbImg" src="" alt="">
-    <button class="lb-nav lb-next" id="lbNext">›</button>
-    <div class="lb-caption">
-      <div class="lb-caption-cat" id="lbCat"></div>
-      <div class="lb-caption-title" id="lbTitle"></div>
-    </div>
+ <div class="lb-counter" id="lbCounter">1 / 8</div>
+ <button class="lb-close" id="lbClose">✕</button>
+ <div class="lb-img-wrap">
+  <button class="lb-nav lb-prev" id="lbPrev">‹</button>
+  <img class="lb-img" id="lbImg" src="" alt="">
+  <button class="lb-nav lb-next" id="lbNext">›</button>
+  <div class="lb-caption">
+   <div class="lb-caption-cat" id="lbCat"></div>
+   <div class="lb-caption-title" id="lbTitle"></div>
   </div>
+ </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="logo-main">A ONE HAIR SALON</div>
-      <p data-cms="footer.tagline">Mumbai's premier luxury unisex salon. Where every visit is a bespoke journey of beauty and self-care.</p>
-      <div class="socials" style="margin-top:24px">
-        <a href="#" class="social-btn">f</a>
-        <a href="#" class="social-btn">in</a>
-        <a href="#" class="social-btn">✦</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Navigation</h4>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="booking.html">Book Now</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Services</h4>
-      <ul>
-        <li><a href="#">Haircuts</a></li>
-        <li><a href="#">Balayage & Color</a></li>
-        <li><a href="#">Bridal Styling</a></li>
-        <li><a href="#">Hair Spa</a></li>
-        <li><a href="#">Men's Grooming</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <div class="footer-contact-item">
-        <span class="fc-icon">📍</span>
-        <span class="fc-text" data-cms="site.address_full">Shop 12, Linking Road, Bandra West, Mumbai 400050</span>
-      </div>
-      <div class="footer-contact-item">
-        <span class="fc-icon">📞</span>
-        <span class="fc-text" data-cms="site.phone">+91 98765 43210</span>
-      </div>
-      <div class="footer-contact-item">
-        <span class="fc-icon">✉</span>
-        <span class="fc-text" data-cms="site.email">hello@aonehairsalon.com</span>
-      </div>
-    </div>
+ <div class="footer-grid">
+  <div class="footer-brand">
+   <div class="logo-main">A ONE HAIR SALON</div>
+   <p data-cms="footer.tagline">London's premier luxury unisex salon. Where every visit is a bespoke journey of beauty and self-care.</p>
+   <div class="socials" style="margin-top:24px">
+    <a href="#" class="social-btn">f</a>
+    <a href="#" class="social-btn">in</a>
+    <a href="#" class="social-btn">✦</a>
+   </div>
   </div>
-  <div class="footer-bottom">
-    <p data-cms="footer.copyright">© 2026 A One Hair Salon, Mumbai. All rights reserved.</p>
-    <p>Crafted with ✦ for luxury</p>
+  <div class="footer-col">
+   <h4>Navigation</h4>
+   <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="booking.html">Book Now</a></li>
+    <li><a href="contact.html">Contact</a></li>
+   </ul>
   </div>
+  <div class="footer-col">
+   <h4>Services</h4>
+   <ul>
+    <li><a href="#">Haircuts</a></li>
+    <li><a href="#">Balayage & Color</a></li>
+    <li><a href="#">Bridal Styling</a></li>
+    <li><a href="#">Hair Spa</a></li>
+    <li><a href="#">Men's Grooming</a></li>
+   </ul>
+  </div>
+  <div class="footer-col">
+   <h4>Contact</h4>
+   <div class="footer-contact-item">
+    <span class="fc-icon">📍</span>
+    <span class="fc-text" data-cms="site.address_full">Shop 12, 12 King Street, London</span>
+   </div>
+   <div class="footer-contact-item">
+    <span class="fc-icon">📞</span>
+    <span class="fc-text" data-cms="site.phone">+91 98765 43210</span>
+   </div>
+   <div class="footer-contact-item">
+    <span class="fc-icon">✉</span>
+    <span class="fc-text" data-cms="site.email">hello@aonehairsalon.com</span>
+   </div>
+  </div>
+ </div>
+ <div class="footer-bottom">
+  <p data-cms="footer.copyright">© 2026 A One Hair Salon. All rights reserved.</p>
+  <p>Crafted with ✦ for luxury</p>
+ </div>
 </footer>
 
 <script>
@@ -487,17 +487,17 @@ window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.
 
 /* Cursor */
 const ring = document.getElementById('cursorRing');
-const dot  = document.getElementById('cursorDot');
+const dot = document.getElementById('cursorDot');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',(e)=>{
-  mx=e.clientX;my=e.clientY;
-  dot.style.left=mx+'px';dot.style.top=my+'px';
-  if(Math.random()>.92){
-    const s=document.createElement('div');s.className='cursor-spark';
-    const dx=(Math.random()-.5)*14;
-    s.style.cssText=`left:${mx}px;top:${my}px;--dx:${dx}px`;
-    document.body.appendChild(s);setTimeout(()=>s.remove(),850);
-  }
+ mx=e.clientX;my=e.clientY;
+ dot.style.left=mx+'px';dot.style.top=my+'px';
+ if(Math.random()>.92){
+  const s=document.createElement('div');s.className='cursor-spark';
+  const dx=(Math.random()-.5)*14;
+  s.style.cssText=`left:${mx}px;top:${my}px;--dx:${dx}px`;
+  document.body.appendChild(s);setTimeout(()=>s.remove(),850);
+ }
 });
 function animC(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animC)}
 animC();
@@ -505,12 +505,12 @@ animC();
 /* Gallery items */
 const items = document.querySelectorAll('.gal-item');
 items.forEach(item=>{
-  item.addEventListener('mouseenter',()=>ring.classList.add('view'));
-  item.addEventListener('mouseleave',()=>ring.classList.remove('view'));
+ item.addEventListener('mouseenter',()=>ring.classList.add('view'));
+ item.addEventListener('mouseleave',()=>ring.classList.remove('view'));
 });
 document.querySelectorAll('a,button:not(.gal-expand):not(.lb-close):not(.lb-nav)').forEach(el=>{
-  el.addEventListener('mouseenter',()=>ring.classList.add('expand'));
-  el.addEventListener('mouseleave',()=>ring.classList.remove('expand'));
+ el.addEventListener('mouseenter',()=>ring.classList.add('expand'));
+ el.addEventListener('mouseleave',()=>ring.classList.remove('expand'));
 });
 
 /* --- LIGHTBOX --- */
@@ -522,100 +522,100 @@ const lbCounter = document.getElementById('lbCounter');
 let currentItems = [], currentIdx = 0;
 
 function getVisibleItems(){
-  return Array.from(document.querySelectorAll('.gal-item:not(.hidden):not([style*="visibility: hidden"])'));
+ return Array.from(document.querySelectorAll('.gal-item:not(.hidden):not([style*="visibility: hidden"])'));
 }
 function openLightbox(item){
-  currentItems = getVisibleItems();
-  currentIdx = currentItems.indexOf(item);
-  showLb(currentIdx);
-  lb.classList.add('open');
-  document.body.style.overflow = 'hidden';
+ currentItems = getVisibleItems();
+ currentIdx = currentItems.indexOf(item);
+ showLb(currentIdx);
+ lb.classList.add('open');
+ document.body.style.overflow = 'hidden';
 }
 function showLb(idx){
-  const item = currentItems[idx];
-  if(!item) return;
-  const img = item.querySelector('img');
-  const title = item.querySelector('.gal-title');
-  const cat = item.querySelector('.gal-cat');
-  lbImg.src = img.src;
-  lbImg.alt = img.alt;
-  lbTitle.textContent = title ? title.textContent : '';
-  lbCat.textContent = cat ? cat.textContent : '';
-  lbCounter.textContent = (idx+1) + ' / ' + currentItems.length;
-  currentIdx = idx;
+ const item = currentItems[idx];
+ if(!item) return;
+ const img = item.querySelector('img');
+ const title = item.querySelector('.gal-title');
+ const cat = item.querySelector('.gal-cat');
+ lbImg.src = img.src;
+ lbImg.alt = img.alt;
+ lbTitle.textContent = title ? title.textContent : '';
+ lbCat.textContent = cat ? cat.textContent : '';
+ lbCounter.textContent = (idx+1) + ' / ' + currentItems.length;
+ currentIdx = idx;
 }
 function closeLb(){
-  lb.classList.remove('open');
-  document.body.style.overflow = '';
+ lb.classList.remove('open');
+ document.body.style.overflow = '';
 }
 document.getElementById('lbClose').addEventListener('click', closeLb);
 document.getElementById('lbPrev').addEventListener('click', ()=>{
-  const newIdx = (currentIdx - 1 + currentItems.length) % currentItems.length;
-  showLb(newIdx);
+ const newIdx = (currentIdx - 1 + currentItems.length) % currentItems.length;
+ showLb(newIdx);
 });
 document.getElementById('lbNext').addEventListener('click', ()=>{
-  const newIdx = (currentIdx + 1) % currentItems.length;
-  showLb(newIdx);
+ const newIdx = (currentIdx + 1) % currentItems.length;
+ showLb(newIdx);
 });
 lb.addEventListener('click', (e)=>{ if(e.target === lb) closeLb(); });
 document.addEventListener('keydown', (e)=>{
-  if(!lb.classList.contains('open')) return;
-  if(e.key==='Escape') closeLb();
-  if(e.key==='ArrowLeft'){ const n=(currentIdx-1+currentItems.length)%currentItems.length; showLb(n); }
-  if(e.key==='ArrowRight'){ const n=(currentIdx+1)%currentItems.length; showLb(n); }
+ if(!lb.classList.contains('open')) return;
+ if(e.key==='Escape') closeLb();
+ if(e.key==='ArrowLeft'){ const n=(currentIdx-1+currentItems.length)%currentItems.length; showLb(n); }
+ if(e.key==='ArrowRight'){ const n=(currentIdx+1)%currentItems.length; showLb(n); }
 });
 
 items.forEach(item=>{
-  item.addEventListener('click', ()=>openLightbox(item));
+ item.addEventListener('click', ()=>openLightbox(item));
 });
 
 /* --- FILTER --- */
 const ftabs = document.querySelectorAll('.ftab');
 const countEl = document.getElementById('countNum');
 ftabs.forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    ftabs.forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    const filter = tab.dataset.filter;
-    let visible = 0;
-    items.forEach((item,i)=>{
-      const match = filter==='all' || item.dataset.cat===filter;
-      if(match){
-        item.classList.remove('hidden');
-        item.style.position='';item.style.visibility='';
-        item.style.animation=`fadeIn .4s ease ${i*0.05}s both`;
-        visible++;
-      } else {
-        item.classList.add('hidden');
-        item.style.position='absolute';item.style.visibility='hidden';
-      }
-    });
-    countEl.textContent = visible;
+ tab.addEventListener('click',()=>{
+  ftabs.forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  const filter = tab.dataset.filter;
+  let visible = 0;
+  items.forEach((item,i)=>{
+   const match = filter==='all' || item.dataset.cat===filter;
+   if(match){
+    item.classList.remove('hidden');
+    item.style.position='';item.style.visibility='';
+    item.style.animation=`fadeIn .4s ease ${i*0.05}s both`;
+    visible++;
+   } else {
+    item.classList.add('hidden');
+    item.style.position='absolute';item.style.visibility='hidden';
+   }
   });
+  countEl.textContent = visible;
+ });
 });
 
 /* --- VIEW TOGGLE --- */
 const vtogs = document.querySelectorAll('.vtog');
 const grid = document.getElementById('galleryGrid');
 vtogs.forEach(tog=>{
-  tog.addEventListener('click',()=>{
-    vtogs.forEach(t=>t.classList.remove('active'));
-    tog.classList.add('active');
-    const view = tog.dataset.view;
-    grid.className = 'gallery-grid ' + view;
-  });
+ tog.addEventListener('click',()=>{
+  vtogs.forEach(t=>t.classList.remove('active'));
+  tog.classList.add('active');
+  const view = tog.dataset.view;
+  grid.className = 'gallery-grid ' + view;
+ });
 });
 
 /* --- GSAP ENTRANCE --- */
 gsap.to('.page-hero-bg img',{
-  yPercent:15,ease:'none',
-  scrollTrigger:{trigger:'.page-hero',start:'top top',end:'bottom top',scrub:true}
+ yPercent:15,ease:'none',
+ scrollTrigger:{trigger:'.page-hero',start:'top top',end:'bottom top',scrub:true}
 });
 
 /* Stagger items on load — no opacity so images are always visible */
 gsap.from('.gal-item',{
-  scale:.95, y:24,
-  stagger:.06, duration:.7, ease:'power3.out', delay:.2
+ scale:.95, y:24,
+ stagger:.06, duration:.7, ease:'power3.out', delay:.2
 });
 
 /* CSS fadeIn for filter */
