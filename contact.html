@@ -10,11 +10,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <style>
 :root {
-  --gold:#c9a84c; --gold-lt:#f0d47a; --gold-dk:#8a6f2e; --gold-glow:rgba(201,168,76,.35);
-  --bg:#08080a; --bg1:#0f0f14; --bg2:#171720; --bg3:#1e1e28;
-  --white:#f5f0e8; --muted:#706a7a; --border:rgba(201,168,76,.15);
-  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
-  --ease:cubic-bezier(.23,1,.32,1);
+ --gold:#c9a84c; --gold-lt:#f0d47a; --gold-dk:#8a6f2e; --gold-glow:rgba(201,168,76,.35);
+ --bg:#08080a; --bg1:#0f0f14; --bg2:#171720; --bg3:#1e1e28;
+ --white:#f5f0e8; --muted:#706a7a; --border:rgba(201,168,76,.15);
+ --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+ --ease:cubic-bezier(.23,1,.32,1);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -69,9 +69,9 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 
 /* CONTACT SECTION */
 .contact-section{
-  padding:100px 70px;
-  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;
-  background:var(--bg);
+ padding:100px 70px;
+ display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;
+ background:var(--bg);
 }
 
 /* INFO COLUMN */
@@ -85,17 +85,17 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 /* Contact cards */
 .contact-cards{display:flex;flex-direction:column;gap:2px}
 .contact-card{
-  display:flex;gap:20px;align-items:flex-start;
-  padding:24px 24px;background:var(--bg2);border:1px solid var(--border);
-  transition:border-color .3s,background .3s;cursor:none;
+ display:flex;gap:20px;align-items:flex-start;
+ padding:24px 24px;background:var(--bg2);border:1px solid var(--border);
+ transition:border-color .3s,background .3s;cursor:none;
 }
 .contact-card:hover{border-color:rgba(201,168,76,.4);background:var(--bg3)}
 .cc-icon{
-  width:44px;height:44px;flex-shrink:0;
-  background:linear-gradient(135deg,var(--gold),var(--gold-dk));
-  border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;color:var(--bg);
-  box-shadow:0 4px 16px rgba(201,168,76,.25);
+ width:44px;height:44px;flex-shrink:0;
+ background:linear-gradient(135deg,var(--gold),var(--gold-dk));
+ border-radius:50%;display:flex;align-items:center;justify-content:center;
+ font-size:1.1rem;color:var(--bg);
+ box-shadow:0 4px 16px rgba(201,168,76,.25);
 }
 .cc-body{}
 .cc-label{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
@@ -107,49 +107,49 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 .social-links h4{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
 .socials-row{display:flex;gap:10px}
 .social-pill{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:10px 18px;border:1px solid var(--border);
-  background:var(--bg2);color:var(--muted);
-  font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
-  transition:all .3s;cursor:none;
+ display:inline-flex;align-items:center;gap:8px;
+ padding:10px 18px;border:1px solid var(--border);
+ background:var(--bg2);color:var(--muted);
+ font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+ transition:all .3s;cursor:none;
 }
 .social-pill:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
 
 /* FORM COLUMN */
 .contact-form-col{}
 .contact-form-wrap{
-  background:var(--bg2);border:1px solid var(--border);
-  padding:44px 40px;
-  position:relative;
+ background:var(--bg2);border:1px solid var(--border);
+ padding:44px 40px;
+ position:relative;
 }
 .contact-form-wrap::before{
-  content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
-  background:linear-gradient(to bottom,var(--gold-lt),var(--gold),var(--gold-dk));
+ content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
+ background:linear-gradient(to bottom,var(--gold-lt),var(--gold),var(--gold-dk));
 }
 .form-group{margin-bottom:20px}
 .form-label{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px}
 .form-control{
-  width:100%;padding:13px 16px;
-  background:var(--bg3);border:1px solid var(--border);
-  color:var(--white);font-size:.85rem;outline:none;
-  transition:border-color .3s;font-family:var(--sans);
+ width:100%;padding:13px 16px;
+ background:var(--bg3);border:1px solid var(--border);
+ color:var(--white);font-size:.85rem;outline:none;
+ transition:border-color .3s;font-family:var(--sans);
 }
 .form-control:focus{border-color:var(--gold)}
 .form-control::placeholder{color:rgba(112,106,122,.5)}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .btn-send{
-  width:100%;padding:15px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-dk));
-  color:var(--bg);font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;
-  font-weight:600;border:none;cursor:none;transition:all .4s var(--ease);
-  box-shadow:0 6px 24px rgba(201,168,76,.25);
-  margin-top:8px;
+ width:100%;padding:15px;
+ background:linear-gradient(135deg,var(--gold),var(--gold-dk));
+ color:var(--bg);font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;
+ font-weight:600;border:none;cursor:none;transition:all .4s var(--ease);
+ box-shadow:0 6px 24px rgba(201,168,76,.25);
+ margin-top:8px;
 }
 .btn-send:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(201,168,76,.4)}
 .form-note{font-size:.65rem;color:var(--muted);text-align:center;margin-top:14px;line-height:1.6}
 .form-success{
-  display:none;text-align:center;padding:32px;
-  animation:fadeInUp .5s var(--ease) both;
+ display:none;text-align:center;padding:32px;
+ animation:fadeInUp .5s var(--ease) both;
 }
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .form-success .fs-icon{font-size:2.5rem;color:var(--gold);margin-bottom:16px}
@@ -158,38 +158,38 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 
 /* MAP SECTION */
 .map-section{
-  padding:0 70px 100px;background:var(--bg);
+ padding:0 70px 100px;background:var(--bg);
 }
 .map-wrapper{
-  position:relative;height:420px;
-  border:1px solid var(--border);
-  overflow:hidden;
+ position:relative;height:420px;
+ border:1px solid var(--border);
+ overflow:hidden;
 }
 .map-placeholder{
-  position:relative;width:100%;height:100%;
-  background:linear-gradient(135deg,var(--bg2),var(--bg3));
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+ position:relative;width:100%;height:100%;
+ background:linear-gradient(135deg,var(--bg2),var(--bg3));
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
 }
 .map-grid{
-  position:absolute;inset:0;
-  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
-  background-size:40px 40px;
-  opacity:.5;
+ position:absolute;inset:0;
+ background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+ background-size:40px 40px;
+ opacity:.5;
 }
 .map-pin{
-  position:relative;z-index:2;
-  width:60px;height:60px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-dk));
-  border-radius:50% 50% 50% 0;transform:rotate(-45deg);
-  box-shadow:0 8px 30px rgba(201,168,76,.4);
-  animation:pinBounce 2s ease-in-out infinite;
+ position:relative;z-index:2;
+ width:60px;height:60px;
+ background:linear-gradient(135deg,var(--gold),var(--gold-dk));
+ border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+ box-shadow:0 8px 30px rgba(201,168,76,.4);
+ animation:pinBounce 2s ease-in-out infinite;
 }
 .map-pin::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:24px;height:24px;background:var(--bg);border-radius:50%}
 @keyframes pinBounce{0%,100%{transform:rotate(-45deg) translateY(0)}50%{transform:rotate(-45deg) translateY(-8px)}}
 .map-address{
-  position:absolute;bottom:24px;left:24px;z-index:2;text-align:left;
-  background:rgba(8,8,10,.88);padding:16px 24px;border:1px solid var(--border);
-  backdrop-filter:blur(12px);
+ position:absolute;bottom:24px;left:24px;z-index:2;text-align:left;
+ background:rgba(8,8,10,.88);padding:16px 24px;border:1px solid var(--border);
+ backdrop-filter:blur(12px);
 }
 .map-address strong{font-family:var(--serif);font-size:1.1rem;color:var(--white);display:block;margin-bottom:4px}
 .map-address span{font-size:.72rem;color:var(--muted)}
@@ -198,13 +198,13 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 
 /* HOURS SECTION */
 .hours-section{
-  background:var(--bg1);padding:80px 70px;
-  display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;
+ background:var(--bg1);padding:80px 70px;
+ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;
 }
 .hours-card{
-  background:var(--bg2);padding:40px 36px;
-  border:1px solid var(--border);
-  transition:border-color .4s;
+ background:var(--bg2);padding:40px 36px;
+ border:1px solid var(--border);
+ transition:border-color .4s;
 }
 .hours-card:hover{border-color:rgba(201,168,76,.4)}
 .hours-card h3{font-family:var(--serif);font-size:1.4rem;font-weight:400;color:var(--white);margin-bottom:6px}
@@ -212,9 +212,9 @@ nav.scrolled{padding:14px 70px;background:rgba(8,8,10,.96);backdrop-filter:blur(
 .hours-time{font-family:var(--serif);font-size:2.2rem;color:var(--white);line-height:1;margin-bottom:6px}
 .hours-note{font-size:.72rem;color:var(--muted)}
 .hours-open{
-  display:inline-block;margin-top:16px;padding:4px 14px;
-  border:1px solid rgba(86,198,96,.4);color:rgba(86,198,96,.8);
-  font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;
+ display:inline-block;margin-top:16px;padding:4px 14px;
+ border:1px solid rgba(86,198,96,.4);color:rgba(86,198,96,.8);
+ font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;
 }
 
 /* FOOTER */
@@ -234,20 +234,20 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
 
 /* MOBILE */
 @media(max-width:1100px){
-  nav,nav.scrolled,.contact-section,.map-section,.hours-section,footer{padding-left:40px;padding-right:40px}
-  nav.scrolled{padding-top:14px;padding-bottom:14px}
-  .contact-section{grid-template-columns:1fr}
-  .hours-section{grid-template-columns:1fr;gap:2px}
-  .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
+ nav,nav.scrolled,.contact-section,.map-section,.hours-section,footer{padding-left:40px;padding-right:40px}
+ nav.scrolled{padding-top:14px;padding-bottom:14px}
+ .contact-section{grid-template-columns:1fr}
+ .hours-section{grid-template-columns:1fr;gap:2px}
+ .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
 }
 @media(max-width:768px){
-  body{cursor:auto}.cursor-ring,.cursor-dot,.cursor-spark{display:none!important}
-  nav,.page-hero,.contact-section,.map-section,.hours-section,footer{padding-left:24px;padding-right:24px}
-  nav{padding-top:18px;padding-bottom:18px}nav.scrolled{padding-top:12px;padding-bottom:12px}
-  .nav-links,.nav-book{display:none}
-  .form-row{grid-template-columns:1fr}
-  .contact-form-wrap{padding:28px 22px}
-  .footer-grid{grid-template-columns:1fr}
+ body{cursor:auto}.cursor-ring,.cursor-dot,.cursor-spark{display:none!important}
+ nav,.page-hero,.contact-section,.map-section,.hours-section,footer{padding-left:24px;padding-right:24px}
+ nav{padding-top:18px;padding-bottom:18px}nav.scrolled{padding-top:12px;padding-bottom:12px}
+ .nav-links,.nav-book{display:none}
+ .form-row{grid-template-columns:1fr}
+ .contact-form-wrap{padding:28px 22px}
+ .footer-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -257,234 +257,234 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
 <div class="cursor-dot" id="cursorDot"></div>
 
 <nav id="mainNav">
-  <div class="nav-logo">
-    <div class="logo-emblem">A</div>
-    <div class="logo-text">
-      <div class="logo-main">A ONE</div>
-      <div class="logo-sub">Hair Salon · Mumbai</div>
-    </div>
+ <div class="nav-logo">
+  <div class="logo-emblem">A</div>
+  <div class="logo-text">
+   <div class="logo-main">A ONE</div>
+   <div class="logo-sub">Hair Salon</div>
   </div>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="contact.html" class="active">Contact</a></li>
-  </ul>
-  <a href="booking.html" class="nav-book">Book Now</a>
+ </div>
+ <ul class="nav-links">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="services.html">Services</a></li>
+  <li><a href="gallery.html">Gallery</a></li>
+  <li><a href="contact.html" class="active">Contact</a></li>
+ </ul>
+ <a href="booking.html" class="nav-book">Book Now</a>
 </nav>
 
 <!-- PAGE HERO -->
 <div class="page-hero">
-  <div class="page-hero-bg">
-    <img src="https://design.canva.ai/sTlJQ7Xvd8wRt8m" alt="Salon Interior">
-  </div>
-  <div class="page-hero-content">
-    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Contact</div>
-    <h1 class="page-title"><em>Contact</em> Us</h1>
-  </div>
+ <div class="page-hero-bg">
+  <img src="https://design.canva.ai/sTlJQ7Xvd8wRt8m" alt="Salon Interior">
+ </div>
+ <div class="page-hero-content">
+  <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Contact</div>
+  <h1 class="page-title"><em>Contact</em> Us</h1>
+ </div>
 </div>
 
 <!-- CONTACT SECTION -->
 <section class="contact-section">
-  <!-- Info Column -->
-  <div class="contact-info-col">
-    <div class="reveal-l">
-      <span class="section-label">Get In Touch</span>
-      <h2 class="section-title">We'd Love to<br><em>Hear From You</em></h2>
-      <div class="divider-gold"></div>
-      <p class="contact-intro">
-        Whether you want to book an appointment, ask about a service, or simply say hello — we're here for you. Drop by our salon in Bandra or reach out through any of the channels below.
-      </p>
-    </div>
-    <div class="contact-cards reveal-l" style="transition-delay:.1s">
-      <div class="contact-card">
-        <div class="cc-icon">📍</div>
-        <div class="cc-body">
-          <div class="cc-label">Location</div>
-          <div class="cc-value" data-cms="site.address_full">Shop 12, Linking Road, Bandra West, Mumbai 400050</div>
-          <div class="cc-sub">Near Bandra Station, Maharashtra</div>
-        </div>
-      </div>
-      <div class="contact-card">
-        <div class="cc-icon">📞</div>
-        <div class="cc-body">
-          <div class="cc-label">Phone</div>
-          <div class="cc-value" data-cms="site.phone">+91 98765 43210</div>
-          <div class="cc-sub">Call or WhatsApp for appointments</div>
-        </div>
-      </div>
-      <div class="contact-card">
-        <div class="cc-icon">✉</div>
-        <div class="cc-body">
-          <div class="cc-label">Email</div>
-          <div class="cc-value" data-cms="site.email">hello@aonehairsalon.com</div>
-          <div class="cc-sub">We reply within 24 hours</div>
-        </div>
-      </div>
-      <div class="contact-card">
-        <div class="cc-icon">🕐</div>
-        <div class="cc-body">
-          <div class="cc-label">Hours Today</div>
-          <div class="cc-value">10:00 AM – 8:00 PM</div>
-          <div class="cc-sub">Walk-ins welcome · Appointments preferred</div>
-        </div>
-      </div>
-    </div>
-    <div class="social-links reveal-l" style="transition-delay:.2s">
-      <h4>Follow Us</h4>
-      <div class="socials-row">
-        <a href="#" class="social-pill">f Facebook</a>
-        <a href="#" class="social-pill">✦ Instagram</a>
-        <a href="#" class="social-pill">in LinkedIn</a>
-      </div>
-    </div>
+ <!-- Info Column -->
+ <div class="contact-info-col">
+  <div class="reveal-l">
+   <span class="section-label">Get In Touch</span>
+   <h2 class="section-title">We'd Love to<br><em>Hear From You</em></h2>
+   <div class="divider-gold"></div>
+   <p class="contact-intro">
+    Whether you want to book an appointment, ask about a service, or simply say hello — we're here for you. Drop by our salon or reach out through any of the channels below.
+   </p>
   </div>
+  <div class="contact-cards reveal-l" style="transition-delay:.1s">
+   <div class="contact-card">
+    <div class="cc-icon">📍</div>
+    <div class="cc-body">
+     <div class="cc-label">Location</div>
+     <div class="cc-value" data-cms="site.address_full">Shop 12, 12 King Street, London</div>
+     <div class="cc-sub">London, United Kingdom</div>
+    </div>
+   </div>
+   <div class="contact-card">
+    <div class="cc-icon">📞</div>
+    <div class="cc-body">
+     <div class="cc-label">Phone</div>
+     <div class="cc-value" data-cms="site.phone">+91 98765 43210</div>
+     <div class="cc-sub">Call or WhatsApp for appointments</div>
+    </div>
+   </div>
+   <div class="contact-card">
+    <div class="cc-icon">✉</div>
+    <div class="cc-body">
+     <div class="cc-label">Email</div>
+     <div class="cc-value" data-cms="site.email">hello@aonehairsalon.com</div>
+     <div class="cc-sub">We reply within 24 hours</div>
+    </div>
+   </div>
+   <div class="contact-card">
+    <div class="cc-icon">🕐</div>
+    <div class="cc-body">
+     <div class="cc-label">Hours Today</div>
+     <div class="cc-value">10:00 AM – 8:00 PM</div>
+     <div class="cc-sub">Walk-ins welcome · Appointments preferred</div>
+    </div>
+   </div>
+  </div>
+  <div class="social-links reveal-l" style="transition-delay:.2s">
+   <h4>Follow Us</h4>
+   <div class="socials-row">
+    <a href="#" class="social-pill">f Facebook</a>
+    <a href="#" class="social-pill">✦ Instagram</a>
+    <a href="#" class="social-pill">in LinkedIn</a>
+   </div>
+  </div>
+ </div>
 
-  <!-- Form Column -->
-  <div class="contact-form-col reveal-r">
-    <div class="contact-form-wrap">
-      <div id="contactFormInner">
-        <h3 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--white);margin-bottom:6px">Send a Message</h3>
-        <p style="font-size:.78rem;color:var(--muted);margin-bottom:32px">Fill in the form and we'll get back to you shortly.</p>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">First Name *</label>
-            <input type="text" class="form-control" id="cf-fname" placeholder="Priya">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Last Name *</label>
-            <input type="text" class="form-control" id="cf-lname" placeholder="Sharma">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email Address *</label>
-          <input type="email" class="form-control" id="cf-email" placeholder="you@example.com">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Phone Number</label>
-          <input type="tel" class="form-control" id="cf-phone" placeholder="+91 98765 43210">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Subject</label>
-          <select class="form-control" id="cf-subject">
-            <option value="" disabled selected>Select a topic...</option>
-            <option>Appointment Enquiry</option>
-            <option>Service Information</option>
-            <option>Bridal Package</option>
-            <option>Pricing</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Message *</label>
-          <textarea class="form-control" id="cf-message" rows="4" placeholder="Tell us how we can help..."></textarea>
-        </div>
-        <button class="btn-send" onclick="sendMessage()">Send Message →</button>
-        <p class="form-note">We respect your privacy. Your information will never be shared.</p>
-      </div>
-      <div class="form-success" id="formSuccess">
-        <div class="fs-icon">✦</div>
-        <h3>Message Sent!</h3>
-        <p>Thank you for reaching out. Our team will respond to you within 24 hours.</p>
-        <a href="booking.html" style="display:inline-block;margin-top:24px;padding:12px 28px;border:1px solid var(--gold);color:var(--gold);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;transition:all .3s;cursor:none" onmouseenter="this.style.background='var(--gold)';this.style.color='var(--bg)'" onmouseleave="this.style.background='transparent';this.style.color='var(--gold)'">Book Appointment →</a>
-      </div>
+ <!-- Form Column -->
+ <div class="contact-form-col reveal-r">
+  <div class="contact-form-wrap">
+   <div id="contactFormInner">
+    <h3 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--white);margin-bottom:6px">Send a Message</h3>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:32px">Fill in the form and we'll get back to you shortly.</p>
+    <div class="form-row">
+     <div class="form-group">
+      <label class="form-label">First Name *</label>
+      <input type="text" class="form-control" id="cf-fname" placeholder="Priya">
+     </div>
+     <div class="form-group">
+      <label class="form-label">Last Name *</label>
+      <input type="text" class="form-control" id="cf-lname" placeholder="Sharma">
+     </div>
     </div>
+    <div class="form-group">
+     <label class="form-label">Email Address *</label>
+     <input type="email" class="form-control" id="cf-email" placeholder="you@example.com">
+    </div>
+    <div class="form-group">
+     <label class="form-label">Phone Number</label>
+     <input type="tel" class="form-control" id="cf-phone" placeholder="+91 98765 43210">
+    </div>
+    <div class="form-group">
+     <label class="form-label">Subject</label>
+     <select class="form-control" id="cf-subject">
+      <option value="" disabled selected>Select a topic...</option>
+      <option>Appointment Enquiry</option>
+      <option>Service Information</option>
+      <option>Bridal Package</option>
+      <option>Pricing</option>
+      <option>Other</option>
+     </select>
+    </div>
+    <div class="form-group">
+     <label class="form-label">Message *</label>
+     <textarea class="form-control" id="cf-message" rows="4" placeholder="Tell us how we can help..."></textarea>
+    </div>
+    <button class="btn-send" onclick="sendMessage()">Send Message →</button>
+    <p class="form-note">We respect your privacy. Your information will never be shared.</p>
+   </div>
+   <div class="form-success" id="formSuccess">
+    <div class="fs-icon">✦</div>
+    <h3>Message Sent!</h3>
+    <p>Thank you for reaching out. Our team will respond to you within 24 hours.</p>
+    <a href="booking.html" style="display:inline-block;margin-top:24px;padding:12px 28px;border:1px solid var(--gold);color:var(--gold);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;transition:all .3s;cursor:none" onmouseenter="this.style.background='var(--gold)';this.style.color='var(--bg)'" onmouseleave="this.style.background='transparent';this.style.color='var(--gold)'">Book Appointment →</a>
+   </div>
   </div>
+ </div>
 </section>
 
 <!-- MAP SECTION -->
 <div class="map-section">
-  <div class="map-wrapper">
-    <iframe
-      src="https://maps.google.com/maps?q=Linking+Road,+Bandra+West,+Mumbai,+Maharashtra+400050&t=&z=15&ie=UTF8&iwloc=&output=embed"
-      width="100%" height="100%"
-      style="border:0;display:block;"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      title="A One Hair Salon Location">
-    </iframe>
-    <div class="map-address">
-      <strong>A One Hair Salon</strong>
-      <span>Shop 12, Linking Road, Bandra West, Mumbai</span>
-      <br>
-      <a href="https://maps.google.com/maps?q=Linking+Road,+Bandra+West,+Mumbai,+Maharashtra+400050" target="_blank">Open in Google Maps →</a>
-    </div>
+ <div class="map-wrapper">
+  <iframe
+   src="https://maps.google.com/maps?q=King+Street,+London,+United+Kingdom&t=&z=15&ie=UTF8&iwloc=&output=embed"
+   width="100%" height="100%"
+   style="border:0;display:block;"
+   allowfullscreen=""
+   loading="lazy"
+   referrerpolicy="no-referrer-when-downgrade"
+   title="A One Hair Salon Location">
+  </iframe>
+  <div class="map-address">
+   <strong>A One Hair Salon</strong>
+   <span>Shop 12, 12 King Street, London</span>
+   <br>
+   <a href="https://maps.google.com/maps?q=King+Street,+London,+United+Kingdom" target="_blank">Open in Google Maps →</a>
   </div>
+ </div>
 </div>
 
 <!-- HOURS SECTION -->
 <section class="hours-section">
-  <div class="hours-card reveal">
-    <h3>Weekdays</h3>
-    <div class="day-range">Monday — Friday</div>
-    <div class="hours-time">10:00<br><span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">AM</span> — 8:00 <span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">PM</span></div>
-    <div class="hours-note">Regular appointments available all day</div>
-    <div class="hours-open">● Open Today</div>
-  </div>
-  <div class="hours-card reveal" style="transition-delay:.12s">
-    <h3>Saturday</h3>
-    <div class="day-range">Every Saturday</div>
-    <div class="hours-time">9:00<br><span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">AM</span> — 9:00 <span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">PM</span></div>
-    <div class="hours-note">Extended hours — busiest day, book early</div>
-    <div class="hours-open" style="border-color:rgba(201,168,76,.4);color:var(--gold)">● Weekend Hours</div>
-  </div>
-  <div class="hours-card reveal" style="transition-delay:.24s">
-    <h3>Sunday</h3>
-    <div class="day-range">Every Sunday</div>
-    <div class="hours-time">10:00<br><span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">AM</span> — 6:00 <span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">PM</span></div>
-    <div class="hours-note">Relaxed Sunday sessions available</div>
-    <div class="hours-open">● Open Today</div>
-  </div>
+ <div class="hours-card reveal">
+  <h3>Weekdays</h3>
+  <div class="day-range">Monday — Friday</div>
+  <div class="hours-time">10:00<br><span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">AM</span> — 8:00 <span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">PM</span></div>
+  <div class="hours-note">Regular appointments available all day</div>
+  <div class="hours-open">● Open Today</div>
+ </div>
+ <div class="hours-card reveal" style="transition-delay:.12s">
+  <h3>Saturday</h3>
+  <div class="day-range">Every Saturday</div>
+  <div class="hours-time">9:00<br><span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">AM</span> — 9:00 <span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">PM</span></div>
+  <div class="hours-note">Extended hours — busiest day, book early</div>
+  <div class="hours-open" style="border-color:rgba(201,168,76,.4);color:var(--gold)">● Weekend Hours</div>
+ </div>
+ <div class="hours-card reveal" style="transition-delay:.24s">
+  <h3>Sunday</h3>
+  <div class="day-range">Every Sunday</div>
+  <div class="hours-time">10:00<br><span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">AM</span> — 6:00 <span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">PM</span></div>
+  <div class="hours-note">Relaxed Sunday sessions available</div>
+  <div class="hours-open">● Open Today</div>
+ </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="logo-main">A ONE HAIR SALON</div>
-      <p data-cms="footer.tagline">Mumbai's premier luxury unisex salon. Where every visit is a bespoke journey of beauty and self-care.</p>
-      <div class="socials" style="margin-top:20px">
-        <a href="#" class="social-btn">f</a>
-        <a href="#" class="social-btn">in</a>
-        <a href="#" class="social-btn">✦</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Navigation</h4>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="booking.html">Book Now</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Services</h4>
-      <ul>
-        <li><a href="#">Haircuts & Styling</a></li>
-        <li><a href="#">Balayage & Color</a></li>
-        <li><a href="#">Bridal Packages</a></li>
-        <li><a href="#">Hair Spa</a></li>
-        <li><a href="#">Men's Grooming</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <ul>
-        <li><a href="#" data-cms="site.phone">+91 98765 43210</a></li>
-        <li><a href="#" data-cms="site.email">hello@aonehairsalon.com</a></li>
-        <li><a href="#" data-cms="site.address">Linking Road, Bandra, Mumbai</a></li>
-        <li><a href="#" data-cms="footer.hour_weekday">Mon–Fri: 10am–8pm</a></li>
-        <li><a href="#" data-cms="footer.hour_saturday">Sat: 9am–9pm</a></li>
-      </ul>
-    </div>
+ <div class="footer-grid">
+  <div class="footer-brand">
+   <div class="logo-main">A ONE HAIR SALON</div>
+   <p data-cms="footer.tagline">London's premier luxury unisex salon. Where every visit is a bespoke journey of beauty and self-care.</p>
+   <div class="socials" style="margin-top:20px">
+    <a href="#" class="social-btn">f</a>
+    <a href="#" class="social-btn">in</a>
+    <a href="#" class="social-btn">✦</a>
+   </div>
   </div>
-  <div class="footer-bottom">
-    <p data-cms="footer.copyright">© 2026 A One Hair Salon, Mumbai. All rights reserved.</p>
-    <p>Crafted with ✦ for luxury</p>
+  <div class="footer-col">
+   <h4>Navigation</h4>
+   <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="booking.html">Book Now</a></li>
+    <li><a href="contact.html">Contact</a></li>
+   </ul>
   </div>
+  <div class="footer-col">
+   <h4>Services</h4>
+   <ul>
+    <li><a href="#">Haircuts & Styling</a></li>
+    <li><a href="#">Balayage & Color</a></li>
+    <li><a href="#">Bridal Packages</a></li>
+    <li><a href="#">Hair Spa</a></li>
+    <li><a href="#">Men's Grooming</a></li>
+   </ul>
+  </div>
+  <div class="footer-col">
+   <h4>Contact</h4>
+   <ul>
+    <li><a href="#" data-cms="site.phone">+91 98765 43210</a></li>
+    <li><a href="#" data-cms="site.email">hello@aonehairsalon.com</a></li>
+    <li><a href="#" data-cms="site.address">12 King Street, London</a></li>
+    <li><a href="#" data-cms="footer.hour_weekday">Mon–Fri: 10am–8pm</a></li>
+    <li><a href="#" data-cms="footer.hour_saturday">Sat: 9am–9pm</a></li>
+   </ul>
+  </div>
+ </div>
+ <div class="footer-bottom">
+  <p data-cms="footer.copyright">© 2026 A One Hair Salon. All rights reserved.</p>
+  <p>Crafted with ✦ for luxury</p>
+ </div>
 </footer>
 
 <script>
@@ -496,48 +496,48 @@ window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.
 
 /* Cursor */
 const ring = document.getElementById('cursorRing');
-const dot  = document.getElementById('cursorDot');
+const dot = document.getElementById('cursorDot');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',(e)=>{
-  mx=e.clientX;my=e.clientY;
-  dot.style.left=mx+'px';dot.style.top=my+'px';
-  if(Math.random()>.92){
-    const s=document.createElement('div');s.className='cursor-spark';
-    const dx=(Math.random()-.5)*14;
-    s.style.cssText=`left:${mx}px;top:${my}px;--dx:${dx}px`;
-    document.body.appendChild(s);setTimeout(()=>s.remove(),850);
-  }
+ mx=e.clientX;my=e.clientY;
+ dot.style.left=mx+'px';dot.style.top=my+'px';
+ if(Math.random()>.92){
+  const s=document.createElement('div');s.className='cursor-spark';
+  const dx=(Math.random()-.5)*14;
+  s.style.cssText=`left:${mx}px;top:${my}px;--dx:${dx}px`;
+  document.body.appendChild(s);setTimeout(()=>s.remove(),850);
+ }
 });
 function animC(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animC)}
 animC();
 document.querySelectorAll('a,button,.contact-card,.hours-card,.social-pill').forEach(el=>{
-  el.addEventListener('mouseenter',()=>ring.classList.add('expand'));
-  el.addEventListener('mouseleave',()=>ring.classList.remove('expand'));
+ el.addEventListener('mouseenter',()=>ring.classList.add('expand'));
+ el.addEventListener('mouseleave',()=>ring.classList.remove('expand'));
 });
 
 /* Reveal */
 const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});
+ entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});
 },{threshold:.08});
 document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>io.observe(el));
 
 /* Page hero parallax */
 gsap.to('.page-hero-bg img',{
-  yPercent:15,ease:'none',
-  scrollTrigger:{trigger:'.page-hero',start:'top top',end:'bottom top',scrub:true}
+ yPercent:15,ease:'none',
+ scrollTrigger:{trigger:'.page-hero',start:'top top',end:'bottom top',scrub:true}
 });
 
 /* Contact form */
 function sendMessage(){
-  const fname=document.getElementById('cf-fname').value.trim();
-  const email=document.getElementById('cf-email').value.trim();
-  const message=document.getElementById('cf-message').value.trim();
-  if(!fname||!email||!message){
-    alert('Please fill in your name, email, and message.');
-    return;
-  }
-  document.getElementById('contactFormInner').style.display='none';
-  document.getElementById('formSuccess').style.display='block';
+ const fname=document.getElementById('cf-fname').value.trim();
+ const email=document.getElementById('cf-email').value.trim();
+ const message=document.getElementById('cf-message').value.trim();
+ if(!fname||!email||!message){
+  alert('Please fill in your name, email, and message.');
+  return;
+ }
+ document.getElementById('contactFormInner').style.display='none';
+ document.getElementById('formSuccess').style.display='block';
 }
 window.sendMessage = sendMessage;
 </script>
