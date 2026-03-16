@@ -10,11 +10,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 :root {
-  --gold:#c9a84c; --gold-lt:#f0d47a; --gold-dk:#8a6f2e; --gold-glow:rgba(201,168,76,.35);
-  --bg:#08080a; --bg1:#0f0f14; --bg2:#171720; --bg3:#1e1e28;
-  --white:#f5f0e8; --muted:#706a7a; --border:rgba(201,168,76,.15);
-  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
-  --ease:cubic-bezier(.23,1,.32,1);
+ --gold:#c9a84c; --gold-lt:#f0d47a; --gold-dk:#8a6f2e; --gold-glow:rgba(201,168,76,.35);
+ --bg:#08080a; --bg1:#0f0f14; --bg2:#171720; --bg3:#1e1e28;
+ --white:#f5f0e8; --muted:#706a7a; --border:rgba(201,168,76,.15);
+ --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+ --ease:cubic-bezier(.23,1,.32,1);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -49,21 +49,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 
 /* BOOKING LAYOUT */
 .booking-wrapper{
-  min-height:100vh;
-  display:grid;
-  grid-template-columns:1fr 580px;
+ min-height:100vh;
+ display:grid;
+ grid-template-columns:1fr 580px;
 }
 .booking-visual{
-  position:sticky;top:0;height:100vh;
-  overflow:hidden;
+ position:sticky;top:0;height:100vh;
+ overflow:hidden;
 }
 .booking-visual img{width:100%;height:100%;object-fit:cover;filter:brightness(.92) saturate(1.05)}
 .booking-visual::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(to right, rgba(8,8,10,.0) 0%, rgba(8,8,10,.28) 100%);
+ content:'';position:absolute;inset:0;
+ background:linear-gradient(to right, rgba(8,8,10,.0) 0%, rgba(8,8,10,.28) 100%);
 }
 .booking-visual-text{
-  position:absolute;bottom:80px;left:60px;right:60px;z-index:2;
+ position:absolute;bottom:80px;left:60px;right:60px;z-index:2;
 }
 .booking-visual-text h2{font-family:var(--serif);font-size:3rem;font-weight:300;line-height:1.1;color:var(--white)}
 .booking-visual-text h2 em{font-style:italic;color:var(--gold)}
@@ -75,30 +75,30 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 
 /* FORM PANEL */
 .booking-panel{
-  background:var(--bg1);
-  padding:120px 60px 80px;
-  overflow-y:auto;
+ background:var(--bg1);
+ padding:120px 60px 80px;
+ overflow-y:auto;
 }
 
 /* PROGRESS BAR — 3 steps */
 .progress-wrap{margin-bottom:50px}
 .progress-steps{display:flex;align-items:center;gap:0;margin-bottom:16px}
 .prog-step{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  flex:1;position:relative;
+ display:flex;flex-direction:column;align-items:center;gap:6px;
+ flex:1;position:relative;
 }
 .prog-step:not(:last-child)::after{
-  content:'';position:absolute;top:16px;left:calc(50% + 16px);right:calc(-50% + 16px);
-  height:1px;background:var(--border);z-index:0;
-  transition:background .4s;
+ content:'';position:absolute;top:16px;left:calc(50% + 16px);right:calc(-50% + 16px);
+ height:1px;background:var(--border);z-index:0;
+ transition:background .4s;
 }
 .prog-step.done:not(:last-child)::after{background:var(--gold)}
 .step-circle{
-  width:32px;height:32px;border-radius:50%;
-  border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.68rem;font-weight:600;color:var(--muted);
-  transition:all .4s;background:var(--bg2);z-index:1;position:relative;
+ width:32px;height:32px;border-radius:50%;
+ border:1px solid var(--border);
+ display:flex;align-items:center;justify-content:center;
+ font-size:.68rem;font-weight:600;color:var(--muted);
+ transition:all .4s;background:var(--bg2);z-index:1;position:relative;
 }
 .prog-step.active .step-circle{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.1);box-shadow:0 0 20px rgba(201,168,76,.25)}
 .prog-step.done .step-circle{background:var(--gold);color:var(--bg);border-color:var(--gold);font-size:.8rem}
@@ -116,8 +116,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 /* SERVICE CARDS */
 .svc-pick-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:32px}
 .svc-pick-card{
-  padding:20px 18px;border:1px solid rgba(201,168,76,.28);background:var(--bg3);
-  cursor:none;transition:all .3s;position:relative;overflow:hidden;
+ padding:20px 18px;border:1px solid rgba(201,168,76,.28);background:var(--bg3);
+ cursor:none;transition:all .3s;position:relative;overflow:hidden;
 }
 .svc-pick-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s var(--ease)}
 .svc-pick-card:hover{border-color:rgba(201,168,76,.6);background:rgba(30,30,40,.95)}
@@ -127,58 +127,58 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 .spk-name{font-family:var(--serif);font-size:1rem;color:var(--white);margin-bottom:3px}
 .spk-price{font-size:.68rem;color:rgba(201,168,76,.7)}
 .spk-check{
-  position:absolute;top:12px;right:12px;
-  width:20px;height:20px;border-radius:50%;
-  background:var(--gold);color:var(--bg);
-  display:none;align-items:center;justify-content:center;
-  font-size:.7rem;font-weight:700;
+ position:absolute;top:12px;right:12px;
+ width:20px;height:20px;border-radius:50%;
+ background:var(--gold);color:var(--bg);
+ display:none;align-items:center;justify-content:center;
+ font-size:.7rem;font-weight:700;
 }
 .svc-pick-card.selected .spk-check{display:flex}
 
 /* CALENDAR */
 .cal-wrap{margin-bottom:28px}
 .cal-header{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:14px;
+ display:flex;align-items:center;justify-content:space-between;
+ margin-bottom:14px;
 }
 .cal-month-label{
-  font-family:var(--serif);font-size:1.25rem;font-weight:300;color:var(--white);
-  letter-spacing:.06em;
+ font-family:var(--serif);font-size:1.25rem;font-weight:300;color:var(--white);
+ letter-spacing:.06em;
 }
 .cal-nav-btn{
-  width:34px;height:34px;border:1px solid rgba(201,168,76,.3);background:transparent;
-  color:var(--gold);font-size:1rem;cursor:none;transition:all .3s;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+ width:34px;height:34px;border:1px solid rgba(201,168,76,.3);background:transparent;
+ color:var(--gold);font-size:1rem;cursor:none;transition:all .3s;
+ display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
 .cal-nav-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.1)}
 .cal-nav-btn:disabled{opacity:.25;pointer-events:none}
 .cal-grid{
-  display:grid;grid-template-columns:repeat(7,1fr);gap:4px;
+ display:grid;grid-template-columns:repeat(7,1fr);gap:4px;
 }
 .cal-day-hdr{
-  text-align:center;padding:6px 2px;
-  font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;
-  color:rgba(201,168,76,.5);
+ text-align:center;padding:6px 2px;
+ font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;
+ color:rgba(201,168,76,.5);
 }
 .cal-cell{
-  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
-  border:1px solid rgba(201,168,76,.12);background:var(--bg3);
-  font-size:.85rem;color:rgba(245,240,232,.75);
-  cursor:none;transition:all .25s;position:relative;
+ aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+ border:1px solid rgba(201,168,76,.12);background:var(--bg3);
+ font-size:.85rem;color:rgba(245,240,232,.75);
+ cursor:none;transition:all .25s;position:relative;
 }
 .cal-cell:hover:not(.cal-past):not(.cal-empty){
-  border-color:rgba(201,168,76,.55);background:rgba(201,168,76,.1);color:var(--gold);
+ border-color:rgba(201,168,76,.55);background:rgba(201,168,76,.1);color:var(--gold);
 }
 .cal-cell.cal-today:not(.cal-past){
-  color:var(--gold-lt);font-weight:600;
+ color:var(--gold-lt);font-weight:600;
 }
 .cal-cell.cal-today::after{
-  content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
-  width:4px;height:4px;border-radius:50%;background:var(--gold);
+ content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
+ width:4px;height:4px;border-radius:50%;background:var(--gold);
 }
 .cal-cell.cal-selected{
-  border-color:var(--gold);background:rgba(201,168,76,.22);
-  color:var(--gold);font-weight:600;box-shadow:0 0 14px rgba(201,168,76,.2);
+ border-color:var(--gold);background:rgba(201,168,76,.22);
+ color:var(--gold);font-weight:600;box-shadow:0 0 14px rgba(201,168,76,.2);
 }
 .cal-cell.cal-past{opacity:.25;pointer-events:none;background:transparent;border-color:rgba(201,168,76,.06)}
 .cal-cell.cal-empty{background:transparent;border-color:transparent;pointer-events:none}
@@ -186,14 +186,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 /* TIME GROUPS */
 .time-group{margin-bottom:20px}
 .time-group-label{
-  font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
-  color:rgba(201,168,76,.55);margin-bottom:10px;
+ font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
+ color:rgba(201,168,76,.55);margin-bottom:10px;
 }
 .time-group-slots{display:flex;flex-wrap:wrap;gap:8px}
 .time-slot{
-  padding:10px 14px;border:1px solid rgba(201,168,76,.22);
-  background:var(--bg3);cursor:none;transition:all .3s;
-  font-size:.75rem;color:rgba(245,240,232,.75);
+ padding:10px 14px;border:1px solid rgba(201,168,76,.22);
+ background:var(--bg3);cursor:none;transition:all .3s;
+ font-size:.75rem;color:rgba(245,240,232,.75);
 }
 .time-slot:hover{border-color:rgba(201,168,76,.55);color:var(--gold);background:rgba(201,168,76,.1)}
 .time-slot.selected{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.18);box-shadow:0 0 12px rgba(201,168,76,.15)}
@@ -202,17 +202,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 /* STYLIST CHIPS */
 .stylist-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px}
 .sty-chip{
-  display:flex;align-items:center;gap:10px;
-  padding:11px 16px;border:1px solid rgba(201,168,76,.22);background:var(--bg3);
-  cursor:none;transition:all .3s;
+ display:flex;align-items:center;gap:10px;
+ padding:11px 16px;border:1px solid rgba(201,168,76,.22);background:var(--bg3);
+ cursor:none;transition:all .3s;
 }
 .sty-chip:hover{border-color:rgba(201,168,76,.55);background:rgba(30,30,40,.95)}
 .sty-chip.selected{border-color:var(--gold);background:rgba(201,168,76,.14);box-shadow:0 0 14px rgba(201,168,76,.1)}
 .sty-chip-av{
-  width:32px;height:32px;border-radius:50%;flex-shrink:0;
-  background:linear-gradient(135deg,var(--gold-dk),var(--gold));
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--serif);font-size:.9rem;color:var(--bg);font-weight:700;
+ width:32px;height:32px;border-radius:50%;flex-shrink:0;
+ background:linear-gradient(135deg,var(--gold-dk),var(--gold));
+ display:flex;align-items:center;justify-content:center;
+ font-family:var(--serif);font-size:.9rem;color:var(--bg);font-weight:700;
 }
 .sty-chip-name{font-size:.78rem;color:var(--white);white-space:nowrap}
 .sty-chip.selected .sty-chip-name{color:var(--gold)}
@@ -225,9 +225,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 .field-wrap{display:flex;flex-direction:column;gap:6px}
 .field-label{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .field-input{
-  padding:13px 16px;background:var(--bg2);border:1px solid var(--border);
-  color:var(--white);font-size:.85rem;outline:none;
-  transition:border-color .3s;
+ padding:13px 16px;background:var(--bg2);border:1px solid var(--border);
+ color:var(--white);font-size:.85rem;outline:none;
+ transition:border-color .3s;
 }
 .field-input:focus{border-color:var(--gold)}
 .field-input::placeholder{color:rgba(112,106,122,.6)}
@@ -235,13 +235,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 
 /* MINI SUMMARY */
 .mini-summary{
-  background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);
-  padding:18px 20px;margin-bottom:24px;
+ background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);
+ padding:18px 20px;margin-bottom:24px;
 }
 .ms-title{font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
 .ms-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:7px 0;border-bottom:1px solid rgba(201,168,76,.1);font-size:.75rem;
+ display:flex;justify-content:space-between;align-items:center;
+ padding:7px 0;border-bottom:1px solid rgba(201,168,76,.1);font-size:.75rem;
 }
 .ms-row:last-child{border-bottom:none}
 .ms-label{color:var(--muted)}
@@ -250,50 +250,50 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 /* NAVIGATION BUTTONS */
 .form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
 .btn-back-step{
-  padding:13px 28px;border:1px solid var(--border);background:transparent;
-  color:var(--muted);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
-  cursor:none;transition:all .3s;
+ padding:13px 28px;border:1px solid var(--border);background:transparent;
+ color:var(--muted);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+ cursor:none;transition:all .3s;
 }
 .btn-back-step:hover{border-color:var(--gold);color:var(--gold)}
 .btn-next-step{
-  padding:13px 36px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));
-  color:var(--bg);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
-  font-weight:600;border:none;cursor:none;transition:all .4s var(--ease);
-  box-shadow:0 6px 24px rgba(201,168,76,.25);
+ padding:13px 36px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));
+ color:var(--bg);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+ font-weight:600;border:none;cursor:none;transition:all .4s var(--ease);
+ box-shadow:0 6px 24px rgba(201,168,76,.25);
 }
 .btn-next-step:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(201,168,76,.4)}
 .btn-next-step:disabled{opacity:.4;transform:none;box-shadow:none;pointer-events:none}
 
 /* CONFIRM NOTE */
 .confirm-note{
-  background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);
-  padding:16px 20px;font-size:.78rem;color:rgba(245,240,232,.6);line-height:1.7;
-  margin-bottom:24px;
+ background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);
+ padding:16px 20px;font-size:.78rem;color:rgba(245,240,232,.6);line-height:1.7;
+ margin-bottom:24px;
 }
 
 /* SUCCESS */
 .success-view{
-  display:none;text-align:center;padding:20px 0;
-  animation:stepIn .6s var(--ease) both;
+ display:none;text-align:center;padding:20px 0;
+ animation:stepIn .6s var(--ease) both;
 }
 .success-icon{
-  width:80px;height:80px;border-radius:50%;
-  background:linear-gradient(135deg,var(--gold),var(--gold-dk));
-  display:flex;align-items:center;justify-content:center;
-  font-size:2rem;color:var(--bg);margin:0 auto 28px;
-  box-shadow:0 0 50px rgba(201,168,76,.4);
+ width:80px;height:80px;border-radius:50%;
+ background:linear-gradient(135deg,var(--gold),var(--gold-dk));
+ display:flex;align-items:center;justify-content:center;
+ font-size:2rem;color:var(--bg);margin:0 auto 28px;
+ box-shadow:0 0 50px rgba(201,168,76,.4);
 }
 .success-view h2{font-family:var(--serif);font-size:2.8rem;font-weight:300;color:var(--white);margin-bottom:12px}
 .success-view p{font-size:.85rem;color:var(--muted);line-height:1.8;max-width:380px;margin:0 auto}
 .booking-id{
-  display:inline-block;margin:24px auto;padding:12px 32px;
-  background:rgba(201,168,76,.1);border:1px solid var(--gold);
-  font-family:var(--serif);font-size:1.4rem;color:var(--gold);
-  letter-spacing:.12em;
+ display:inline-block;margin:24px auto;padding:12px 32px;
+ background:rgba(201,168,76,.1);border:1px solid var(--gold);
+ font-family:var(--serif);font-size:1.4rem;color:var(--gold);
+ letter-spacing:.12em;
 }
 .confirm-details{
-  background:var(--bg2);border:1px solid var(--border);
-  padding:24px;margin:28px 0;text-align:left;
+ background:var(--bg2);border:1px solid var(--border);
+ padding:24px;margin:28px 0;text-align:left;
 }
 .cd-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:.8rem}
 .cd-row:last-child{border:none}
@@ -302,21 +302,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;justify-content
 
 /* MOBILE */
 @media(max-width:1100px){
-  .booking-wrapper{grid-template-columns:1fr}
-  .booking-visual{display:none}
-  nav{padding-left:40px;padding-right:40px}
-  .booking-panel{padding:100px 40px 60px}
+ .booking-wrapper{grid-template-columns:1fr}
+ .booking-visual{display:none}
+ nav{padding-left:40px;padding-right:40px}
+ .booking-panel{padding:100px 40px 60px}
 }
 @media(max-width:768px){
-  body{cursor:auto}.cursor-ring,.cursor-dot,.cursor-spark{display:none!important}
-  nav{padding:18px 24px}
-  .nav-links,.nav-back{display:none}
-  .booking-panel{padding:90px 24px 60px}
-  .svc-pick-grid{grid-template-columns:1fr}
-  .form-row{grid-template-columns:1fr}
-  .cal-cell{font-size:.78rem}
-  .stylist-row{flex-direction:column}
-  .sty-chip{width:100%}
+ body{cursor:auto}.cursor-ring,.cursor-dot,.cursor-spark{display:none!important}
+ nav{padding:18px 24px}
+ .nav-links,.nav-back{display:none}
+ .booking-panel{padding:90px 24px 60px}
+ .svc-pick-grid{grid-template-columns:1fr}
+ .form-row{grid-template-columns:1fr}
+ .cal-cell{font-size:.78rem}
+ .stylist-row{flex-direction:column}
+ .sty-chip{width:100%}
 }
 
 /* FOOTER */
@@ -343,310 +343,310 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
 <div class="cursor-dot" id="cursorDot"></div>
 
 <nav id="mainNav">
-  <div class="nav-logo">
-    <div class="logo-emblem">A</div>
-    <div class="logo-text">
-      <div class="logo-main">A ONE</div>
-      <div class="logo-sub">Hair Salon · Mumbai</div>
-    </div>
+ <div class="nav-logo">
+  <div class="logo-emblem">A</div>
+  <div class="logo-text">
+   <div class="logo-main">A ONE</div>
+   <div class="logo-sub">Hair Salon</div>
   </div>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <a href="index.html" class="nav-back">← Back</a>
+ </div>
+ <ul class="nav-links">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="services.html">Services</a></li>
+  <li><a href="gallery.html">Gallery</a></li>
+  <li><a href="contact.html">Contact</a></li>
+ </ul>
+ <a href="index.html" class="nav-back">← Back</a>
 </nav>
 
 <div class="booking-wrapper">
 
-  <!-- VISUAL SIDE -->
-  <div class="booking-visual">
-    <img src="https://design.canva.ai/sTlJQ7Xvd8wRt8m" alt="A One Salon">
-    <div class="booking-visual-text">
-      <h2>Book Your<br><em>Experience</em></h2>
-      <p>Reserve your appointment at A One Hair Salon and step into a world of luxury and artistry.</p>
-      <div class="bvt-hours">
-        <div class="bvt-hour"><span class="day">Mon – Fri</span><span class="time">10:00 AM – 8:00 PM</span></div>
-        <div class="bvt-hour"><span class="day">Saturday</span><span class="time">9:00 AM – 9:00 PM</span></div>
-        <div class="bvt-hour"><span class="day">Sunday</span><span class="time">10:00 AM – 6:00 PM</span></div>
-      </div>
+ <!-- VISUAL SIDE -->
+ <div class="booking-visual">
+  <img src="https://design.canva.ai/sTlJQ7Xvd8wRt8m" alt="A One Salon">
+  <div class="booking-visual-text">
+   <h2>Book Your<br><em>Experience</em></h2>
+   <p>Reserve your appointment at A One Hair Salon and step into a world of luxury and artistry.</p>
+   <div class="bvt-hours">
+    <div class="bvt-hour"><span class="day">Mon – Fri</span><span class="time">10:00 AM – 8:00 PM</span></div>
+    <div class="bvt-hour"><span class="day">Saturday</span><span class="time">9:00 AM – 9:00 PM</span></div>
+    <div class="bvt-hour"><span class="day">Sunday</span><span class="time">10:00 AM – 6:00 PM</span></div>
+   </div>
+  </div>
+ </div>
+
+ <!-- BOOKING PANEL -->
+ <div class="booking-panel">
+
+  <!-- Progress — 3 steps -->
+  <div class="progress-wrap" id="progressWrap">
+   <div class="progress-steps">
+    <div class="prog-step active" id="ps1">
+     <div class="step-circle">1</div>
+     <div class="step-label">Service</div>
     </div>
+    <div class="prog-step" id="ps2">
+     <div class="step-circle">2</div>
+     <div class="step-label">Schedule</div>
+    </div>
+    <div class="prog-step" id="ps3">
+     <div class="step-circle">3</div>
+     <div class="step-label">Confirm</div>
+    </div>
+   </div>
   </div>
 
-  <!-- BOOKING PANEL -->
-  <div class="booking-panel">
-
-    <!-- Progress — 3 steps -->
-    <div class="progress-wrap" id="progressWrap">
-      <div class="progress-steps">
-        <div class="prog-step active" id="ps1">
-          <div class="step-circle">1</div>
-          <div class="step-label">Service</div>
-        </div>
-        <div class="prog-step" id="ps2">
-          <div class="step-circle">2</div>
-          <div class="step-label">Schedule</div>
-        </div>
-        <div class="prog-step" id="ps3">
-          <div class="step-circle">3</div>
-          <div class="step-label">Confirm</div>
-        </div>
-      </div>
+  <!-- ── STEP 1: Service ── -->
+  <div class="form-step active" id="step1">
+   <div class="step-heading">
+    <h3>Choose a Service</h3>
+    <p>Select the treatment you'd like to book</p>
+   </div>
+   <div class="svc-pick-grid" id="cmsBookingServices">
+    <div class="svc-pick-card" data-svc="Women's Haircut" data-price="₹800">
+     <div class="spk-icon">✂</div>
+     <div class="spk-name">Women's Haircut</div>
+     <div class="spk-price">from ₹800</div>
+     <div class="spk-check">✓</div>
     </div>
-
-    <!-- ── STEP 1: Service ── -->
-    <div class="form-step active" id="step1">
-      <div class="step-heading">
-        <h3>Choose a Service</h3>
-        <p>Select the treatment you'd like to book</p>
-      </div>
-      <div class="svc-pick-grid" id="cmsBookingServices">
-        <div class="svc-pick-card" data-svc="Women's Haircut" data-price="₹800">
-          <div class="spk-icon">✂</div>
-          <div class="spk-name">Women's Haircut</div>
-          <div class="spk-price">from ₹800</div>
-          <div class="spk-check">✓</div>
-        </div>
-        <div class="svc-pick-card" data-svc="Men's Haircut" data-price="₹350">
-          <div class="spk-icon">✦</div>
-          <div class="spk-name">Men's Haircut</div>
-          <div class="spk-price">from ₹350</div>
-          <div class="spk-check">✓</div>
-        </div>
-        <div class="svc-pick-card" data-svc="Balayage & Color" data-price="₹4,000">
-          <div class="spk-icon">◉</div>
-          <div class="spk-name">Balayage &amp; Color</div>
-          <div class="spk-price">from ₹4,000</div>
-          <div class="spk-check">✓</div>
-        </div>
-        <div class="svc-pick-card" data-svc="Bridal Styling" data-price="₹5,000">
-          <div class="spk-icon">♛</div>
-          <div class="spk-name">Bridal Styling</div>
-          <div class="spk-price">from ₹5,000</div>
-          <div class="spk-check">✓</div>
-        </div>
-        <div class="svc-pick-card" data-svc="Hair Spa" data-price="₹1,500">
-          <div class="spk-icon">◈</div>
-          <div class="spk-name">Hair Spa</div>
-          <div class="spk-price">from ₹1,500</div>
-          <div class="spk-check">✓</div>
-        </div>
-        <div class="svc-pick-card" data-svc="Keratin Treatment" data-price="₹5,000">
-          <div class="spk-icon">✿</div>
-          <div class="spk-name">Keratin Treatment</div>
-          <div class="spk-price">from ₹5,000</div>
-          <div class="spk-check">✓</div>
-        </div>
-        <div class="svc-pick-card" data-svc="Luxury Facial" data-price="₹2,000">
-          <div class="spk-icon">❋</div>
-          <div class="spk-name">Luxury Facial</div>
-          <div class="spk-price">from ₹2,000</div>
-          <div class="spk-check">✓</div>
-        </div>
-        <div class="svc-pick-card" data-svc="Nail Art" data-price="₹1,200">
-          <div class="spk-icon">◆</div>
-          <div class="spk-name">Nail Art</div>
-          <div class="spk-price">from ₹1,200</div>
-          <div class="spk-check">✓</div>
-        </div>
-      </div>
-      <div class="form-nav">
-        <span></span>
-        <button class="btn-next-step" id="next1" disabled onclick="goStep(2)">Next: Pick a Date →</button>
-      </div>
+    <div class="svc-pick-card" data-svc="Men's Haircut" data-price="₹350">
+     <div class="spk-icon">✦</div>
+     <div class="spk-name">Men's Haircut</div>
+     <div class="spk-price">from ₹350</div>
+     <div class="spk-check">✓</div>
     </div>
-
-    <!-- ── STEP 2: Schedule (Date + Time + Stylist) ── -->
-    <div class="form-step" id="step2">
-      <div class="step-heading">
-        <h3>Schedule</h3>
-        <p>Choose your date, time, and preferred stylist</p>
-      </div>
-
-      <!-- Service reminder chip -->
-      <div id="svcReminder" style="display:none;margin-bottom:20px;padding:10px 16px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);font-size:.75rem;color:var(--gold);letter-spacing:.05em">
-        ✦ <span id="svcReminderText"></span>
-      </div>
-
-      <!-- Full Calendar -->
-      <p style="font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Select a Date</p>
-      <div class="cal-wrap">
-        <div class="cal-header">
-          <button class="cal-nav-btn" id="calPrev" onclick="calShift(-1)">&#8592;</button>
-          <div class="cal-month-label" id="calMonthLabel">Month Year</div>
-          <button class="cal-nav-btn" id="calNext" onclick="calShift(1)">&#8594;</button>
-        </div>
-        <div class="cal-grid" id="calGrid"></div>
-      </div>
-
-      <!-- Time slots grouped -->
-      <p style="font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Available Times</p>
-      <div id="timeGroupsWrap">
-        <div class="time-group">
-          <div class="time-group-label">Morning</div>
-          <div class="time-group-slots">
-            <div class="time-slot" data-time="10:00 AM">10:00 AM</div>
-            <div class="time-slot" data-time="10:30 AM">10:30 AM</div>
-            <div class="time-slot" data-time="11:00 AM">11:00 AM</div>
-            <div class="time-slot taken" data-time="11:30 AM">11:30 AM</div>
-          </div>
-        </div>
-        <div class="time-group">
-          <div class="time-group-label">Afternoon</div>
-          <div class="time-group-slots">
-            <div class="time-slot taken" data-time="12:00 PM">12:00 PM</div>
-            <div class="time-slot" data-time="1:00 PM">1:00 PM</div>
-            <div class="time-slot" data-time="2:00 PM">2:00 PM</div>
-            <div class="time-slot" data-time="3:00 PM">3:00 PM</div>
-            <div class="time-slot" data-time="4:00 PM">4:00 PM</div>
-          </div>
-        </div>
-        <div class="time-group">
-          <div class="time-group-label">Evening</div>
-          <div class="time-group-slots">
-            <div class="time-slot" data-time="5:00 PM">5:00 PM</div>
-            <div class="time-slot" data-time="6:00 PM">6:00 PM</div>
-            <div class="time-slot taken" data-time="6:30 PM">6:30 PM</div>
-            <div class="time-slot" data-time="7:00 PM">7:00 PM</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stylist chips -->
-      <p style="font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin:24px 0 12px">Choose Stylist</p>
-      <div class="stylist-row">
-        <div class="sty-chip" data-stylist="Any Available">
-          <div class="sty-chip-av">A</div>
-          <div>
-            <div class="sty-chip-name">Any Available</div>
-            <div class="sty-chip-spec">Best availability</div>
-          </div>
-        </div>
-        <div class="sty-chip" data-stylist="Priya Sharma">
-          <div class="sty-chip-av">P</div>
-          <div>
-            <div class="sty-chip-name">Priya Sharma</div>
-            <div class="sty-chip-spec">Color Expert</div>
-          </div>
-        </div>
-        <div class="sty-chip" data-stylist="Rahul Mehta">
-          <div class="sty-chip-av">R</div>
-          <div>
-            <div class="sty-chip-name">Rahul Mehta</div>
-            <div class="sty-chip-spec">Grooming</div>
-          </div>
-        </div>
-        <div class="sty-chip" data-stylist="Ayesha Khan">
-          <div class="sty-chip-av">AK</div>
-          <div>
-            <div class="sty-chip-name">Ayesha Khan</div>
-            <div class="sty-chip-spec">Bridal</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-nav">
-        <button class="btn-back-step" onclick="goStep(1)">← Back</button>
-        <button class="btn-next-step" id="next2" disabled onclick="goStep(3)">Next: Your Details →</button>
-      </div>
+    <div class="svc-pick-card" data-svc="Balayage & Color" data-price="₹4,000">
+     <div class="spk-icon">◉</div>
+     <div class="spk-name">Balayage &amp; Color</div>
+     <div class="spk-price">from ₹4,000</div>
+     <div class="spk-check">✓</div>
     </div>
-
-    <!-- ── STEP 3: Details + Confirm ── -->
-    <div class="form-step" id="step3">
-      <div class="step-heading">
-        <h3>Your Details</h3>
-        <p>Fill in your information and confirm your booking</p>
-      </div>
-
-      <!-- Mini summary of selections -->
-      <div class="mini-summary" id="miniSummary">
-        <div class="ms-title">Your Selection</div>
-        <div class="ms-row"><span class="ms-label">Service</span><span class="ms-val" id="ms-svc">—</span></div>
-        <div class="ms-row"><span class="ms-label">Date</span><span class="ms-val" id="ms-date">—</span></div>
-        <div class="ms-row"><span class="ms-label">Time</span><span class="ms-val" id="ms-time">—</span></div>
-        <div class="ms-row"><span class="ms-label">Stylist</span><span class="ms-val" id="ms-sty">—</span></div>
-        <div class="ms-row"><span class="ms-label">Est. Price</span><span class="ms-val" id="ms-price">—</span></div>
-      </div>
-
-      <!-- Contact fields -->
-      <div class="form-fields">
-        <div class="form-row">
-          <div class="field-wrap">
-            <label class="field-label">First Name *</label>
-            <input type="text" class="field-input" id="fname" placeholder="Priya" oninput="validateStep3()">
-          </div>
-          <div class="field-wrap">
-            <label class="field-label">Last Name *</label>
-            <input type="text" class="field-input" id="lname" placeholder="Sharma" oninput="validateStep3()">
-          </div>
-        </div>
-        <div class="field-wrap">
-          <label class="field-label">Mobile Number *</label>
-          <input type="tel" class="field-input" id="mobile" placeholder="+91 98765 43210" oninput="validateStep3()">
-          <span class="field-note">We'll send a WhatsApp confirmation to this number</span>
-        </div>
-        <div class="field-wrap">
-          <label class="field-label">Email Address *</label>
-          <input type="email" class="field-input" id="email" placeholder="you@example.com" oninput="validateStep3()">
-          <span class="field-note">Booking confirmation will be sent here</span>
-        </div>
-        <div class="field-wrap">
-          <label class="field-label">Special Requests (Optional)</label>
-          <textarea class="field-input" id="notes" rows="3" placeholder="Any allergies, preferences or notes for your stylist..."></textarea>
-        </div>
-      </div>
-
-      <div class="confirm-note">
-        ✦ Confirmation will be sent via email and WhatsApp immediately after booking.<br>
-        ✦ Please arrive 10 minutes before your appointment time.<br>
-        ✦ Cancellations must be made at least 24 hours in advance.
-      </div>
-
-      <div class="form-nav">
-        <button class="btn-back-step" onclick="goStep(2)">← Back</button>
-        <button class="btn-next-step" id="confirmBtn" disabled onclick="confirmBooking()">Confirm Appointment ✓</button>
-      </div>
+    <div class="svc-pick-card" data-svc="Bridal Styling" data-price="₹5,000">
+     <div class="spk-icon">♛</div>
+     <div class="spk-name">Bridal Styling</div>
+     <div class="spk-price">from ₹5,000</div>
+     <div class="spk-check">✓</div>
     </div>
-
-    <!-- ── SUCCESS ── -->
-    <div class="success-view" id="successView">
-      <div class="success-icon">✓</div>
-      <h2>Booking Confirmed!</h2>
-      <p>Thank you for choosing A One Hair Salon. Your appointment is all set!</p>
-      <div class="booking-id" id="bookingId">#AOH-00000</div>
-      <div class="confirm-details" id="confirmDetails">
-        <div class="cd-row"><span class="cd-label">Service</span><span class="cd-val" id="cd-svc">—</span></div>
-        <div class="cd-row"><span class="cd-label">Stylist</span><span class="cd-val" id="cd-sty">—</span></div>
-        <div class="cd-row"><span class="cd-label">Date &amp; Time</span><span class="cd-val" id="cd-dt">—</span></div>
-        <div class="cd-row"><span class="cd-label">Confirmation sent to</span><span class="cd-val" id="cd-email">—</span></div>
-        <div class="cd-row"><span class="cd-label">WhatsApp confirmation to</span><span class="cd-val" id="cd-sms">—</span></div>
-      </div>
-      <div class="confirm-note" id="emailStatusNote">
-        See you soon at A One Hair Salon!
-      </div>
-      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:24px">
-        <a id="waSmsBtn" href="#" target="_blank" style="display:none;padding:14px 28px;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;font-weight:600;border:none;transition:all .4s;cursor:none">
-          WhatsApp Confirmation
-        </a>
-        <a href="index.html" style="display:inline-block;padding:14px 36px;border:1px solid var(--gold);color:var(--gold);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;transition:all .4s;cursor:none" onmouseenter="this.style.background='var(--gold)';this.style.color='var(--bg)'" onmouseleave="this.style.background='transparent';this.style.color='var(--gold)'">Return to Home</a>
-      </div>
+    <div class="svc-pick-card" data-svc="Hair Spa" data-price="₹1,500">
+     <div class="spk-icon">◈</div>
+     <div class="spk-name">Hair Spa</div>
+     <div class="spk-price">from ₹1,500</div>
+     <div class="spk-check">✓</div>
     </div>
+    <div class="svc-pick-card" data-svc="Keratin Treatment" data-price="₹5,000">
+     <div class="spk-icon">✿</div>
+     <div class="spk-name">Keratin Treatment</div>
+     <div class="spk-price">from ₹5,000</div>
+     <div class="spk-check">✓</div>
+    </div>
+    <div class="svc-pick-card" data-svc="Luxury Facial" data-price="₹2,000">
+     <div class="spk-icon">❋</div>
+     <div class="spk-name">Luxury Facial</div>
+     <div class="spk-price">from ₹2,000</div>
+     <div class="spk-check">✓</div>
+    </div>
+    <div class="svc-pick-card" data-svc="Nail Art" data-price="₹1,200">
+     <div class="spk-icon">◆</div>
+     <div class="spk-name">Nail Art</div>
+     <div class="spk-price">from ₹1,200</div>
+     <div class="spk-check">✓</div>
+    </div>
+   </div>
+   <div class="form-nav">
+    <span></span>
+    <button class="btn-next-step" id="next1" disabled onclick="goStep(2)">Next: Pick a Date →</button>
+   </div>
+  </div>
 
-  </div><!-- /booking-panel -->
+  <!-- ── STEP 2: Schedule (Date + Time + Stylist) ── -->
+  <div class="form-step" id="step2">
+   <div class="step-heading">
+    <h3>Schedule</h3>
+    <p>Choose your date, time, and preferred stylist</p>
+   </div>
+
+   <!-- Service reminder chip -->
+   <div id="svcReminder" style="display:none;margin-bottom:20px;padding:10px 16px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);font-size:.75rem;color:var(--gold);letter-spacing:.05em">
+    ✦ <span id="svcReminderText"></span>
+   </div>
+
+   <!-- Full Calendar -->
+   <p style="font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Select a Date</p>
+   <div class="cal-wrap">
+    <div class="cal-header">
+     <button class="cal-nav-btn" id="calPrev" onclick="calShift(-1)">&#8592;</button>
+     <div class="cal-month-label" id="calMonthLabel">Month Year</div>
+     <button class="cal-nav-btn" id="calNext" onclick="calShift(1)">&#8594;</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+   </div>
+
+   <!-- Time slots grouped -->
+   <p style="font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Available Times</p>
+   <div id="timeGroupsWrap">
+    <div class="time-group">
+     <div class="time-group-label">Morning</div>
+     <div class="time-group-slots">
+      <div class="time-slot" data-time="10:00 AM">10:00 AM</div>
+      <div class="time-slot" data-time="10:30 AM">10:30 AM</div>
+      <div class="time-slot" data-time="11:00 AM">11:00 AM</div>
+      <div class="time-slot taken" data-time="11:30 AM">11:30 AM</div>
+     </div>
+    </div>
+    <div class="time-group">
+     <div class="time-group-label">Afternoon</div>
+     <div class="time-group-slots">
+      <div class="time-slot taken" data-time="12:00 PM">12:00 PM</div>
+      <div class="time-slot" data-time="1:00 PM">1:00 PM</div>
+      <div class="time-slot" data-time="2:00 PM">2:00 PM</div>
+      <div class="time-slot" data-time="3:00 PM">3:00 PM</div>
+      <div class="time-slot" data-time="4:00 PM">4:00 PM</div>
+     </div>
+    </div>
+    <div class="time-group">
+     <div class="time-group-label">Evening</div>
+     <div class="time-group-slots">
+      <div class="time-slot" data-time="5:00 PM">5:00 PM</div>
+      <div class="time-slot" data-time="6:00 PM">6:00 PM</div>
+      <div class="time-slot taken" data-time="6:30 PM">6:30 PM</div>
+      <div class="time-slot" data-time="7:00 PM">7:00 PM</div>
+     </div>
+    </div>
+   </div>
+
+   <!-- Stylist chips -->
+   <p style="font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin:24px 0 12px">Choose Stylist</p>
+   <div class="stylist-row">
+    <div class="sty-chip" data-stylist="Any Available">
+     <div class="sty-chip-av">A</div>
+     <div>
+      <div class="sty-chip-name">Any Available</div>
+      <div class="sty-chip-spec">Best availability</div>
+     </div>
+    </div>
+    <div class="sty-chip" data-stylist="Priya Sharma">
+     <div class="sty-chip-av">P</div>
+     <div>
+      <div class="sty-chip-name">Priya Sharma</div>
+      <div class="sty-chip-spec">Color Expert</div>
+     </div>
+    </div>
+    <div class="sty-chip" data-stylist="Rahul Mehta">
+     <div class="sty-chip-av">R</div>
+     <div>
+      <div class="sty-chip-name">Rahul Mehta</div>
+      <div class="sty-chip-spec">Grooming</div>
+     </div>
+    </div>
+    <div class="sty-chip" data-stylist="Ayesha Khan">
+     <div class="sty-chip-av">AK</div>
+     <div>
+      <div class="sty-chip-name">Ayesha Khan</div>
+      <div class="sty-chip-spec">Bridal</div>
+     </div>
+    </div>
+   </div>
+
+   <div class="form-nav">
+    <button class="btn-back-step" onclick="goStep(1)">← Back</button>
+    <button class="btn-next-step" id="next2" disabled onclick="goStep(3)">Next: Your Details →</button>
+   </div>
+  </div>
+
+  <!-- ── STEP 3: Details + Confirm ── -->
+  <div class="form-step" id="step3">
+   <div class="step-heading">
+    <h3>Your Details</h3>
+    <p>Fill in your information and confirm your booking</p>
+   </div>
+
+   <!-- Mini summary of selections -->
+   <div class="mini-summary" id="miniSummary">
+    <div class="ms-title">Your Selection</div>
+    <div class="ms-row"><span class="ms-label">Service</span><span class="ms-val" id="ms-svc">—</span></div>
+    <div class="ms-row"><span class="ms-label">Date</span><span class="ms-val" id="ms-date">—</span></div>
+    <div class="ms-row"><span class="ms-label">Time</span><span class="ms-val" id="ms-time">—</span></div>
+    <div class="ms-row"><span class="ms-label">Stylist</span><span class="ms-val" id="ms-sty">—</span></div>
+    <div class="ms-row"><span class="ms-label">Est. Price</span><span class="ms-val" id="ms-price">—</span></div>
+   </div>
+
+   <!-- Contact fields -->
+   <div class="form-fields">
+    <div class="form-row">
+     <div class="field-wrap">
+      <label class="field-label">First Name *</label>
+      <input type="text" class="field-input" id="fname" placeholder="Priya" oninput="validateStep3()">
+     </div>
+     <div class="field-wrap">
+      <label class="field-label">Last Name *</label>
+      <input type="text" class="field-input" id="lname" placeholder="Sharma" oninput="validateStep3()">
+     </div>
+    </div>
+    <div class="field-wrap">
+     <label class="field-label">Mobile Number *</label>
+     <input type="tel" class="field-input" id="mobile" placeholder="+91 98765 43210" oninput="validateStep3()">
+     <span class="field-note">We'll send a WhatsApp confirmation to this number</span>
+    </div>
+    <div class="field-wrap">
+     <label class="field-label">Email Address *</label>
+     <input type="email" class="field-input" id="email" placeholder="you@example.com" oninput="validateStep3()">
+     <span class="field-note">Booking confirmation will be sent here</span>
+    </div>
+    <div class="field-wrap">
+     <label class="field-label">Special Requests (Optional)</label>
+     <textarea class="field-input" id="notes" rows="3" placeholder="Any allergies, preferences or notes for your stylist..."></textarea>
+    </div>
+   </div>
+
+   <div class="confirm-note">
+    ✦ Confirmation will be sent via email and WhatsApp immediately after booking.<br>
+    ✦ Please arrive 10 minutes before your appointment time.<br>
+    ✦ Cancellations must be made at least 24 hours in advance.
+   </div>
+
+   <div class="form-nav">
+    <button class="btn-back-step" onclick="goStep(2)">← Back</button>
+    <button class="btn-next-step" id="confirmBtn" disabled onclick="confirmBooking()">Confirm Appointment ✓</button>
+   </div>
+  </div>
+
+  <!-- ── SUCCESS ── -->
+  <div class="success-view" id="successView">
+   <div class="success-icon">✓</div>
+   <h2>Booking Confirmed!</h2>
+   <p>Thank you for choosing A One Hair Salon. Your appointment is all set!</p>
+   <div class="booking-id" id="bookingId">#AOH-00000</div>
+   <div class="confirm-details" id="confirmDetails">
+    <div class="cd-row"><span class="cd-label">Service</span><span class="cd-val" id="cd-svc">—</span></div>
+    <div class="cd-row"><span class="cd-label">Stylist</span><span class="cd-val" id="cd-sty">—</span></div>
+    <div class="cd-row"><span class="cd-label">Date &amp; Time</span><span class="cd-val" id="cd-dt">—</span></div>
+    <div class="cd-row"><span class="cd-label">Confirmation sent to</span><span class="cd-val" id="cd-email">—</span></div>
+    <div class="cd-row"><span class="cd-label">WhatsApp confirmation to</span><span class="cd-val" id="cd-sms">—</span></div>
+   </div>
+   <div class="confirm-note" id="emailStatusNote">
+    See you soon at A One Hair Salon!
+   </div>
+   <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:24px">
+    <a id="waSmsBtn" href="#" target="_blank" style="display:none;padding:14px 28px;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;font-weight:600;border:none;transition:all .4s;cursor:none">
+     WhatsApp Confirmation
+    </a>
+    <a href="index.html" style="display:inline-block;padding:14px 36px;border:1px solid var(--gold);color:var(--gold);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;transition:all .4s;cursor:none" onmouseenter="this.style.background='var(--gold)';this.style.color='var(--bg)'" onmouseleave="this.style.background='transparent';this.style.color='var(--gold)'">Return to Home</a>
+   </div>
+  </div>
+
+ </div><!-- /booking-panel -->
 </div><!-- /booking-wrapper -->
 
 <script src="cms.js"></script>
 <script src="site.js"></script>
 <script>
 /* =====================================================
-   A ONE SALON — BOOKING ENGINE (3-Step)
-   ===================================================== */
+  A ONE SALON — BOOKING ENGINE (3-Step)
+  ===================================================== */
 
 /* -- EmailJS Config -- */
-const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
-const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
+const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
 const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
 const EMAIL_ENABLED = EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY';
 if (EMAIL_ENABLED) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
@@ -657,133 +657,133 @@ let currentStep = 1;
 
 /* ── Cursor ── */
 const ring = document.getElementById('cursorRing');
-const dot  = document.getElementById('cursorDot');
+const dot = document.getElementById('cursorDot');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',(e)=>{
-  mx=e.clientX; my=e.clientY;
-  dot.style.left=mx+'px'; dot.style.top=my+'px';
-  if(Math.random()>.93){
-    const s=document.createElement('div'); s.className='cursor-spark';
-    const dx=(Math.random()-.5)*14;
-    s.style.cssText=`left:${mx}px;top:${my}px;--dx:${dx}px`;
-    document.body.appendChild(s); setTimeout(()=>s.remove(),850);
-  }
+ mx=e.clientX; my=e.clientY;
+ dot.style.left=mx+'px'; dot.style.top=my+'px';
+ if(Math.random()>.93){
+  const s=document.createElement('div'); s.className='cursor-spark';
+  const dx=(Math.random()-.5)*14;
+  s.style.cssText=`left:${mx}px;top:${my}px;--dx:${dx}px`;
+  document.body.appendChild(s); setTimeout(()=>s.remove(),850);
+ }
 });
 function animC(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animC)}
 animC();
 function refreshCursorTargets(){
-  document.querySelectorAll('a,button,.svc-pick-card,.sty-chip,.date-chip,.time-slot').forEach(el=>{
-    el.addEventListener('mouseenter',()=>ring.classList.add('expand'));
-    el.addEventListener('mouseleave',()=>ring.classList.remove('expand'));
-  });
+ document.querySelectorAll('a,button,.svc-pick-card,.sty-chip,.date-chip,.time-slot').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('expand'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('expand'));
+ });
 }
 refreshCursorTargets();
 
 /* ── Step navigation ── */
 function goStep(n){
-  document.querySelectorAll('.form-step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('step'+n).classList.add('active');
-  for(let i=1;i<=3;i++){
-    const ps = document.getElementById('ps'+i);
-    ps.classList.remove('active','done');
-    if(i<n) ps.classList.add('done');
-    else if(i===n) ps.classList.add('active');
-    const c = ps.querySelector('.step-circle');
-    c.textContent = i<n ? '✓' : i;
-  }
-  currentStep = n;
-  if(n===2){
-    /* Show service reminder */
-    const rem = document.getElementById('svcReminder');
-    const txt = document.getElementById('svcReminderText');
-    if(B.svc){ rem.style.display='block'; txt.textContent = B.svc + ' — ' + B.price; }
-  }
-  if(n===3) populateMiniSummary();
-  document.querySelector('.booking-panel').scrollTo({top:0,behavior:'smooth'});
+ document.querySelectorAll('.form-step').forEach(s=>s.classList.remove('active'));
+ document.getElementById('step'+n).classList.add('active');
+ for(let i=1;i<=3;i++){
+  const ps = document.getElementById('ps'+i);
+  ps.classList.remove('active','done');
+  if(i<n) ps.classList.add('done');
+  else if(i===n) ps.classList.add('active');
+  const c = ps.querySelector('.step-circle');
+  c.textContent = i<n ? '✓' : i;
+ }
+ currentStep = n;
+ if(n===2){
+  /* Show service reminder */
+  const rem = document.getElementById('svcReminder');
+  const txt = document.getElementById('svcReminderText');
+  if(B.svc){ rem.style.display='block'; txt.textContent = B.svc + ' — ' + B.price; }
+ }
+ if(n===3) populateMiniSummary();
+ document.querySelector('.booking-panel').scrollTo({top:0,behavior:'smooth'});
 }
 window.goStep = goStep;
 
 /* ── Step 1: Service ── */
 document.querySelectorAll('.svc-pick-card').forEach(card=>{
-  card.addEventListener('click',()=>{
-    document.querySelectorAll('.svc-pick-card').forEach(c=>c.classList.remove('selected'));
-    card.classList.add('selected');
-    B.svc   = card.dataset.svc;
-    B.price = card.dataset.price;
-    document.getElementById('next1').disabled = false;
-  });
+ card.addEventListener('click',()=>{
+  document.querySelectorAll('.svc-pick-card').forEach(c=>c.classList.remove('selected'));
+  card.classList.add('selected');
+  B.svc  = card.dataset.svc;
+  B.price = card.dataset.price;
+  document.getElementById('next1').disabled = false;
+ });
 });
 
 /* ── Step 2: Full Calendar ── */
 const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DAY_HDRS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const today      = new Date();
-let calYear  = today.getFullYear();
-let calMonth = today.getMonth();  /* 0-indexed */
+const DAY_HDRS  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const today   = new Date();
+let calYear = today.getFullYear();
+let calMonth = today.getMonth(); /* 0-indexed */
 
 function buildCalendar(year, month){
-  const grid = document.getElementById('calGrid');
-  grid.innerHTML = '';
+ const grid = document.getElementById('calGrid');
+ grid.innerHTML = '';
 
-  /* Month/year label */
-  document.getElementById('calMonthLabel').textContent = MONTH_NAMES[month] + ' ' + year;
+ /* Month/year label */
+ document.getElementById('calMonthLabel').textContent = MONTH_NAMES[month] + ' ' + year;
 
-  /* Disable prev button if we're already at current month */
-  const isCurrentMonth = (year === today.getFullYear() && month === today.getMonth());
-  document.getElementById('calPrev').disabled = isCurrentMonth;
+ /* Disable prev button if we're already at current month */
+ const isCurrentMonth = (year === today.getFullYear() && month === today.getMonth());
+ document.getElementById('calPrev').disabled = isCurrentMonth;
 
-  /* Day-of-week headers */
-  DAY_HDRS.forEach(d => {
-    const hdr = document.createElement('div');
-    hdr.className = 'cal-day-hdr';
-    hdr.textContent = d;
-    grid.appendChild(hdr);
-  });
+ /* Day-of-week headers */
+ DAY_HDRS.forEach(d => {
+  const hdr = document.createElement('div');
+  hdr.className = 'cal-day-hdr';
+  hdr.textContent = d;
+  grid.appendChild(hdr);
+ });
 
-  const firstDay    = new Date(year, month, 1).getDay();   /* 0=Sun */
-  const daysInMonth = new Date(year, month+1, 0).getDate();
-  const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+ const firstDay  = new Date(year, month, 1).getDay();  /* 0=Sun */
+ const daysInMonth = new Date(year, month+1, 0).getDate();
+ const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
-  /* Empty cells before first day */
-  for(let i=0; i<firstDay; i++){
-    const empty = document.createElement('div');
-    empty.className = 'cal-cell cal-empty';
-    grid.appendChild(empty);
+ /* Empty cells before first day */
+ for(let i=0; i<firstDay; i++){
+  const empty = document.createElement('div');
+  empty.className = 'cal-cell cal-empty';
+  grid.appendChild(empty);
+ }
+
+ /* Day cells */
+ for(let d=1; d<=daysInMonth; d++){
+  const cellDate  = new Date(year, month, d);
+  const isPast   = cellDate < todayMidnight;
+  const isToday  = (year===today.getFullYear() && month===today.getMonth() && d===today.getDate());
+  const dateLabel = MONTH_NAMES[month] + ' ' + d + ', ' + year;
+
+  const cell = document.createElement('div');
+  cell.className = 'cal-cell' + (isPast ? ' cal-past' : '') + (isToday ? ' cal-today' : '');
+  cell.textContent = d;
+  cell.dataset.date = dateLabel;
+
+  if(!isPast){
+   cell.addEventListener('click', ()=>{
+    grid.querySelectorAll('.cal-cell').forEach(c=>c.classList.remove('cal-selected'));
+    cell.classList.add('cal-selected');
+    B.date = dateLabel;
+    checkStep2();
+   });
   }
-
-  /* Day cells */
-  for(let d=1; d<=daysInMonth; d++){
-    const cellDate   = new Date(year, month, d);
-    const isPast     = cellDate < todayMidnight;
-    const isToday    = (year===today.getFullYear() && month===today.getMonth() && d===today.getDate());
-    const dateLabel  = MONTH_NAMES[month] + ' ' + d + ', ' + year;
-
-    const cell = document.createElement('div');
-    cell.className = 'cal-cell' + (isPast ? ' cal-past' : '') + (isToday ? ' cal-today' : '');
-    cell.textContent = d;
-    cell.dataset.date = dateLabel;
-
-    if(!isPast){
-      cell.addEventListener('click', ()=>{
-        grid.querySelectorAll('.cal-cell').forEach(c=>c.classList.remove('cal-selected'));
-        cell.classList.add('cal-selected');
-        B.date = dateLabel;
-        checkStep2();
-      });
-    }
-    grid.appendChild(cell);
-  }
-  refreshCursorTargets();
+  grid.appendChild(cell);
+ }
+ refreshCursorTargets();
 }
 
 function calShift(dir){
-  calMonth += dir;
-  if(calMonth > 11){ calMonth=0; calYear++; }
-  if(calMonth < 0 ){ calMonth=11; calYear--; }
-  /* Reset selected date if shifting away */
-  const prevSelected = document.querySelector('.cal-cell.cal-selected');
-  if(prevSelected){ B.date=''; checkStep2(); }
-  buildCalendar(calYear, calMonth);
+ calMonth += dir;
+ if(calMonth > 11){ calMonth=0; calYear++; }
+ if(calMonth < 0 ){ calMonth=11; calYear--; }
+ /* Reset selected date if shifting away */
+ const prevSelected = document.querySelector('.cal-cell.cal-selected');
+ if(prevSelected){ B.date=''; checkStep2(); }
+ buildCalendar(calYear, calMonth);
 }
 window.calShift = calShift;
 
@@ -792,172 +792,172 @@ buildCalendar(calYear, calMonth);
 
 /* ── Step 2: Time slots ── */
 document.querySelectorAll('.time-slot:not(.taken)').forEach(slot=>{
-  slot.addEventListener('click',()=>{
-    document.querySelectorAll('.time-slot').forEach(s=>s.classList.remove('selected'));
-    slot.classList.add('selected');
-    B.time = slot.dataset.time;
-    checkStep2();
-  });
+ slot.addEventListener('click',()=>{
+  document.querySelectorAll('.time-slot').forEach(s=>s.classList.remove('selected'));
+  slot.classList.add('selected');
+  B.time = slot.dataset.time;
+  checkStep2();
+ });
 });
 
 /* ── Step 2: Stylist chips ── */
 document.querySelectorAll('.sty-chip').forEach(chip=>{
-  chip.addEventListener('click',()=>{
-    document.querySelectorAll('.sty-chip').forEach(c=>c.classList.remove('selected'));
-    chip.classList.add('selected');
-    B.stylist = chip.dataset.stylist;
-    checkStep2();
-  });
+ chip.addEventListener('click',()=>{
+  document.querySelectorAll('.sty-chip').forEach(c=>c.classList.remove('selected'));
+  chip.classList.add('selected');
+  B.stylist = chip.dataset.stylist;
+  checkStep2();
+ });
 });
 
 function checkStep2(){
-  document.getElementById('next2').disabled = !(B.date && B.time && B.stylist);
+ document.getElementById('next2').disabled = !(B.date && B.time && B.stylist);
 }
 
 /* ── Step 3: Populate mini summary ── */
 function populateMiniSummary(){
-  document.getElementById('ms-svc').textContent   = B.svc   || '—';
-  document.getElementById('ms-date').textContent  = B.date  || '—';
-  document.getElementById('ms-time').textContent  = B.time  || '—';
-  document.getElementById('ms-sty').textContent   = B.stylist || '—';
-  document.getElementById('ms-price').textContent = B.price || '—';
+ document.getElementById('ms-svc').textContent  = B.svc  || '—';
+ document.getElementById('ms-date').textContent = B.date || '—';
+ document.getElementById('ms-time').textContent = B.time || '—';
+ document.getElementById('ms-sty').textContent  = B.stylist || '—';
+ document.getElementById('ms-price').textContent = B.price || '—';
 }
 
 /* ── Step 3: Validate contact fields ── */
 function validateStep3(){
-  B.fname  = document.getElementById('fname').value.trim();
-  B.lname  = document.getElementById('lname').value.trim();
-  B.mobile = document.getElementById('mobile').value.trim();
-  B.email  = document.getElementById('email').value.trim();
-  const emailOk  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(B.email);
-  const mobileOk = B.mobile.replace(/\D/g,'').length >= 10;
-  document.getElementById('confirmBtn').disabled = !(B.fname && B.lname && mobileOk && emailOk);
+ B.fname = document.getElementById('fname').value.trim();
+ B.lname = document.getElementById('lname').value.trim();
+ B.mobile = document.getElementById('mobile').value.trim();
+ B.email = document.getElementById('email').value.trim();
+ const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(B.email);
+ const mobileOk = B.mobile.replace(/\D/g,'').length >= 10;
+ document.getElementById('confirmBtn').disabled = !(B.fname && B.lname && mobileOk && emailOk);
 }
 window.validateStep3 = validateStep3;
 
 /* ── Confirm Booking ── */
 async function confirmBooking(){
-  const btn = document.getElementById('confirmBtn');
-  btn.textContent = 'Processing...';
-  btn.disabled = true;
+ const btn = document.getElementById('confirmBtn');
+ btn.textContent = 'Processing...';
+ btn.disabled = true;
 
-  /* Save to localStorage */
-  let bid = '#AOH-00000';
-  if (window.SalonDB) {
-    bid = window.SalonDB.saveBooking({ ...B });
-  } else {
-    bid = '#AOH-' + Math.floor(Math.random()*90000+10000);
-    try {
-      const existing = JSON.parse(localStorage.getItem('salon_bookings')||'[]');
-      existing.unshift({ ...B, id:bid, timestamp:new Date().toISOString(), status:'confirmed' });
-      localStorage.setItem('salon_bookings', JSON.stringify(existing));
-    } catch(e){}
-  }
+ /* Save to localStorage */
+ let bid = '#AOH-00000';
+ if (window.SalonDB) {
+  bid = window.SalonDB.saveBooking({ ...B });
+ } else {
+  bid = '#AOH-' + Math.floor(Math.random()*90000+10000);
+  try {
+   const existing = JSON.parse(localStorage.getItem('salon_bookings')||'[]');
+   existing.unshift({ ...B, id:bid, timestamp:new Date().toISOString(), status:'confirmed' });
+   localStorage.setItem('salon_bookings', JSON.stringify(existing));
+  } catch(e){}
+ }
 
-  /* Send Email via EmailJS */
-  if (EMAIL_ENABLED) {
-    try {
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_email:    B.email,
-        to_name:     B.fname + ' ' + B.lname,
-        booking_id:  bid,
-        service:     B.svc,
-        stylist:     B.stylist,
-        date:        B.date,
-        time:        B.time,
-        mobile:      B.mobile,
-        price:       B.price,
-        salon_name:  'A One Hair Salon',
-        salon_phone: '+91 98765 43210',
-        salon_addr:  'Linking Road, Bandra West, Mumbai'
-      });
-    } catch(err){ console.warn('EmailJS error:', err); }
-  }
+ /* Send Email via EmailJS */
+ if (EMAIL_ENABLED) {
+  try {
+   await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    to_email:  B.email,
+    to_name:   B.fname + ' ' + B.lname,
+    booking_id: bid,
+    service:   B.svc,
+    stylist:   B.stylist,
+    date:    B.date,
+    time:    B.time,
+    mobile:   B.mobile,
+    price:    B.price,
+    salon_name: 'A One Hair Salon',
+    salon_phone: '+91 98765 43210',
+    salon_addr: '12 King Street, London'
+   });
+  } catch(err){ console.warn('EmailJS error:', err); }
+ }
 
-  /* Build WhatsApp link */
-  const waMsg = encodeURIComponent(
-    'Hi! Your appointment at A One Hair Salon is confirmed.\n\n' +
-    'Booking ID: ' + bid + '\n' +
-    'Service: ' + B.svc + '\n' +
-    'Stylist: ' + B.stylist + '\n' +
-    'Date: ' + B.date + '\n' +
-    'Time: ' + B.time + '\n' +
-    'Estimated: ' + B.price + '\n\n' +
-    'Please arrive 10 mins early. Call us: +91 98765 43210'
-  );
-  const rawMobile = B.mobile.replace(/\D/g,'');
-  const waLink = 'https://wa.me/91' + rawMobile + '?text=' + waMsg;
+ /* Build WhatsApp link */
+ const waMsg = encodeURIComponent(
+  'Hi! Your appointment at A One Hair Salon is confirmed.\n\n' +
+  'Booking ID: ' + bid + '\n' +
+  'Service: ' + B.svc + '\n' +
+  'Stylist: ' + B.stylist + '\n' +
+  'Date: ' + B.date + '\n' +
+  'Time: ' + B.time + '\n' +
+  'Estimated: ' + B.price + '\n\n' +
+  'Please arrive 10 mins early. Call us: +91 98765 43210'
+ );
+ const rawMobile = B.mobile.replace(/\D/g,'');
+ const waLink = 'https://wa.me/91' + rawMobile + '?text=' + waMsg;
 
-  /* Show success */
-  document.getElementById('progressWrap').style.display = 'none';
-  document.querySelectorAll('.form-step').forEach(s=>s.style.display='none');
-  const sv = document.getElementById('successView');
-  sv.style.display = 'block';
-  document.getElementById('bookingId').textContent  = bid;
-  document.getElementById('cd-svc').textContent     = B.svc;
-  document.getElementById('cd-sty').textContent     = B.stylist;
-  document.getElementById('cd-dt').textContent      = B.date + ' at ' + B.time;
-  document.getElementById('cd-email').textContent   = B.email;
-  document.getElementById('cd-sms').textContent     = B.mobile;
+ /* Show success */
+ document.getElementById('progressWrap').style.display = 'none';
+ document.querySelectorAll('.form-step').forEach(s=>s.style.display='none');
+ const sv = document.getElementById('successView');
+ sv.style.display = 'block';
+ document.getElementById('bookingId').textContent = bid;
+ document.getElementById('cd-svc').textContent   = B.svc;
+ document.getElementById('cd-sty').textContent   = B.stylist;
+ document.getElementById('cd-dt').textContent   = B.date + ' at ' + B.time;
+ document.getElementById('cd-email').textContent  = B.email;
+ document.getElementById('cd-sms').textContent   = B.mobile;
 
-  const waBtn = document.getElementById('waSmsBtn');
-  if(waBtn){ waBtn.href = waLink; waBtn.style.display='inline-block'; }
+ const waBtn = document.getElementById('waSmsBtn');
+ if(waBtn){ waBtn.href = waLink; waBtn.style.display='inline-block'; }
 
-  const emailNote = document.getElementById('emailStatusNote');
-  if(emailNote){
-    emailNote.textContent = EMAIL_ENABLED
-      ? 'Confirmation email sent to ' + B.email
-      : 'See you soon at A One Hair Salon, ' + B.fname + '!';
-  }
+ const emailNote = document.getElementById('emailStatusNote');
+ if(emailNote){
+  emailNote.textContent = EMAIL_ENABLED
+   ? 'Confirmation email sent to ' + B.email
+   : 'See you soon at A One Hair Salon, ' + B.fname + '!';
+ }
 
-  sv.scrollIntoView({behavior:'smooth',block:'start'});
+ sv.scrollIntoView({behavior:'smooth',block:'start'});
 }
 window.confirmBooking = confirmBooking;
 </script>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="logo-main">A ONE HAIR SALON</div>
-      <p data-cms="footer.tagline">Mumbai's premier luxury unisex salon. Where every visit is a bespoke journey of beauty.</p>
-      <div class="socials" style="margin-top:20px">
-        <a href="#" class="social-btn">f</a>
-        <a href="#" class="social-btn">in</a>
-        <a href="#" class="social-btn">&#10022;</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Navigation</h4>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="booking.html">Book Now</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Hours</h4>
-      <ul>
-        <li><a href="#" data-cms="footer.hour_weekday">Mon-Fri: 10am - 8pm</a></li>
-        <li><a href="#" data-cms="footer.hour_saturday">Saturday: 9am - 9pm</a></li>
-        <li><a href="#" data-cms="footer.hour_sunday">Sunday: 10am - 6pm</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <ul>
-        <li><a href="#" data-cms="site.phone">+91 98765 43210</a></li>
-        <li><a href="#" data-cms="site.email">hello@aonehairsalon.com</a></li>
-        <li><a href="#" data-cms="site.address">Linking Road, Bandra, Mumbai</a></li>
-      </ul>
-    </div>
+ <div class="footer-grid">
+  <div class="footer-brand">
+   <div class="logo-main">A ONE HAIR SALON</div>
+   <p data-cms="footer.tagline">London's premier luxury unisex salon. Where every visit is a bespoke journey of beauty.</p>
+   <div class="socials" style="margin-top:20px">
+    <a href="#" class="social-btn">f</a>
+    <a href="#" class="social-btn">in</a>
+    <a href="#" class="social-btn">&#10022;</a>
+   </div>
   </div>
-  <div class="footer-bottom">
-    <p data-cms="footer.copyright">&#169; 2026 A One Hair Salon, Mumbai. All rights reserved.</p>
-    <p>Crafted with &#10022; for luxury</p>
+  <div class="footer-col">
+   <h4>Navigation</h4>
+   <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="booking.html">Book Now</a></li>
+    <li><a href="contact.html">Contact</a></li>
+   </ul>
   </div>
+  <div class="footer-col">
+   <h4>Hours</h4>
+   <ul>
+    <li><a href="#" data-cms="footer.hour_weekday">Mon-Fri: 10am - 8pm</a></li>
+    <li><a href="#" data-cms="footer.hour_saturday">Saturday: 9am - 9pm</a></li>
+    <li><a href="#" data-cms="footer.hour_sunday">Sunday: 10am - 6pm</a></li>
+   </ul>
+  </div>
+  <div class="footer-col">
+   <h4>Contact</h4>
+   <ul>
+    <li><a href="#" data-cms="site.phone">+91 98765 43210</a></li>
+    <li><a href="#" data-cms="site.email">hello@aonehairsalon.com</a></li>
+    <li><a href="#" data-cms="site.address">12 King Street, London</a></li>
+   </ul>
+  </div>
+ </div>
+ <div class="footer-bottom">
+  <p data-cms="footer.copyright">&#169; 2026 A One Hair Salon. All rights reserved.</p>
+  <p>Crafted with &#10022; for luxury</p>
+ </div>
 </footer>
 
 </body>
