@@ -52,6 +52,16 @@
     }
   });
 
+  /* ── 4b. Patch booking confirmation message ─────────────── */
+  if (C.booking) {
+    if (C.booking.confirm_title) {
+      document.querySelectorAll('[data-cms="booking.confirm_title"]').forEach(el => { el.textContent = C.booking.confirm_title; });
+    }
+    if (C.booking.confirm_text) {
+      document.querySelectorAll('[data-cms="booking.confirm_text"]').forEach(el => { el.textContent = C.booking.confirm_text; });
+    }
+  }
+
   /* ── 5. Patch [data-cms-src] for iframes / img src ─────── */
   document.querySelectorAll('[data-cms-src]').forEach(el => {
     const val = get(el.getAttribute('data-cms-src'));
