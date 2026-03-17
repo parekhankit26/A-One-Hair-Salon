@@ -249,10 +249,17 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
     </div>
    </div>
    <div class="panel-section">
-    <div class="panel-section-title">Booking CTA</div>
+    <div class="panel-section-title">Booking CTA Section</div>
     <div class="form-grid col1">
-     <div class="field"><label>Booking CTA Title</label><input type="text" id="hp-cta-title" placeholder="Ready for Your Transformation?"></div>
-     <div class="field"><label>Booking CTA Text</label><textarea id="hp-cta-text" rows="2" placeholder="Book your appointment today..."></textarea></div>
+     <div class="field"><label>CTA Title</label><input type="text" id="hp-cta-title" placeholder="Ready for Your Transformation?"></div>
+     <div class="field"><label>CTA Text <span class="field-note" style="display:inline">Shown on home page under the booking CTA</span></label><textarea id="hp-cta-text" rows="2" placeholder="Secure your spot at A One Hair Salon..."></textarea></div>
+    </div>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">Booking Confirmation Message</div>
+    <div class="form-grid col1">
+     <div class="field"><label>Confirmation Title</label><input type="text" id="hp-confirm-title" placeholder="Booking Confirmed!"><span class="field-note">Shown after a booking is submitted</span></div>
+     <div class="field"><label>Confirmation Message</label><textarea id="hp-confirm-text" rows="2" placeholder="Thank you for choosing A One Hair Salon..."></textarea></div>
     </div>
    </div>
   </div>
@@ -313,7 +320,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
       <label>Personal Access Token <span style="color:var(--muted);font-weight:400;letter-spacing:0">(saved in browser)</span></label>
       <div style="display:flex;gap:8px;align-items:center">
        <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="flex:1">
-       <button class="btn btn-outline" onclick="saveTokenToStorage()" style="white-space:nowrap;flex-shrink:0">&#128274; Save Token</button>
+       <button class="btn btn-outline" onclick="toggleTokenView()" style="white-space:nowrap;flex-shrink:0;padding:9px 12px" title="Show/hide token">&#128065;</button>
+       <button class="btn btn-gold" onclick="saveTokenToStorage()" style="white-space:nowrap;flex-shrink:0">&#128274; Save Token</button>
       </div>
       <span class="field-note" id="tokenStatus" style="color:var(--muted)">No token saved yet.</span>
      </div>
@@ -324,16 +332,19 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
    <div class="panel-section">
     <div class="panel-section-title">Publish Changes</div>
     <p style="font-size:.78rem;color:var(--muted);margin-bottom:16px;line-height:1.7">
-     Collects all your edits and pushes <code style="background:var(--bg);padding:2px 6px;border-radius:2px;color:var(--gold)">content.json</code> to GitHub.
-     GitHub Actions then automatically deploys the update to your <strong style="color:var(--white)">Hostinger website</strong> — live in ~2 minutes, no files needed.
+     Saves all your edits to <code style="background:var(--bg);padding:2px 6px;border-radius:2px;color:var(--gold)">content.json</code> on GitHub.
+     Hostinger automatically detects the change and updates your live website within <strong style="color:var(--white)">1–2 minutes</strong>.
     </p>
+    <div id="deploy-token-warning" style="display:none;background:rgba(229,115,115,.08);border:1px solid rgba(229,115,115,.3);border-radius:4px;padding:12px 16px;margin-bottom:16px;font-size:.8rem;color:#e88;line-height:1.7">
+     ⚠ No GitHub token found. Enter your token in the <strong>GitHub Connection</strong> section above, then click <strong>Save Token</strong> before deploying.
+    </div>
     <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
-     <button class="btn btn-green" onclick="deployContentJson()" style="min-width:200px">&#8679; &nbsp;Deploy to GitHub → Live</button>
+     <button class="btn btn-green" onclick="deployContentJson()" style="min-width:220px;font-size:.75rem">&#8679; &nbsp;Deploy to GitHub → Live Website</button>
      <button class="btn btn-outline" onclick="downloadJson()">&#8595; Download JSON</button>
-     <button class="btn btn-outline" onclick="previewJson()">{ } Preview</button>
+     <button class="btn btn-outline" onclick="previewJson()">{ } Preview JSON</button>
     </div>
     <div class="deploy-progress"><div class="deploy-progress-fill" id="deployFill"></div></div>
-    <div class="deploy-status-bar" id="deployLog"><span class="ds-info">Ready. Click Deploy to publish your changes live.</span></div>
+    <div class="deploy-status-bar" id="deployLog"><span class="ds-info">Ready. Make your edits, then click Deploy to go live.</span></div>
    </div>
 
    <!-- ADMIN URL -->
@@ -548,6 +559,8 @@ function populateAll() {
  setVal("hp-svc-label",H.services_label); setVal("hp-svc-title",H.services_title);
  setVal("hp-testi-label",H.testimonials_label); setVal("hp-testi-title",H.testimonials_title);
  setVal("hp-cta-title",H.booking_cta_title); setVal("hp-cta-text",H.booking_cta_text);
+ setVal("hp-confirm-title", C.booking && C.booking.confirm_title);
+ setVal("hp-confirm-text", C.booking && C.booking.confirm_text);
  setVal("pt-svc-title",C.pages && C.pages.services && C.pages.services.hero_title);
  setVal("pt-svc-intro",C.pages && C.pages.services && C.pages.services.intro);
  setVal("pt-gal-title",C.pages && C.pages.gallery && C.pages.gallery.hero_title);
@@ -578,38 +591,43 @@ function collectAll() {
   tagline:document.getElementById("ft-tagline").value.trim()||C.footer.tagline,
   copyright:document.getElementById("ft-copyright").value.trim()||C.footer.copyright
  };
+ const H = C.home || {};
  C.home = {
-  hero_tag:document.getElementById("hp-hero-tag").value.trim()||C.home.hero_tag,
-  hero_sub:document.getElementById("hp-hero-sub").value.trim()||C.home.hero_sub,
-  about_text1:document.getElementById("hp-about1").value.trim()||C.home.about_text1,
-  about_text2:document.getElementById("hp-about2").value.trim()||C.home.about_text2,
-  about_label:document.getElementById("hp-about-label") && document.getElementById("hp-about-label").value || '',
-  about_title:document.getElementById("hp-about-title") && document.getElementById("hp-about-title").value || '',
-  services_label:document.getElementById("hp-svc-label") && document.getElementById("hp-svc-label").value || '',
-  services_title:document.getElementById("hp-svc-title") && document.getElementById("hp-svc-title").value || '',
-  testimonials_label:document.getElementById("hp-testi-label") && document.getElementById("hp-testi-label").value || '',
-  testimonials_title:document.getElementById("hp-testi-title") && document.getElementById("hp-testi-title").value || '',
-  booking_cta_title:document.getElementById("hp-cta-title") && document.getElementById("hp-cta-title").value || '',
-  booking_cta_text:document.getElementById("hp-cta-text") && document.getElementById("hp-cta-text").value || ''
+  hero_tag:document.getElementById("hp-hero-tag").value.trim()||H.hero_tag||'',
+  hero_sub:document.getElementById("hp-hero-sub").value.trim()||H.hero_sub||'',
+  about_text1:document.getElementById("hp-about1").value.trim()||H.about_text1||'',
+  about_text2:document.getElementById("hp-about2").value.trim()||H.about_text2||'',
+  about_label:(document.getElementById("hp-about-label")||{}).value||H.about_label||'',
+  about_title:(document.getElementById("hp-about-title")||{}).value||H.about_title||'',
+  services_label:(document.getElementById("hp-svc-label")||{}).value||H.services_label||'',
+  services_title:(document.getElementById("hp-svc-title")||{}).value||H.services_title||'',
+  testimonials_label:(document.getElementById("hp-testi-label")||{}).value||H.testimonials_label||'',
+  testimonials_title:(document.getElementById("hp-testi-title")||{}).value||H.testimonials_title||'',
+  booking_cta_title:(document.getElementById("hp-cta-title")||{}).value||H.booking_cta_title||'',
+  booking_cta_text:(document.getElementById("hp-cta-text")||{}).value||H.booking_cta_text||''
  };
+ const P = C.pages || {}; const PS = P.services||{}; const PG = P.gallery||{}; const PC = P.contact||{}; const PB = P.booking||{};
  if (!C.pages) C.pages = {};
  if (!C.pages.services) C.pages.services = {};
- C.pages.services.hero_title = document.getElementById("pt-svc-title") && document.getElementById("pt-svc-title").value || '';
- C.pages.services.intro = document.getElementById("pt-svc-intro") && document.getElementById("pt-svc-intro").value || '';
+ C.pages.services.hero_title = (document.getElementById("pt-svc-title")||{}).value || PS.hero_title || '';
+ C.pages.services.intro      = (document.getElementById("pt-svc-intro")||{}).value || PS.intro || '';
  if (!C.pages.gallery) C.pages.gallery = {};
- C.pages.gallery.hero_title = document.getElementById("pt-gal-title") && document.getElementById("pt-gal-title").value || '';
- C.pages.gallery.intro = document.getElementById("pt-gal-intro") && document.getElementById("pt-gal-intro").value || '';
+ C.pages.gallery.hero_title  = (document.getElementById("pt-gal-title")||{}).value || PG.hero_title || '';
+ C.pages.gallery.intro       = (document.getElementById("pt-gal-intro")||{}).value || PG.intro || '';
  if (!C.pages.contact) C.pages.contact = {};
- C.pages.contact.hero_title = document.getElementById("pt-con-title") && document.getElementById("pt-con-title").value || '';
- C.pages.contact.section_label = document.getElementById("pt-con-label") && document.getElementById("pt-con-label").value || '';
- C.pages.contact.section_title = document.getElementById("pt-con-sectitle") && document.getElementById("pt-con-sectitle").value || '';
- C.pages.contact.intro = document.getElementById("pt-con-intro") && document.getElementById("pt-con-intro").value || '';
+ C.pages.contact.hero_title  = (document.getElementById("pt-con-title")||{}).value || PC.hero_title || '';
+ C.pages.contact.section_label = (document.getElementById("pt-con-label")||{}).value || PC.section_label || '';
+ C.pages.contact.section_title = (document.getElementById("pt-con-sectitle")||{}).value || PC.section_title || '';
+ C.pages.contact.intro       = (document.getElementById("pt-con-intro")||{}).value || PC.intro || '';
  if (!C.pages.booking) C.pages.booking = {};
- C.pages.booking.hero_title = document.getElementById("pt-book-title") && document.getElementById("pt-book-title").value || '';
- C.pages.booking.hero_sub = document.getElementById("pt-book-sub") && document.getElementById("pt-book-sub").value || '';
+ C.pages.booking.hero_title  = (document.getElementById("pt-book-title")||{}).value || PB.hero_title || '';
+ C.pages.booking.hero_sub    = (document.getElementById("pt-book-sub")||{}).value || PB.hero_sub || '';
  if (!C.booking) C.booking = {};
- C.booking.visual_title = document.getElementById("bk-vis-title") && document.getElementById("bk-vis-title").value || '';
- C.booking.visual_sub = document.getElementById("bk-vis-sub") && document.getElementById("bk-vis-sub").value || '';
+ const BK = C.booking || {};
+ C.booking.visual_title   = (document.getElementById("bk-vis-title")||{}).value || BK.visual_title || '';
+ C.booking.visual_sub     = (document.getElementById("bk-vis-sub")||{}).value || BK.visual_sub || '';
+ C.booking.confirm_title  = (document.getElementById("hp-confirm-title")||{}).value || BK.confirm_title || 'Booking Confirmed!';
+ C.booking.confirm_text   = (document.getElementById("hp-confirm-text")||{}).value || BK.confirm_text || 'Thank you for choosing A One Hair Salon. Your appointment is all set!';
  C.services_page = C.services_page || {};
  C.services_page.categories = collectSvcCategories();
  C.booking.stylists = collectStylists();
@@ -719,11 +737,18 @@ async function getFileSha(owner, repo, path, token) {
 
 async function deployContentJson() {
  collectAll();
- const owner=document.getElementById("gh-owner").value.trim();
- const repo=document.getElementById("gh-repo").value.trim();
- const branch=document.getElementById("gh-branch").value.trim();
+ const owner=document.getElementById("gh-owner").value.trim()||"parekhankit26";
+ const repo=document.getElementById("gh-repo").value.trim()||"A-One-Hair-Salon";
+ const branch=document.getElementById("gh-branch").value.trim()||"main";
  const token=document.getElementById("gh-token").value.trim();
- if (!token) { toast("Please enter your GitHub token","err"); return; }
+ const warn=document.getElementById("deploy-token-warning");
+ if (!token) {
+   if(warn) warn.style.display="block";
+   toast("Please enter and save your GitHub token first","err",5000);
+   gotoPanel("deploy");
+   return;
+ }
+ if(warn) warn.style.display="none";
  const log = document.getElementById("deployLog");
  log.innerHTML = "";
  document.getElementById("deployFill").style.width = "0%";
@@ -750,8 +775,9 @@ async function deployContentJson() {
   if (r.ok) {
    dlog(" ✓ content.json deployed successfully!","ds-ok");
    dlog("─".repeat(48));
-   dlog("✅ GitHub updated! Your Hostinger site will auto-update in ~2 minutes.","ds-ok");
-   dlog("   (GitHub Actions is deploying the change to Hostinger now)","ds-ok");
+   dlog("✅ content.json pushed to GitHub successfully!","ds-ok");
+   dlog("⏳ Hostinger is pulling the update now — your website will refresh in ~1–2 minutes.","ds-ok");
+   dlog("   Hard refresh your site with Ctrl+Shift+R (or Cmd+Shift+R on Mac) to see changes.","ds-ok");
    localStorage.setItem("aone_admin_draft",JSON.stringify(C));
    isDirty=false; document.getElementById("statDraft").textContent="✓ Deployed";
    toast("✓ Deployed! Site updates in ~60 seconds.","ok",5000);
@@ -780,25 +806,26 @@ function previewJson() {
 }
 
 async function loadFromGitHub() {
- toast("Loading content.json from GitHub…","info");
+ toast("Reloading content…","info");
+ /* 1. Try same-origin (fastest, works on Hostinger directly) */
+ try {
+  const r = await fetch('./content.json?v='+Date.now());
+  if (r.ok) { C=await r.json(); populateAll(); toast("✓ Content reloaded from website","ok"); return; }
+ } catch(e){}
+ /* 2. Try GitHub API */
  try {
   const owner=document.getElementById("gh-owner").value.trim()||"parekhankit26";
   const repo=document.getElementById("gh-repo").value.trim()||"A-One-Hair-Salon";
-  const token=document.getElementById("gh-token").value.trim();
+  const token=(document.getElementById("gh-token")||{}).value||localStorage.getItem('aone_gh_token')||'';
   const headers={Accept:"application/vnd.github.v3+json"};
   if (token) headers.Authorization="token "+token;
   const r=await fetch("https://api.github.com/repos/"+owner+"/"+repo+"/contents/content.json",{headers});
   if (!r.ok) throw new Error("HTTP "+r.status);
   const meta=await r.json();
-  C=JSON.parse(atob(meta.content.replace(/
-/g,"")));
+  C=JSON.parse(atob(meta.content.replace(/\n/g,"")));
   populateAll(); toast("✓ Loaded from GitHub","ok");
  } catch(e) {
-  try {
-   const r=await fetch("./content.json?v="+Date.now());
-   if (r.ok) { C=await r.json(); populateAll(); toast("✓ Loaded from local file","ok"); }
-   else throw new Error();
-  } catch(e2) { C=getDefaults(); populateAll(); toast("Using defaults","info"); }
+  C=getDefaults(); populateAll(); toast("Using default content — check your GitHub token","info");
  }
 }
 
@@ -875,10 +902,16 @@ function saveTokenToStorage() {
   const token = document.getElementById('gh-token').value.trim();
   if (!token) { toast('Please enter a token first', 'err'); return; }
   localStorage.setItem(TOKEN_KEY, token);
-  document.getElementById('gh-token').value = token;
-  document.getElementById('tokenStatus').textContent = '✓ Token saved in this browser.';
+  document.getElementById('tokenStatus').textContent = '✓ Token saved — you won\'t need to enter it again on this device.';
   document.getElementById('tokenStatus').style.color = '#6fcf97';
-  toast('Token saved in browser ✓', 'ok');
+  const warn = document.getElementById('deploy-token-warning');
+  if(warn) warn.style.display = 'none';
+  toast('Token saved ✓ — ready to deploy!', 'ok');
+}
+
+function toggleTokenView() {
+  const inp = document.getElementById('gh-token');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
 }
 
 function loadTokenFromStorage() {
@@ -922,21 +955,41 @@ deployContentJson = async function() {
    INIT
 ══════════════════════════════════════ */
 (async function init() {
- /* Load token from localStorage */
  loadTokenFromStorage();
  buildAdminUrl();
 
- /* Load content */
- const draft = localStorage.getItem("aone_admin_draft");
- if (draft) {
-  try {
-   C = JSON.parse(draft);
+ /* Always load live content.json from same origin first — works on both Hostinger and GitHub Pages */
+ try {
+  const r = await fetch('./content.json?v=' + Date.now());
+  if (r.ok) {
+   C = await r.json();
    populateAll();
-   toast("Draft loaded from browser", "info");
+   toast("✓ Content loaded from website", "ok");
    return;
-  } catch(e) {}
- }
- await loadFromGitHub();
+  }
+ } catch(e) {}
+
+ /* Fallback: try GitHub API */
+ try {
+  const owner = "parekhankit26";
+  const repo  = "A-One-Hair-Salon";
+  const token = localStorage.getItem('aone_gh_token') || '';
+  const headers = { Accept: "application/vnd.github.v3+json" };
+  if (token) headers.Authorization = "token " + token;
+  const r = await fetch("https://api.github.com/repos/"+owner+"/"+repo+"/contents/content.json", { headers });
+  if (r.ok) {
+   const meta = await r.json();
+   C = JSON.parse(atob(meta.content.replace(/\n/g, "")));
+   populateAll();
+   toast("✓ Content loaded from GitHub", "ok");
+   return;
+  }
+ } catch(e) {}
+
+ /* Final fallback: defaults */
+ C = getDefaults();
+ populateAll();
+ toast("Using default content — click 'Reload from GitHub' after saving your token", "info", 5000);
 })();
 
 document.querySelectorAll("input,textarea").forEach(el => {
