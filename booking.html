@@ -368,9 +368,9 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
    <h2 data-cms="booking.visual_title">Book Your<br><em>Experience</em></h2>
    <p data-cms="booking.visual_sub">Reserve your appointment at A One Hair Salon and step into a world of luxury and artistry.</p>
    <div class="bvt-hours">
-    <div class="bvt-hour"><span class="day">Mon – Fri</span><span class="time">10:00 AM – 8:00 PM</span></div>
-    <div class="bvt-hour"><span class="day">Saturday</span><span class="time">9:00 AM – 9:00 PM</span></div>
-    <div class="bvt-hour"><span class="day">Sunday</span><span class="time">10:00 AM – 6:00 PM</span></div>
+    <div class="bvt-hour"><span class="day">Mon – Fri</span><span class="time" data-cms="footer.hour_weekday">Mon-Fri: 10am - 8pm</span></div>
+    <div class="bvt-hour"><span class="day">Saturday</span><span class="time" data-cms="footer.hour_saturday">Saturday: 9am - 9pm</span></div>
+    <div class="bvt-hour"><span class="day">Sunday</span><span class="time" data-cms="footer.hour_sunday">Sunday: 10am - 6pm</span></div>
    </div>
   </div>
  </div>
@@ -613,8 +613,8 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
   <!-- ── SUCCESS ── -->
   <div class="success-view" id="successView">
    <div class="success-icon">✓</div>
-   <h2>Booking Confirmed!</h2>
-   <p>Thank you for choosing A One Hair Salon. Your appointment is all set!</p>
+   <h2 data-cms="booking.confirm_title">Booking Confirmed!</h2>
+   <p data-cms="booking.confirm_text">Thank you for choosing A One Hair Salon. Your appointment is all set!</p>
    <div class="booking-id" id="bookingId">#AOH-00000</div>
    <div class="confirm-details" id="confirmDetails">
     <div class="cd-row"><span class="cd-label">Service</span><span class="cd-val" id="cd-svc">—</span></div>
