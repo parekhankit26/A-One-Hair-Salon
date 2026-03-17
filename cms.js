@@ -87,19 +87,21 @@
   if (sigWrap && Array.isArray(C.services)) {
     sigWrap.innerHTML = C.services.map(s => `
       <div class="svc-card reveal">
-        <div class="svc-front">
-          <div class="svc-front-img"><img src="images/aone-hero.jpg" alt="${s.name}"></div>
-          <div class="svc-front-info">
-            <div class="svc-icon">${s.icon}</div>
-            <div class="svc-name">${s.name}</div>
-            <div class="svc-price">${s.price}</div>
+        <div class="svc-card-inner">
+          <div class="svc-front">
+            <div class="svc-front-img"><img src="images/aone-hero.jpg" alt="${s.name}"></div>
+            <div class="svc-front-info">
+              <h3>${s.name}</h3>
+              <p>${s.price}</p>
+            </div>
           </div>
-        </div>
-        <div class="svc-back">
-          <div class="svc-icon">${s.icon}</div>
-          <div class="svc-name">${s.name}</div>
-          <div class="svc-price">${s.price}</div>
-          <a href="booking.html" class="btn-svc-book">Book Now</a>
+          <div class="svc-back">
+            <div class="svc-back-icon">${s.icon}</div>
+            <h3>${s.name}</h3>
+            <div class="price-tag">${s.price}</div>
+            <a href="booking.html" style="margin-top:8px;padding:10px 24px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--bg);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;text-decoration:none">Book Now</a>
+            <div class="svc-hint">Hover to flip · Click to book</div>
+          </div>
         </div>
       </div>`).join('');
     reObserve(sigWrap);
@@ -112,8 +114,9 @@
   if (testiWrap && Array.isArray(C.testimonials)) {
     testiWrap.innerHTML = C.testimonials.map(t => `
       <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"${t.text}"</p>
+        <div class="testi-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">${t.text}</p>
         <div class="testi-author">
           <div class="testi-avatar">${t.initial}</div>
           <div>
@@ -128,30 +131,39 @@
   /* ══════════════════════════════════════════════════════════
      9. SERVICES PAGE — rebuild category tables
   ══════════════════════════════════════════════════════════ */
+  const catIcons = {hair:'✂',color:'◉',bridal:'♛',grooming:'✦',skin:'✿',nails:'◆',treatments:'◈',makeup:'❋'};
   const svcWrap = document.getElementById('cmsSvcCategories');
   if (svcWrap && C.services_page && Array.isArray(C.services_page.categories)) {
     svcWrap.innerHTML = C.services_page.categories.map(cat => {
+      const icon = catIcons[cat.id] || '✦';
       const rows = cat.items.map(item => `
-        <tr>
-          <td class="svc-name-cell">
-            <div class="svc-row-name">${item.name}</div>
-            <div class="svc-row-detail">${item.detail}</div>
-          </td>
-          <td class="svc-dur">${item.duration}</td>
-          <td class="svc-price-cell">${item.price}</td>
-        </tr>`).join('');
+        <div class="svc-row">
+          <div>
+            <div class="svc-name">${item.name}</div>
+            <div class="svc-detail">${item.detail}</div>
+          </div>
+          <div class="svc-duration">${item.duration}<span>duration</span></div>
+          <div class="svc-price-cell"><div class="svc-price">${item.price}</div></div>
+          <a href="booking.html" class="svc-book-btn">Book Now</a>
+        </div>`).join('');
       return `
-        <div class="svc-category reveal" data-id="${cat.id}">
+        <div class="svc-category reveal" data-cat="${cat.id}">
           <div class="cat-header">
-            <h2 class="cat-title">${cat.title}</h2>
-            <p class="cat-desc">${cat.desc}</p>
+            <div class="cat-icon">${icon}</div>
+            <div class="cat-info">
+              <h2>${cat.title}</h2>
+              <p>${cat.desc}</p>
+            </div>
+            <div class="cat-line"></div>
           </div>
-          <div class="svc-table-wrap">
-            <table class="svc-table">
-              <thead><tr><th>Service</th><th>Duration</th><th>Price</th></tr></thead>
-              <tbody>${rows}</tbody>
-            </table>
+          <div class="cat-photo-banner">
+            <img src="images/aone-hero.jpg" alt="${cat.title}">
+            <div class="cat-photo-label">
+              <h3>${cat.title}</h3>
+              <p>${cat.desc}</p>
+            </div>
           </div>
+          <div class="svc-table">${rows}</div>
         </div>`;
     }).join('');
     reObserve(svcWrap);
