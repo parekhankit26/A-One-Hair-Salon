@@ -86,7 +86,7 @@
   const sigWrap = document.getElementById('cmsSignatureServices');
   if (sigWrap && Array.isArray(C.services)) {
     sigWrap.innerHTML = C.services.map(s => `
-      <div class="svc-card reveal">
+      <div class="svc-card reveal visible">
         <div class="svc-card-inner">
           <div class="svc-front">
             <div class="svc-front-img"><img src="images/aone-hero.jpg" alt="${s.name}"></div>
@@ -113,7 +113,7 @@
   const testiWrap = document.getElementById('cmsTestimonials');
   if (testiWrap && Array.isArray(C.testimonials)) {
     testiWrap.innerHTML = C.testimonials.map(t => `
-      <div class="testi-card reveal">
+      <div class="testi-card reveal visible">
         <div class="testi-quote">"</div>
         <div class="stars">★★★★★</div>
         <p class="testi-text">${t.text}</p>
@@ -147,7 +147,7 @@
           <a href="booking.html" class="svc-book-btn">Book Now</a>
         </div>`).join('');
       return `
-        <div class="svc-category reveal" data-cat="${cat.id}">
+        <div class="svc-category reveal visible" data-cat="${cat.id}">
           <div class="cat-header">
             <div class="cat-icon">${icon}</div>
             <div class="cat-info">
