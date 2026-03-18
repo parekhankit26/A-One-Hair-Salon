@@ -90,12 +90,6 @@
       "name": "Luxury Facial",
       "price": "from ₹2,000",
       "image": "images/aone-hero.jpg"
-    },
-    {
-      "icon": "◆",
-      "name": "Nail Art",
-      "price": "from ₹1,200",
-      "image": "images/aone-hero.jpg"
     }
   ],
   "services_page": {
