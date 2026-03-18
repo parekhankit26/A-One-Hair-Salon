@@ -89,7 +89,7 @@
       <div class="svc-card reveal visible">
         <div class="svc-card-inner">
           <div class="svc-front">
-            <div class="svc-front-img"><img src="images/aone-hero.jpg" alt="${s.name}"></div>
+            <div class="svc-front-img"><img src="${s.image || 'images/aone-hero.jpg'}" alt="${s.name}"></div>
             <div class="svc-front-info">
               <h3>${s.name}</h3>
               <p>${s.price}</p>
