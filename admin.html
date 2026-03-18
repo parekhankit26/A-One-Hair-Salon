@@ -852,7 +852,12 @@ function renderSvcPageCategories() {
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
         <div style="flex:1">
           <div class="field" style="margin-bottom:8px"><label>Category Title</label><input type="text" value="${cat.title}" onchange="updateSvcCat(${ci},'title',this.value)"></div>
-          <div class="field"><label>Category Description</label><input type="text" value="${cat.desc}" onchange="updateSvcCat(${ci},'desc',this.value)"></div>
+          <div class="field" style="margin-bottom:8px"><label>Category Description</label><input type="text" value="${cat.desc}" onchange="updateSvcCat(${ci},'desc',this.value)"></div>
+          <div class="field">
+            <label>Banner Image URL <span style="font-size:.65rem;color:var(--gold);font-weight:400">— Recommended size: 1400 × 480 px (wide landscape)</span></label>
+            <input type="text" value="${cat.banner_image || 'images/aone-hero.jpg'}" placeholder="https://... or images/filename.jpg" onchange="updateSvcCat(${ci},'banner_image',this.value)" style="font-size:.78rem">
+            <div style="font-size:.65rem;color:var(--muted);margin-top:4px">Paste any image URL (from Google Drive, Canva, Dropbox etc.) or use <code style="background:var(--bg);padding:1px 4px;border-radius:3px">images/filename.jpg</code> if uploaded to your repo. Format: JPG or PNG.</div>
+          </div>
         </div>
         <button class="btn btn-outline" style="color:#e88;border-color:#e88;white-space:nowrap" onclick="removeSvcCat(${ci})">✕ Remove Category</button>
       </div>
