@@ -157,7 +157,7 @@
             <div class="cat-line"></div>
           </div>
           <div class="cat-photo-banner">
-            <img src="images/aone-hero.jpg" alt="${cat.title}">
+            <img src="${cat.banner_image || 'images/aone-hero.jpg'}" alt="${cat.title}">
             <div class="cat-photo-label">
               <h3>${cat.title}</h3>
               <p>${cat.desc}</p>
