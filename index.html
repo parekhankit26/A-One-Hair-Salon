@@ -303,7 +303,7 @@ section { padding:120px 70px; }
 .services-section { background:var(--bg); padding:120px 70px; }
 .services-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:70px; }
 .services-grid {
- display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:start;
 }
 /* 3D Flip Cards */
 .svc-card {
@@ -1024,7 +1024,7 @@ ScrollTrigger.create({
  start: 'top 80%',
  onEnter: () => {
   gsap.from('.svc-card', {
-   y: 60, duration: 0.8, stagger: 0.12, ease: 'power3.out'
+   y: 0, duration: 0.6, stagger: 0, ease: 'power3.out'
   });
  }
 });
