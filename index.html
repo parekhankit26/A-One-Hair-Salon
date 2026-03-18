@@ -399,7 +399,7 @@ section { padding:120px 70px; }
 .booking-cta-photo {
  flex:1; position:relative; overflow:hidden;
 }
-.booking-cta-photo img { width:100%; height:100%; object-fit:cover; filter:brightness(.92) saturate(1.05); }
+.booking-cta-photo img { position:absolute; top:-12%; left:0; width:100%; height:124%; object-fit:cover; filter:brightness(.92) saturate(1.05); }
 .booking-cta-photo::after {
  content:''; position:absolute; inset:0;
  background:linear-gradient(90deg, rgba(8,8,10,.0) 0%, rgba(8,8,10,.3) 60%, var(--bg) 100%);
@@ -1076,10 +1076,12 @@ gsap.to('.about-accent-photo', {
 });
 
 /* 9. Booking CTA photo parallax */
-gsap.to('.booking-cta-photo img', {
- yPercent: 15, ease:'none',
- scrollTrigger:{ trigger:'.booking-cta', start:'top bottom', end:'bottom top', scrub:1.5 }
-});
+gsap.fromTo('.booking-cta-photo img',
+ { yPercent: 0 },
+ { yPercent: 10, ease:'none',
+   scrollTrigger:{ trigger:'.booking-cta', start:'top bottom', end:'bottom top', scrub:1.5 }
+ }
+);
 </script>
 <script src="site.js"></script>
 </body>
