@@ -224,19 +224,13 @@
       },
       {
         "id": "skin",
-        "title": "Skin & Nail Services",
-        "desc": "Facials, nail art & full body care",
+        "title": "Skin Services",
+        "desc": "Facials & full body care",
         "items": [
           {
             "name": "Luxury Facial",
             "detail": "Deep cleanse + serum + massage + mask",
             "price": "₹2,000 – ₹4,500",
-            "duration": "60 min"
-          },
-          {
-            "name": "Nail Art (Hands)",
-            "detail": "Gel / acrylic / nail art extensions",
-            "price": "₹1,200 – ₹3,000",
             "duration": "60 min"
           },
           {
@@ -262,10 +256,6 @@
       {
         "name": "Any Available",
         "specialty": "All services"
-      },
-      {
-        "name": "Priya Sharma",
-        "specialty": "Color & Styling"
       },
       {
         "name": "Rahul Mehta",
