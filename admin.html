@@ -649,26 +649,40 @@ function updateDashboard() {
 function renderServices() {
  const list = document.getElementById("svcList");
  const svcs = C.services||[];
- list.innerHTML = svcs.map((s,i) =>
-  "<div class='item-row' id='svc-row-" + i + "'>" +
+ list.innerHTML = svcs.map((s,i) => {
+  const imgSrc = s.image || 'images/aone-hero.jpg';
+  return "<div class='item-row' id='svc-row-" + i + "'>" +
   "<div class='item-row-header'><div style='display:flex;align-items:center;gap:10px'>" +
   "<div class='item-icon-preview' id='svc-prev-" + i + "'>" + s.icon + "</div>" +
-  "<span class='item-row-label'>Service " + (i+1) + "</span></div>" +
+  "<span class='item-row-label'>Service " + (i+1) + ": " + s.name.replace(/'/g,"&#39;") + "</span></div>" +
   "<div class='item-row-actions'><button class='btn btn-red btn-sm' onclick='removeService(" + i + ")'>Remove</button></div></div>" +
   "<div class='form-grid col3'>" +
   "<div class='field'><label>Icon / Symbol</label><input type='text' id='svc-icon-" + i + "' value='" + s.icon + "' oninput='updateService(" + i + ")' style='font-size:1.2rem;text-align:center'></div>" +
   "<div class='field'><label>Service Name</label><input type='text' id='svc-name-" + i + "' value='" + s.name.replace(/'/g,"&#39;") + "' oninput='updateService(" + i + ")'></div>" +
   "<div class='field'><label>Price</label><input type='text' id='svc-price-" + i + "' value='" + s.price.replace(/'/g,"&#39;") + "' oninput='updateService(" + i + ")'></div>" +
-  "</div></div>"
- ).join("");
+  "</div>" +
+  "<div class='field' style='margin-top:10px'>" +
+  "<label style='display:flex;align-items:center;gap:8px'>Card Image <span style='font-size:.62rem;color:var(--gold);font-weight:400'>— Recommended: 600×400px JPG/PNG</span></label>" +
+  "<div style='display:flex;align-items:center;gap:10px;margin-top:6px'>" +
+  "<img id='svc-img-prev-" + i + "' src='" + imgSrc + "' style='width:80px;height:54px;object-fit:cover;border-radius:4px;border:1px solid var(--border)' onerror='this.style.opacity=0.3'>" +
+  "<div style='flex:1'>" +
+  "<input type='text' id='svc-img-" + i + "' value='" + imgSrc.replace(/'/g,"&#39;") + "' placeholder='images/filename.jpg or https://...' oninput='updateService(" + i + ");document.getElementById(\"svc-img-prev-" + i + "\").src=this.value' style='font-size:.78rem;margin-bottom:6px'>" +
+  "<div style='display:flex;gap:8px'>" +
+  "<button class='btn btn-outline' style='font-size:.72rem;padding:6px 12px' onclick='triggerImageUpload(\"svc-file-" + i + "\")'>📁 Upload from Desktop</button>" +
+  "<input type='file' id='svc-file-" + i + "' accept='image/*' style='display:none' onchange='uploadImageToGitHub(this.files[0],function(p){document.getElementById(\"svc-img-" + i + "\").value=p;document.getElementById(\"svc-img-prev-" + i + "\").src=p;updateService(" + i + ");})'>" +
+  "</div></div></div></div>" +
+  "</div>";
+ }).join("");
 }
 
 function updateService(i) {
  if (!C.services) C.services = [];
+ const imgEl = document.getElementById("svc-img-"+i);
  C.services[i] = {
   icon:document.getElementById("svc-icon-"+i).value,
   name:document.getElementById("svc-name-"+i).value,
-  price:document.getElementById("svc-price-"+i).value
+  price:document.getElementById("svc-price-"+i).value,
+  image:imgEl ? imgEl.value : (C.services[i] && C.services[i].image) || 'images/aone-hero.jpg'
  };
  const prev = document.getElementById("svc-prev-"+i);
  if (prev) prev.textContent = C.services[i].icon;
@@ -725,6 +739,39 @@ function dlog(msg, cls) {
  const line = document.createElement("div");
  if (cls) line.className = cls; line.textContent = msg;
  el.appendChild(line); el.scrollTop = el.scrollHeight;
+}
+
+/* ── Image upload to GitHub ──────────────────────────────── */
+async function uploadImageToGitHub(file, onSuccess) {
+  const token = (document.getElementById("gh-token")||{}).value || localStorage.getItem('aone_gh_token') || '';
+  if (!token) { toast("Add your GitHub token in the Deploy section first", "err", 5000); return; }
+  const owner = (document.getElementById("gh-owner")||{}).value || "parekhankit26";
+  const repo  = (document.getElementById("gh-repo")||{}).value  || "A-One-Hair-Salon";
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g,'_').toLowerCase();
+  const path = 'images/' + safeName;
+  toast("Uploading image…", "info", 60000);
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const b64 = e.target.result.split(',')[1];
+      const sha = await getFileSha(owner, repo, path, token);
+      const body = { message: 'upload: ' + path, content: b64 };
+      if (sha) body.sha = sha;
+      const r = await fetch('https://api.github.com/repos/'+owner+'/'+repo+'/contents/'+path, {
+        method: 'PUT',
+        headers: { 'Authorization':'token '+token, 'Accept':'application/vnd.github.v3+json', 'Content-Type':'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!r.ok) { const err = await r.json(); throw new Error(err.message); }
+      toast("✅ Image uploaded! Click Deploy to update the site.", "ok", 6000);
+      onSuccess(path);
+    } catch(err) { toast("Upload failed: " + err.message, "err", 7000); }
+  };
+  reader.readAsDataURL(file);
+}
+
+function triggerImageUpload(inputId) {
+  document.getElementById(inputId).click();
 }
 
 async function getFileSha(owner, repo, path, token) {
@@ -854,9 +901,17 @@ function renderSvcPageCategories() {
           <div class="field" style="margin-bottom:8px"><label>Category Title</label><input type="text" value="${cat.title}" onchange="updateSvcCat(${ci},'title',this.value)"></div>
           <div class="field" style="margin-bottom:8px"><label>Category Description</label><input type="text" value="${cat.desc}" onchange="updateSvcCat(${ci},'desc',this.value)"></div>
           <div class="field">
-            <label>Banner Image URL <span style="font-size:.65rem;color:var(--gold);font-weight:400">— Recommended size: 1400 × 480 px (wide landscape)</span></label>
-            <input type="text" value="${cat.banner_image || 'images/aone-hero.jpg'}" placeholder="https://... or images/filename.jpg" onchange="updateSvcCat(${ci},'banner_image',this.value)" style="font-size:.78rem">
-            <div style="font-size:.65rem;color:var(--muted);margin-top:4px">Paste any image URL (from Google Drive, Canva, Dropbox etc.) or use <code style="background:var(--bg);padding:1px 4px;border-radius:3px">images/filename.jpg</code> if uploaded to your repo. Format: JPG or PNG.</div>
+            <label>Banner Image <span style="font-size:.62rem;color:var(--gold);font-weight:400">— Recommended size: 1400 × 480 px (wide landscape)</span></label>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+              <img id="cat-img-prev-${ci}" src="${cat.banner_image || 'images/aone-hero.jpg'}" style="width:100px;height:44px;object-fit:cover;border-radius:4px;border:1px solid var(--border);flex-shrink:0" onerror="this.style.opacity=0.3">
+              <div style="flex:1">
+                <input type="text" id="cat-img-${ci}" value="${cat.banner_image || 'images/aone-hero.jpg'}" placeholder="images/filename.jpg or https://..." style="font-size:.78rem;margin-bottom:6px" onchange="updateSvcCat(${ci},'banner_image',this.value);document.getElementById('cat-img-prev-${ci}').src=this.value">
+                <div style="display:flex;gap:8px">
+                  <button class="btn btn-outline" style="font-size:.72rem;padding:6px 12px" onclick="triggerImageUpload('cat-file-${ci}')">📁 Upload from Desktop</button>
+                  <input type="file" id="cat-file-${ci}" accept="image/*" style="display:none" onchange="uploadImageToGitHub(this.files[0],function(p){document.getElementById('cat-img-${ci}').value=p;document.getElementById('cat-img-prev-${ci}').src=p;updateSvcCat(${ci},'banner_image',p);})">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <button class="btn btn-outline" style="color:#e88;border-color:#e88;white-space:nowrap" onclick="removeSvcCat(${ci})">✕ Remove Category</button>
