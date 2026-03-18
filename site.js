@@ -189,6 +189,11 @@
     init();
   }
 
+  /* ── Back button / bfcache fix ─────────────────────────── */
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) { window.location.reload(); }
+  });
+
   function init() {
     initTransitions();
     applySettings();
