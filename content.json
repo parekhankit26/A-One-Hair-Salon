@@ -96,7 +96,7 @@
         "id": "hair",
         "title": "Hair Services",
         "desc": "Precision cuts for women, men & kids",
-        "banner_image": "",
+        "banner_image": "images/aone-hero.jpg",
         "items": [
           {
             "name": "Women's Haircut & Blowdry",
