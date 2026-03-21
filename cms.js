@@ -155,7 +155,25 @@
   }
 
   /* ══════════════════════════════════════════════════════════
-     9. SERVICES PAGE — rebuild category tables
+     9. HOME PAGE — Gallery Grid
+  ══════════════════════════════════════════════════════════ */
+  const galleryWrap = document.getElementById('cmsGalleryGrid');
+  if (galleryWrap && Array.isArray(C.gallery_items) && C.gallery_items.length > 0) {
+    const delays = ['', 'style="transition-delay:.08s"', 'style="transition-delay:.16s"',
+                    'style="transition-delay:.08s"', 'style="transition-delay:.16s"', 'style="transition-delay:.24s"'];
+    galleryWrap.innerHTML = C.gallery_items.map((item, i) =>
+      '<div class="g-item reveal visible" ' + (delays[i] || '') + '>' +
+      '<img src="' + (item.image || 'images/aone-hero.jpg') + '" alt="' + item.label + '">' +
+      '<div class="g-overlay"><span>' + item.label + '</span></div>' +
+      '</div>'
+    ).join('');
+    galleryWrap.querySelectorAll('.g-item').forEach(function(el) {
+      el.addEventListener('click', function() { window.location.href = 'gallery.html'; });
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     10. SERVICES PAGE — rebuild category tables
   ══════════════════════════════════════════════════════════ */
   const catIcons = {hair:'✂',color:'◉',bridal:'♛',grooming:'✦',skin:'✿',nails:'◆',treatments:'◈',makeup:'❋'};
   const svcWrap = document.getElementById('cmsSvcCategories');
@@ -196,7 +214,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════
-     10. BOOKING PAGE — rebuild service pick cards
+     11. BOOKING PAGE — rebuild service pick cards
   ══════════════════════════════════════════════════════════ */
   const bookGrid = document.getElementById('cmsBookingServices');
   if (bookGrid && Array.isArray(C.services)) {
@@ -228,7 +246,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════
-     11. BOOKING PAGE — rebuild stylist chips
+     12. BOOKING PAGE — rebuild stylist chips
   ══════════════════════════════════════════════════════════ */
   const stylistWrap = document.getElementById('cmsStylists');
   if (stylistWrap && C.booking && Array.isArray(C.booking.stylists)) {
