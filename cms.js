@@ -45,7 +45,23 @@
     ).join('');
   }
 
-  /* ── 3b. Global: Logo (every page) ─────────────────────── */
+  /* ── 3b. About section — stat counters & images ─────────── */
+  const aboutStats = [
+    { id: 'cmsAboutStat1', key: 'home.about_stat1_num' },
+    { id: 'cmsAboutStat2', key: 'home.about_stat2_num' },
+    { id: 'cmsAboutStat3', key: 'home.about_stat3_num' },
+  ];
+  aboutStats.forEach(function(s) {
+    const el = document.getElementById(s.id);
+    if (!el) return;
+    const raw = get(s.key);
+    if (raw == null) return;
+    const numVal = parseInt(String(raw).replace(/[^0-9]/g, '')) || 0;
+    el.setAttribute('data-target', numVal);
+    el.textContent = numVal >= 1000 ? (numVal / 1000).toFixed(1) + 'k+' : numVal + (numVal > 8 ? '+' : '');
+  });
+
+  /* ── 3d. Global: Logo (every page) ─────────────────────── */
   if (C.site) {
     setText('.logo-main', C.site.name);
     setText('.logo-sub',  C.site.tagline);
