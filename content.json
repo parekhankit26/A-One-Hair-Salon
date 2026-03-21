@@ -1,353 +1,366 @@
 {
-  "site": {
-    "name": "A ONE",
-    "tagline": "Hair Salon",
-    "phone": "+91 98765 43210",
-    "email": "hello@aonehairsalon.com",
-    "address": "12 King Street, London",
-    "address_full": "Shop 12, 12 King Street, London"
+ "site": {
+  "name": "A ONE",
+  "tagline": "Hair Salon",
+  "phone": "+91 98765 43210",
+  "email": "hello@aonehairsalon.com",
+  "address": "12 King Street, London",
+  "address_full": "Shop 12, 12 King Street, London"
+ },
+ "marquee": [
+  "Haircuts",
+  "Balayage & Color",
+  "Bridal Styling",
+  "Men's Grooming",
+  "Hair Spa",
+  "Nail Art",
+  "Facials",
+  "Keratin Treatment",
+  "Hair Extensions"
+ ],
+ "footer": {
+  "tagline": "London's premier luxury unisex salon. Where every visit is a bespoke journey of beauty and self-care.",
+  "hour_weekday": "Mon-Fri: 10am - 8pm",
+  "hour_saturday": "Saturday: 9am - 9pm",
+  "hour_sunday": "Sunday: 10am - 6pm",
+  "copyright": "© 2026 A One Hair Salon. All rights reserved."
+ },
+ "home": {
+  "hero_tag": "Premier Luxury Salon",
+  "hero_sub": "Where Art Meets Elegance",
+  "about_label": "About Us",
+  "about_title": "Luxury Hair Care, Perfected",
+  "about_text1": "Welcome to A One Hair Salon — a premier unisex luxury salon. With 8+ years of artistry and an unwavering commitment to excellence, every visit is a bespoke experience crafted just for you.",
+  "about_text2": "From precision cuts and vibrant color to rejuvenating spa treatments and flawless bridal styling, our salon is where beauty is elevated to an art form.",
+  "about_main_image": "images/aone-hero.jpg",
+  "about_accent_image": "images/aone-hero.jpg",
+  "about_badge_num": "8+",
+  "about_badge_lbl": "Years",
+  "about_stat1_num": "5000",
+  "about_stat1_lbl": "Happy Clients",
+  "about_stat2_num": "15",
+  "about_stat2_lbl": "Services",
+  "about_stat3_num": "8",
+  "about_stat3_lbl": "Years Expertise",
+  "services_label": "Our Services",
+  "services_title": "Signature Services",
+  "testimonials_label": "What Our Clients Say",
+  "testimonials_title": "Trusted by Hundreds",
+  "gallery_label": "Our Work",
+  "gallery_title": "The Salon Gallery",
+  "gallery_subtitle": "A glimpse into our world of beauty and craftsmanship",
+  "booking_cta_image": "images/aone-hero.jpg",
+  "booking_cta_title": "Ready for Your Transformation?",
+  "booking_cta_text": "Secure your spot at A One Hair Salon. Walk-ins welcome, but appointments are recommended for priority service."
+ },
+ "pages": {
+  "services": {
+   "hero_title": "Services & Pricing",
+   "intro": "Discover our full range of luxury hair, beauty, and grooming services. Every treatment is performed by our expert stylists using only the finest products."
   },
-  "marquee": [
-    "Haircuts",
-    "Balayage & Color",
-    "Bridal Styling",
-    "Men's Grooming",
-    "Hair Spa",
-    "Facials",
-    "Hair Extensions"
-  ],
-  "footer": {
-    "hour_weekday": "Mon-Fri: 10am - 8pm",
-    "hour_saturday": "Saturday: 9am - 9pm",
-    "hour_sunday": "Sunday: 10am - 6pm",
-    "tagline": "London's premier luxury unisex salon. Where every visit is a bespoke journey of beauty and self-care.",
-    "copyright": "© 2026 A One Hair Salon. All rights reserved."
+  "gallery": {
+   "hero_title": "Our Gallery",
+   "intro": "A glimpse into the artistry and atmosphere of A ONE Hair Salon."
   },
-  "home": {
-    "hero_tag": "Premier Luxury Salon",
-    "hero_sub": "Where Art Meets Elegance",
-    "about_text1": "Welcome to A One Hair Salon — a premier unisex luxury salon. With 8+ years of artistry and an unwavering commitment to excellence, every visit is a bespoke experience crafted just for you.",
-    "about_text2": "From precision cuts and vibrant color to rejuvenating spa treatments and flawless bridal styling, our salon is where beauty is elevated to an art form.",
-    "about_label": "About Us",
-    "about_title": "Luxury Hair Care Perfected",
-    "services_label": "Our Services",
-    "services_title": "Signature Services",
-    "testimonials_label": "What Our Clients Say",
-    "testimonials_title": "Trusted by Hundreds",
-    "gallery_label": "Our Work",
-    "gallery_title": "The Salon Gallery",
-    "gallery_subtitle": "A glimpse into our world of beauty and craftsmanship.",
-    "booking_cta_title": "Ready for Your Transformation?",
-    "booking_cta_text": "Secure your spot at A One Hair Salon. Walk-ins welcome, but appointments are recommended for priority service.",
-    "booking_cta_image": "images/aone-hero.jpg",
-    "about_main_image": "images/aone-hero.jpg",
-    "about_accent_image": "images/aone-hero.jpg",
-    "about_badge_num": "10+",
-    "about_badge_lbl": "Years",
-    "about_stat1_num": "1400",
-    "about_stat1_lbl": "Happy Clients",
-    "about_stat2_num": "13",
-    "about_stat2_lbl": "Services",
-    "about_stat3_num": "10",
-    "about_stat3_lbl": "Years Expertise"
-  },
-  "pages": {
-    "services": {
-      "hero_title": "Services & Pricing",
-      "intro": "Discover our full range of luxury hair, beauty, and grooming services. Every treatment is performed by our expert stylists using only the finest products."
-    },
-    "gallery": {
-      "hero_title": "Our Gallery",
-      "intro": "A glimpse into the artistry and atmosphere of A ONE Hair Salon."
-    },
-    "contact": {
-      "hero_title": "Contact Us",
-      "section_label": "Get In Touch",
-      "section_title": "We'd Love to Hear From You",
-      "intro": "Whether you want to book an appointment, ask about a service, or simply say hello — we're here for you. Drop by our salon or reach out through any of the channels below."
-    },
-    "booking": {
-      "hero_title": "Book Your Experience",
-      "hero_sub": "Reserve your appointment with our expert stylists. Instant confirmation guaranteed."
-    }
-  },
-  "services": [
-    {
-      "icon": "✂",
-      "name": "Women's Haircut",
-      "price": "from £10.00",
-      "detail": "Precision cut, blowdry & finish by our expert stylists.",
-      "image": "images/aone-hero.jpg"
-    },
-    {
-      "icon": "✦",
-      "name": "Men's Haircut",
-      "price": "from ₹350",
-      "detail": "Classic & modern cuts, scissor or machine, wash & style.",
-      "image": "images/pngtree-4d-rendering-of-a-hair-salon-with-3-chairs-image_2691250.jpg"
-    },
-    {
-      "icon": "◉",
-      "name": "Balayage & Color",
-      "price": "from £25.00",
-      "detail": "Freehand painting for natural sun-kissed highlights blended seamlessly.",
-      "image": "images/aone-hero.jpg"
-    },
-    {
-      "icon": "♛",
-      "name": "Bridal Styling",
-      "price": "from ₹5,000",
-      "detail": "Complete bridal packages — hair, makeup & day-of styling.",
-      "image": "images/pngtree-4d-rendering-of-a-hair-salon-with-3-chairs-image_2691250.jpg"
-    },
-    {
-      "icon": "◈",
-      "name": "Hair Spa",
-      "price": "from £30.00",
-      "detail": "Deep conditioning, scalp massage & nourishing mask treatment.",
-      "image": "images/aone-hero.jpg"
-    },
-    {
-      "icon": "❋",
-      "name": "Luxury Facial",
-      "price": "from £40.00",
-      "detail": "Deep cleanse, serum, facial massage & premium mask.",
-      "image": "images/image.jpg"
-    }
-  ],
-  "services_page": {
-    "categories": [
-      {
-        "id": "hair",
-        "title": "Hair Services",
-        "desc": "Precision cuts for women, men & kids",
-        "banner_image": "images/aone-hero.jpg",
-        "items": [
-          {
-            "name": "Women's Haircut & Blowdry",
-            "detail": "Consultation + shampoo + precision cut + blowdry",
-            "price": "₹800 – ₹1,500",
-            "duration": "60 min"
-          },
-          {
-            "name": "Men's Haircut",
-            "detail": "Scissor cut / machine cut + wash + style",
-            "price": "₹350 – ₹600",
-            "duration": "30 min"
-          },
-          {
-            "name": "Kids' Haircut",
-            "detail": "For children under 12",
-            "price": "₹250 – ₹400",
-            "duration": "20 min"
-          },
-          {
-            "name": "Blowdry & Styling",
-            "detail": "Wash + blowdry + finish",
-            "price": "₹500 – ₹900",
-            "duration": "45 min"
-          },
-          {
-            "name": "Hair Straightening",
-            "detail": "Temporary straightening with heat tools",
-            "price": "₹700 – ₹1,200",
-            "duration": "60 min"
-          }
-        ]
-      },
-      {
-        "id": "color",
-        "title": "Color & Treatments",
-        "desc": "Premium hair color, keratin & spa",
-        "banner_image": "images/aone-hero.jpg",
-        "items": [
-          {
-            "name": "Balayage",
-            "detail": "Hand-painted highlights for a sun-kissed effect",
-            "price": "₹4,000 – ₹8,000",
-            "duration": "120 min"
-          },
-          {
-            "name": "Global Color",
-            "detail": "Full head single-process color",
-            "price": "₹1,500 – ₹3,500",
-            "duration": "90 min"
-          },
-          {
-            "name": "Highlights / Ombre",
-            "detail": "Foil highlights or gradient ombre",
-            "price": "₹3,000 – ₹6,000",
-            "duration": "120 min"
-          },
-          {
-            "name": "Keratin Treatment",
-            "detail": "Brazilian keratin for frizz-free, smooth hair",
-            "price": "₹5,000 – ₹10,000",
-            "duration": "150 min"
-          },
-          {
-            "name": "Hair Spa & Mask",
-            "detail": "Deep conditioning + scalp massage + mask",
-            "price": "₹1,500 – ₹3,000",
-            "duration": "60 min"
-          }
-        ]
-      },
-      {
-        "id": "bridal",
-        "title": "Bridal Services",
-        "desc": "Look flawless on your most special day",
-        "banner_image": "images/aone-hero.jpg",
-        "items": [
-          {
-            "name": "Bridal Hair Styling",
-            "detail": "Trial + day-of styling + accessories",
-            "price": "₹5,000 – ₹12,000",
-            "duration": "120 min"
-          },
-          {
-            "name": "Bridal Makeup",
-            "detail": "Full glam makeup with airbrush finish",
-            "price": "₹8,000 – ₹18,000",
-            "duration": "120 min"
-          },
-          {
-            "name": "Full Bridal Package",
-            "detail": "Hair + makeup + pre-bridal treatment",
-            "price": "₹20,000 – ₹35,000",
-            "duration": "300 min"
-          }
-        ]
-      },
-      {
-        "id": "grooming",
-        "title": "Men's Grooming",
-        "desc": "Precision services for the modern man",
-        "banner_image": "images/aone-hero.jpg",
-        "items": [
-          {
-            "name": "Beard Trim & Shape",
-            "detail": "Precision beard sculpting + hot towel",
-            "price": "₹300 – ₹500",
-            "duration": "20 min"
-          },
-          {
-            "name": "Hot Towel Shave",
-            "detail": "Classic straight-razor shave + skin treatment",
-            "price": "₹500 – ₹800",
-            "duration": "30 min"
-          },
-          {
-            "name": "Men's Hair Color",
-            "detail": "Root touch-up or full color for men",
-            "price": "₹800 – ₹2,000",
-            "duration": "60 min"
-          },
-          {
-            "name": "Men's Facial",
-            "detail": "Deep cleanse + exfoliation + mask",
-            "price": "₹1,200 – ₹2,500",
-            "duration": "45 min"
-          }
-        ]
-      },
-      {
-        "id": "skin",
-        "title": "Skin & Nail Services",
-        "desc": "Facials, nail art & full body care",
-        "banner_image": "images/aone-hero.jpg",
-        "items": [
-          {
-            "name": "Luxury Facial",
-            "detail": "Deep cleanse + serum + massage + mask",
-            "price": "₹2,000 – ₹4,500",
-            "duration": "60 min"
-          },
-          {
-            "name": "Nail Art (Hands)",
-            "detail": "Gel / acrylic / nail art extensions",
-            "price": "₹1,200 – ₹3,000",
-            "duration": "60 min"
-          },
-          {
-            "name": "Pedicure",
-            "detail": "Foot soak + scrub + massage + polish",
-            "price": "₹800 – ₹2,000",
-            "duration": "45 min"
-          },
-          {
-            "name": "Waxing (Full Body)",
-            "detail": "Full body wax with soothing finish",
-            "price": "₹2,500 – ₹5,000",
-            "duration": "90 min"
-          }
-        ]
-      }
-    ]
+  "contact": {
+   "hero_title": "Contact Us",
+   "section_label": "Get In Touch",
+   "section_title": "We'd Love to Hear From You",
+   "intro": "Whether you want to book an appointment, ask about a service, or simply say hello — we're here for you. Drop by our salon or reach out through any of the channels below."
   },
   "booking": {
-    "visual_title": "Book Your Experience",
-    "visual_sub": "Reserve your appointment with our expert stylists. Instant confirmation guaranteed.",
-    "stylists": [
-      {
-        "name": "Any Available",
-        "specialty": "All services"
-      },
-      {
-        "name": "Priya Sharma",
-        "specialty": "Color & Styling"
-      },
-      {
-        "name": "Rahul Mehta",
-        "specialty": "Cuts & Grooming"
-      },
-      {
-        "name": "Ayesha Khan",
-        "specialty": "Bridal & Treatments"
-      }
-    ],
-    "confirm_title": "Booking Confirmed!",
-    "confirm_text": "Thank you for choosing A One Hair Salon. Your appointment is all set!"
+   "hero_title": "Book Your Experience",
+   "hero_sub": "Reserve your appointment with our expert stylists. Instant confirmation guaranteed."
+  }
+ },
+ "services": [
+  {
+   "icon": "✂",
+   "name": "Women's Haircut",
+   "price": "from ₹800",
+   "detail": "Precision cut, blowdry & finish by our expert stylists.",
+   "image": "images/aone-hero.jpg"
   },
-  "testimonials": [
-    {
-      "text": "The balayage treatment transformed my hair completely. Absolutely loved the result — the salon has a magical ambiance.",
-      "name": "Priya Sharma",
-      "location": "West End, London",
-      "initial": "P",
-      "photo": ""
-    },
-    {
-      "text": "Best men's haircut I've ever gotten. Clean, precise, and the hot towel shave was incredibly relaxing. Worth every penny.",
-      "name": "Rohan Mehta",
-      "location": "Mayfair, London",
-      "initial": "R",
-      "photo": ""
-    },
-    {
-      "text": "My bridal look was beyond perfection. The team understood exactly what I wanted. I felt like royalty on my wedding day!",
-      "name": "Umang Valand",
-      "location": "Green Streat, London",
-      "initial": "A",
-      "photo": "images/image.jpg"
-    }
-  ],
-  "gallery_items": [
-    {
-      "image": "images/pngtree-4d-rendering-of-a-hair-salon-with-3-chairs-image_2691250.jpg",
-      "label": "Salon Interior"
-    },
-    {
-      "image": "images/aone-hero.jpg",
-      "label": "Bridal Styling"
-    },
-    {
-      "image": "images/pngtree-4d-rendering-of-a-hair-salon-with-3-chairs-image_2691250.jpg",
-      "label": "Bold Color"
-    },
-    {
-      "image": "images/istockphoto-1267162278-612x612.jpg",
-      "label": "Facial"
-    }
+  {
+   "icon": "✦",
+   "name": "Men's Haircut",
+   "price": "from ₹350",
+   "detail": "Classic & modern cuts, scissor or machine, wash & style.",
+   "image": "images/aone-hero.jpg"
+  },
+  {
+   "icon": "◉",
+   "name": "Balayage & Color",
+   "price": "from ₹4,000",
+   "detail": "Freehand painting for natural sun-kissed highlights blended seamlessly.",
+   "image": "images/aone-hero.jpg"
+  },
+  {
+   "icon": "♛",
+   "name": "Bridal Styling",
+   "price": "from ₹5,000",
+   "detail": "Complete bridal packages — hair, makeup & day-of styling.",
+   "image": "images/aone-hero.jpg"
+  },
+  {
+   "icon": "◈",
+   "name": "Hair Spa",
+   "price": "from ₹1,500",
+   "detail": "Deep conditioning, scalp massage & nourishing mask treatment.",
+   "image": "images/aone-hero.jpg"
+  },
+  {
+   "icon": "✿",
+   "name": "Keratin Treatment",
+   "price": "from ₹5,000",
+   "detail": "Brazilian keratin for frizz-free, silky smooth hair.",
+   "image": "images/aone-hero.jpg"
+  },
+  {
+   "icon": "❋",
+   "name": "Luxury Facial",
+   "price": "from ₹2,000",
+   "detail": "Deep cleanse, serum, facial massage & premium mask.",
+   "image": "images/aone-hero.jpg"
+  },
+  {
+   "icon": "◆",
+   "name": "Nail Art",
+   "price": "from ₹1,200",
+   "detail": "Gel, acrylic & custom nail art extensions by specialists.",
+   "image": "images/aone-hero.jpg"
+  }
+ ],
+ "services_page": {
+  "categories": [
+   {
+    "id": "hair",
+    "title": "Hair Services",
+    "desc": "Precision cuts for women, men & kids",
+    "banner_image": "images/aone-hero.jpg",
+    "items": [
+     {
+      "name": "Women's Haircut & Blowdry",
+      "detail": "Consultation + shampoo + precision cut + blowdry",
+      "price": "₹800 – ₹1,500",
+      "duration": "60 min"
+     },
+     {
+      "name": "Men's Haircut",
+      "detail": "Scissor cut / machine cut + wash + style",
+      "price": "₹350 – ₹600",
+      "duration": "30 min"
+     },
+     {
+      "name": "Kids' Haircut",
+      "detail": "For children under 12",
+      "price": "₹250 – ₹400",
+      "duration": "20 min"
+     },
+     {
+      "name": "Blowdry & Styling",
+      "detail": "Wash + blowdry + finish",
+      "price": "₹500 – ₹900",
+      "duration": "45 min"
+     },
+     {
+      "name": "Hair Straightening",
+      "detail": "Temporary straightening with heat tools",
+      "price": "₹700 – ₹1,200",
+      "duration": "60 min"
+     }
+    ]
+   },
+   {
+    "id": "color",
+    "title": "Color & Treatments",
+    "desc": "Premium hair color, keratin & spa",
+    "banner_image": "images/aone-hero.jpg",
+    "items": [
+     {
+      "name": "Balayage",
+      "detail": "Hand-painted highlights for a sun-kissed effect",
+      "price": "₹4,000 – ₹8,000",
+      "duration": "120 min"
+     },
+     {
+      "name": "Global Color",
+      "detail": "Full head single-process color",
+      "price": "₹1,500 – ₹3,500",
+      "duration": "90 min"
+     },
+     {
+      "name": "Highlights / Ombre",
+      "detail": "Foil highlights or gradient ombre",
+      "price": "₹3,000 – ₹6,000",
+      "duration": "120 min"
+     },
+     {
+      "name": "Keratin Treatment",
+      "detail": "Brazilian keratin for frizz-free, smooth hair",
+      "price": "₹5,000 – ₹10,000",
+      "duration": "150 min"
+     },
+     {
+      "name": "Hair Spa & Mask",
+      "detail": "Deep conditioning + scalp massage + mask",
+      "price": "₹1,500 – ₹3,000",
+      "duration": "60 min"
+     }
+    ]
+   },
+   {
+    "id": "bridal",
+    "title": "Bridal Services",
+    "desc": "Look flawless on your most special day",
+    "banner_image": "images/aone-hero.jpg",
+    "items": [
+     {
+      "name": "Bridal Hair Styling",
+      "detail": "Trial + day-of styling + accessories",
+      "price": "₹5,000 – ₹12,000",
+      "duration": "120 min"
+     },
+     {
+      "name": "Bridal Makeup",
+      "detail": "Full glam makeup with airbrush finish",
+      "price": "₹8,000 – ₹18,000",
+      "duration": "120 min"
+     },
+     {
+      "name": "Full Bridal Package",
+      "detail": "Hair + makeup + pre-bridal treatment",
+      "price": "₹20,000 – ₹35,000",
+      "duration": "300 min"
+     }
+    ]
+   },
+   {
+    "id": "grooming",
+    "title": "Men's Grooming",
+    "desc": "Precision services for the modern man",
+    "banner_image": "images/aone-hero.jpg",
+    "items": [
+     {
+      "name": "Beard Trim & Shape",
+      "detail": "Precision beard sculpting + hot towel",
+      "price": "₹300 – ₹500",
+      "duration": "20 min"
+     },
+     {
+      "name": "Hot Towel Shave",
+      "detail": "Classic straight-razor shave + skin treatment",
+      "price": "₹500 – ₹800",
+      "duration": "30 min"
+     },
+     {
+      "name": "Men's Hair Color",
+      "detail": "Root touch-up or full color for men",
+      "price": "₹800 – ₹2,000",
+      "duration": "60 min"
+     },
+     {
+      "name": "Men's Facial",
+      "detail": "Deep cleanse + exfoliation + mask",
+      "price": "₹1,200 – ₹2,500",
+      "duration": "45 min"
+     }
+    ]
+   },
+   {
+    "id": "skin",
+    "title": "Skin & Nail Services",
+    "desc": "Facials, nail art & full body care",
+    "banner_image": "images/aone-hero.jpg",
+    "items": [
+     {
+      "name": "Luxury Facial",
+      "detail": "Deep cleanse + serum + massage + mask",
+      "price": "₹2,000 – ₹4,500",
+      "duration": "60 min"
+     },
+     {
+      "name": "Nail Art (Hands)",
+      "detail": "Gel / acrylic / nail art extensions",
+      "price": "₹1,200 – ₹3,000",
+      "duration": "60 min"
+     },
+     {
+      "name": "Pedicure",
+      "detail": "Foot soak + scrub + massage + polish",
+      "price": "₹800 – ₹2,000",
+      "duration": "45 min"
+     },
+     {
+      "name": "Waxing (Full Body)",
+      "detail": "Full body wax with soothing finish",
+      "price": "₹2,500 – ₹5,000",
+      "duration": "90 min"
+     }
+    ]
+   }
   ]
+ },
+ "booking": {
+  "visual_title": "Book Your Experience",
+  "visual_sub": "Reserve your appointment with our expert stylists. Instant confirmation guaranteed.",
+  "stylists": [
+   {
+    "name": "Any Available",
+    "specialty": "All services"
+   },
+   {
+    "name": "Priya Sharma",
+    "specialty": "Color & Styling"
+   },
+   {
+    "name": "Rahul Mehta",
+    "specialty": "Cuts & Grooming"
+   },
+   {
+    "name": "Ayesha Khan",
+    "specialty": "Bridal & Treatments"
+   }
+  ],
+  "confirm_title": "Booking Confirmed!",
+  "confirm_text": "Thank you for choosing A One Hair Salon. Your appointment is all set!"
+ },
+ "testimonials": [
+  {
+   "text": "The balayage treatment transformed my hair completely. Absolutely loved the result — the salon has a magical ambiance.",
+   "name": "Priya Sharma",
+   "location": "West End, London",
+   "initial": "P",
+   "photo": ""
+  },
+  {
+   "text": "Best men's haircut I've ever gotten. Clean, precise, and the hot towel shave was incredibly relaxing. Worth every penny.",
+   "name": "Rohan Mehta",
+   "location": "Mayfair, London",
+   "initial": "R",
+   "photo": ""
+  },
+  {
+   "text": "My bridal look was beyond perfection. The team understood exactly what I wanted. I felt like royalty on my wedding day!",
+   "name": "Ayesha Khan",
+   "location": "Chelsea, London",
+   "initial": "A",
+   "photo": ""
+  }
+ ],
+ "gallery_items": [
+  {"image": "images/aone-hero.jpg", "label": "Salon Interior"},
+  {"image": "images/aone-hero.jpg", "label": "Balayage"},
+  {"image": "images/aone-hero.jpg", "label": "Bridal Styling"},
+  {"image": "images/aone-hero.jpg", "label": "Bold Color"},
+  {"image": "images/aone-hero.jpg", "label": "Nail Art"},
+  {"image": "images/aone-hero.jpg", "label": "Facial"}
+ ],
+ "carousel_items": [
+  {"image": "images/aone-hero.jpg", "label": "Salon Interior"},
+  {"image": "images/aone-hero.jpg", "label": "Balayage"},
+  {"image": "images/aone-hero.jpg", "label": "Bridal Styling"},
+  {"image": "images/aone-hero.jpg", "label": "Men's Grooming"},
+  {"image": "images/aone-hero.jpg", "label": "Hair Spa"}
+ ]
 }
