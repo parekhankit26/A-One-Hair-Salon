@@ -267,7 +267,19 @@
     });
   }
 
-  /* ── 12. Expose content globally ───────────────────────── */
+  /* ══════════════════════════════════════════════════════════
+     13. HOME PAGE — Hero Carousel
+  ══════════════════════════════════════════════════════════ */
+  const carouselWrap = document.getElementById('carousel3d');
+  if (carouselWrap && Array.isArray(C.carousel_items) && C.carousel_items.length > 0) {
+    carouselWrap.innerHTML = C.carousel_items.map(function(item, i) {
+      return '<div class="panel-3d" style="--i:' + i + '">' +
+        '<img src="' + (item.image || 'images/aone-hero.jpg') + '" alt="' + (item.label || '') + '">' +
+        '</div>';
+    }).join('');
+  }
+
+  /* ── 14. Expose content globally ───────────────────────── */
   window.AONE_CONTENT = C;
 
 })();
