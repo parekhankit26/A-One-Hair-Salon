@@ -991,14 +991,7 @@ gsap.utils.toArray('.about-section').forEach(el => {
  });
 });
 
-/* 3. Horizontal marquee speed boost on scroll */
-let lastScroll = 0;
-window.addEventListener('scroll', () => {
- const speed = Math.min(Math.abs(window.scrollY - lastScroll) / 3, 3);
- const track = document.querySelector('.marquee-track');
- if(track) track.style.animationDuration = Math.max(8, 22 - speed*10) + 's';
- lastScroll = window.scrollY;
-}, { passive: true });
+/* 3. Marquee runs at constant speed — no scroll interference */
 
 /* 4. Service cards -- GSAP stagger on scroll (no opacity — reveal class handles that) */
 ScrollTrigger.create({
