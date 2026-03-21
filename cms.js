@@ -36,7 +36,16 @@
     }
   }
 
-  /* ── 3. Global: Logo (every page) ──────────────────────── */
+  /* ── 3. Marquee strip ──────────────────────────────────── */
+  const marqueeTrack = document.getElementById('cmsMarqueeTrack');
+  if (marqueeTrack && Array.isArray(C.marquee) && C.marquee.length > 0) {
+    const doubled = [...C.marquee, ...C.marquee];
+    marqueeTrack.innerHTML = doubled.map(item =>
+      `<span>${item}</span><span class="dot">✦</span>`
+    ).join('');
+  }
+
+  /* ── 3b. Global: Logo (every page) ─────────────────────── */
   if (C.site) {
     setText('.logo-main', C.site.name);
     setText('.logo-sub',  C.site.tagline);
