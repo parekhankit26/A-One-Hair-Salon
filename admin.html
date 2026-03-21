@@ -295,6 +295,17 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
     <div class="form-grid col1">
      <div class="field"><label>CTA Title</label><input type="text" id="hp-cta-title" placeholder="Ready for Your Transformation?"></div>
      <div class="field"><label>CTA Text <span class="field-note" style="display:inline">Shown on home page under the booking CTA</span></label><textarea id="hp-cta-text" rows="2" placeholder="Secure your spot at A One Hair Salon..."></textarea></div>
+     <div class="field">
+      <label>CTA Background Photo <span class="field-note" style="display:inline">Recommended: 900 x 700 px landscape</span></label>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+       <img id="cta-photo-prev" src="images/aone-hero.jpg" style="width:72px;height:72px;object-fit:cover;border-radius:4px;border:1px solid var(--border);flex-shrink:0" onerror="this.style.opacity=0.3">
+       <div style="flex:1">
+        <input type="text" id="hp-cta-image" placeholder="images/filename.jpg or https://..." style="font-size:.78rem;margin-bottom:6px" oninput="document.getElementById('cta-photo-prev').src=this.value;isDirty=true;">
+        <button class="btn btn-outline" style="font-size:.72rem;padding:6px 12px;width:100%" onclick="triggerImageUpload('cta-photo-file')">&#128193; Upload from Desktop</button>
+        <input type="file" id="cta-photo-file" accept="image/*" style="display:none" onchange="uploadImageToGitHub(this.files[0],function(p){document.getElementById('hp-cta-image').value=p;document.getElementById('cta-photo-prev').src=p;isDirty=true;})">
+       </div>
+      </div>
+     </div>
     </div>
    </div>
    <div class="panel-section">
@@ -607,6 +618,8 @@ function populateAll() {
  setVal("hp-svc-label",H.services_label); setVal("hp-svc-title",H.services_title);
  setVal("hp-testi-label",H.testimonials_label); setVal("hp-testi-title",H.testimonials_title);
  setVal("hp-cta-title",H.booking_cta_title); setVal("hp-cta-text",H.booking_cta_text);
+ setVal("hp-cta-image",H.booking_cta_image);
+ if(H.booking_cta_image){var cp=document.getElementById("cta-photo-prev");if(cp)cp.src=H.booking_cta_image;}
  setVal("hp-about-main-img",H.about_main_image); setVal("hp-about-accent-img",H.about_accent_image);
  if(H.about_main_image){var mp=document.getElementById("about-main-prev");if(mp)mp.src=H.about_main_image;}
  if(H.about_accent_image){var ap=document.getElementById("about-accent-prev");if(ap)ap.src=H.about_accent_image;}
@@ -660,6 +673,7 @@ function collectAll() {
   testimonials_title:(document.getElementById("hp-testi-title")||{}).value||H.testimonials_title||'',
   booking_cta_title:(document.getElementById("hp-cta-title")||{}).value||H.booking_cta_title||'',
   booking_cta_text:(document.getElementById("hp-cta-text")||{}).value||H.booking_cta_text||'',
+  booking_cta_image:(document.getElementById("hp-cta-image")||{}).value||H.booking_cta_image||'images/aone-hero.jpg',
   about_main_image:(document.getElementById("hp-about-main-img")||{}).value||H.about_main_image||'images/aone-hero.jpg',
   about_accent_image:(document.getElementById("hp-about-accent-img")||{}).value||H.about_accent_image||'',
   about_badge_num:(document.getElementById("hp-badge-num")||{}).value||H.about_badge_num||'8+',
