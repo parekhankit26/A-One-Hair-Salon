@@ -292,6 +292,17 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
     <button class="btn btn-outline btn-sm" onclick="addTesti()">+ Add Testimonial</button>
    </div>
    <div class="panel-section">
+    <div class="panel-section-title">Gallery Section</div>
+    <div class="form-grid col1" style="margin-bottom:20px">
+     <div class="field"><label>Section Label</label><input type="text" id="hp-gallery-label" placeholder="Our Work"></div>
+     <div class="field"><label>Section Title</label><input type="text" id="hp-gallery-title" placeholder="The Salon Gallery"></div>
+     <div class="field"><label>Section Subtitle</label><input type="text" id="hp-gallery-subtitle" placeholder="A glimpse into our world of beauty and craftsmanship"></div>
+    </div>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Edit each photo in the gallery grid — upload your image and set the hover label. <span style="color:var(--gold)">Recommended: 800x600px JPG/PNG.</span></p>
+    <div class="item-list" id="galleryList"></div>
+    <button class="btn btn-outline btn-sm" onclick="addGalleryItem()">+ Add Photo</button>
+   </div>
+   <div class="panel-section">
     <div class="panel-section-title">Booking CTA Section</div>
     <div class="form-grid col1">
      <div class="field"><label>CTA Title</label><input type="text" id="hp-cta-title" placeholder="Ready for Your Transformation?"></div>
@@ -600,6 +611,7 @@ function populateAll() {
  setVal("hp-about-label",H.about_label); setVal("hp-about-title",H.about_title);
  setVal("hp-svc-label",H.services_label); setVal("hp-svc-title",H.services_title);
  setVal("hp-testi-label",H.testimonials_label); setVal("hp-testi-title",H.testimonials_title);
+ setVal("hp-gallery-label",H.gallery_label); setVal("hp-gallery-title",H.gallery_title); setVal("hp-gallery-subtitle",H.gallery_subtitle);
  setVal("hp-cta-title",H.booking_cta_title); setVal("hp-cta-text",H.booking_cta_text);
  setVal("hp-cta-image",H.booking_cta_image);
  if(H.booking_cta_image){var cp=document.getElementById("cta-photo-prev");if(cp)cp.src=H.booking_cta_image;}
@@ -622,7 +634,7 @@ function populateAll() {
  setVal("pt-con-intro",C.pages && C.pages.contact && C.pages.contact.intro);
  setVal("pt-book-title",C.pages && C.pages.booking && C.pages.booking.hero_title);
  setVal("pt-book-sub",C.pages && C.pages.booking && C.pages.booking.hero_sub);
- renderMarquee(); renderServices(); renderTestimonials(); renderSvcPageCategories(); renderStylists(); updateDashboard();
+ renderMarquee(); renderServices(); renderTestimonials(); renderGallery(); renderSvcPageCategories(); renderStylists(); updateDashboard();
  isDirty = false; document.getElementById("statDraft").textContent = "Saved";
 }
 
@@ -654,6 +666,9 @@ function collectAll() {
   services_title:(document.getElementById("hp-svc-title")||{}).value||H.services_title||'',
   testimonials_label:(document.getElementById("hp-testi-label")||{}).value||H.testimonials_label||'',
   testimonials_title:(document.getElementById("hp-testi-title")||{}).value||H.testimonials_title||'',
+  gallery_label:(document.getElementById("hp-gallery-label")||{}).value||H.gallery_label||'Our Work',
+  gallery_title:(document.getElementById("hp-gallery-title")||{}).value||H.gallery_title||'The Salon Gallery',
+  gallery_subtitle:(document.getElementById("hp-gallery-subtitle")||{}).value||H.gallery_subtitle||'A glimpse into our world of beauty and craftsmanship',
   booking_cta_title:(document.getElementById("hp-cta-title")||{}).value||H.booking_cta_title||'',
   booking_cta_text:(document.getElementById("hp-cta-text")||{}).value||H.booking_cta_text||'',
   booking_cta_image:(document.getElementById("hp-cta-image")||{}).value||H.booking_cta_image||'images/aone-hero.jpg',
@@ -886,6 +901,60 @@ function addTesti() {
 function removeTesti(i) {
  if (!confirm("Remove this testimonial?")) return;
  C.testimonials.splice(i,1); renderTestimonials(); isDirty = true;
+}
+
+/* ── Gallery renderer ── */
+function renderGallery() {
+  var list = document.getElementById("galleryList");
+  if (!list) return;
+  var items = C.gallery_items || [];
+  list.innerHTML = items.map(function(item, i) {
+    var imgSrc = item.image || "images/aone-hero.jpg";
+    return "<div class=\"item-row\">" +
+    "<div class=\"item-row-header\"><div style=\"display:flex;align-items:center;gap:10px\">" +
+    "<div class=\"item-icon-preview\" id=\"gal-prev-icon-" + i + "\" style=\"padding:0;overflow:hidden\">" +
+    "<img src=\"" + imgSrc + "\" style=\"width:100%;height:100%;object-fit:cover\" onerror=\"this.style.opacity=0.3\">" +
+    "</div>" +
+    "<span class=\"item-row-label\">Photo " + (i+1) + ": " + item.label + "</span></div>" +
+    "<div class=\"item-row-actions\"><button class=\"btn btn-red btn-sm\" onclick=\"removeGalleryItem(" + i + ")\">Remove</button></div></div>" +
+    "<div class=\"form-grid col2\" style=\"margin-bottom:10px\">" +
+    "<div class=\"field\" style=\"grid-column:1/-1\"><label>Hover Label <span style=\"font-size:.62rem;color:var(--muted);font-weight:400\">— text shown when mouse is over this photo</span></label>" +
+    "<input type=\"text\" id=\"gal-label-" + i + "\" value=\"" + item.label.replace(/\"/g,"&quot;") + "\" oninput=\"updateGalleryItem(" + i + ")\"></div>" +
+    "</div>" +
+    "<div class=\"field\">" +
+    "<label style=\"display:flex;align-items:center;gap:8px\">Photo <span style=\"font-size:.62rem;color:var(--gold);font-weight:400\">— Recommended: 800x600px JPG/PNG</span></label>" +
+    "<div style=\"display:flex;align-items:center;gap:10px;margin-top:6px\">" +
+    "<img id=\"gal-img-prev-" + i + "\" src=\"" + imgSrc + "\" style=\"width:80px;height:54px;object-fit:cover;border-radius:4px;border:1px solid var(--border)\" onerror=\"this.style.opacity=0.3\">" +
+    "<div style=\"flex:1\">" +
+    "<input type=\"text\" id=\"gal-img-" + i + "\" value=\"" + imgSrc.replace(/\"/g,"&quot;") + "\" placeholder=\"images/filename.jpg or https://...\" oninput=\"updateGalleryItem(" + i + ");document.getElementById('gal-img-prev-" + i + "').src=this.value;document.getElementById('gal-prev-icon-" + i + "').querySelector('img').src=this.value\" style=\"font-size:.78rem;margin-bottom:6px\">" +
+    "<button class=\"btn btn-outline\" style=\"font-size:.72rem;padding:6px 12px;width:100%\" onclick=\"triggerImageUpload('gal-file-" + i + "')\">&#128193; Upload from Desktop</button>" +
+    "<input type=\"file\" id=\"gal-file-" + i + "\" accept=\"image/*\" style=\"display:none\" onchange=\"uploadImageToGitHub(this.files[0],function(p){document.getElementById('gal-img-" + i + "').value=p;document.getElementById('gal-img-prev-" + i + "').src=p;document.getElementById('gal-prev-icon-" + i + "').querySelector('img').src=p;updateGalleryItem(" + i + ");})\"></div>" +
+    "</div></div></div>";
+  }).join("");
+}
+
+function updateGalleryItem(i) {
+  if (!C.gallery_items) C.gallery_items = [];
+  var imgEl = document.getElementById("gal-img-" + i);
+  var lblEl = document.getElementById("gal-label-" + i);
+  C.gallery_items[i] = {
+    image: imgEl ? imgEl.value : (C.gallery_items[i] && C.gallery_items[i].image) || "images/aone-hero.jpg",
+    label: lblEl ? lblEl.value : (C.gallery_items[i] && C.gallery_items[i].label) || "Photo"
+  };
+  isDirty = true;
+  document.getElementById("statDraft").textContent = "● Unsaved";
+}
+
+function addGalleryItem() {
+  if (!C.gallery_items) C.gallery_items = [];
+  C.gallery_items.push({image: "images/aone-hero.jpg", label: "New Photo"});
+  renderGallery(); isDirty = true;
+  toast("Photo added — upload your image and set the label", "info");
+}
+
+function removeGalleryItem(i) {
+  if (!confirm("Remove this gallery photo?")) return;
+  C.gallery_items.splice(i, 1); renderGallery(); isDirty = true;
 }
 
 function dlog(msg, cls) {
