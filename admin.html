@@ -289,8 +289,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
      <div class="field"><label>Section Label</label><input type="text" id="hp-testi-label" placeholder="What Our Clients Say"></div>
      <div class="field"><label>Section Title</label><input type="text" id="hp-testi-title" placeholder="Trusted by Hundreds"></div>
     </div>
-    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Edit the client reviews shown on the home page — quote, name, city and initials.</p>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Edit the client reviews shown on the home page — quote, name, city, photo and initials.</p>
     <div class="item-list" id="testiList"></div>
+    <button class="btn btn-outline btn-sm" onclick="addTesti()">+ Add Testimonial</button>
    </div>
    <div class="panel-section">
     <div class="panel-section-title">Booking CTA Section</div>
@@ -745,24 +746,32 @@ function renderServices() {
  const svcs = C.services||[];
  list.innerHTML = svcs.map((s,i) => {
   const imgSrc = s.image || 'images/aone-hero.jpg';
+  const detail = (s.detail||'').replace(/'/g,"&#39;");
   return "<div class='item-row' id='svc-row-" + i + "'>" +
   "<div class='item-row-header'><div style='display:flex;align-items:center;gap:10px'>" +
   "<div class='item-icon-preview' id='svc-prev-" + i + "'>" + s.icon + "</div>" +
   "<span class='item-row-label'>Service " + (i+1) + ": " + s.name.replace(/'/g,"&#39;") + "</span></div>" +
   "<div class='item-row-actions'><button class='btn btn-red btn-sm' onclick='removeService(" + i + ")'>Remove</button></div></div>" +
-  "<div class='form-grid col3'>" +
+  /* row 1: icon, name, price */
+  "<div class='form-grid col3' style='margin-bottom:10px'>" +
   "<div class='field'><label>Icon / Symbol</label><input type='text' id='svc-icon-" + i + "' value='" + s.icon + "' oninput='updateService(" + i + ")' style='font-size:1.2rem;text-align:center'></div>" +
   "<div class='field'><label>Service Name</label><input type='text' id='svc-name-" + i + "' value='" + s.name.replace(/'/g,"&#39;") + "' oninput='updateService(" + i + ")'></div>" +
   "<div class='field'><label>Price</label><input type='text' id='svc-price-" + i + "' value='" + s.price.replace(/'/g,"&#39;") + "' oninput='updateService(" + i + ")'></div>" +
   "</div>" +
-  "<div class='field' style='margin-top:10px'>" +
+  /* row 2: detail description */
+  "<div class='field' style='margin-bottom:10px'>" +
+  "<label style='display:flex;align-items:center;gap:8px'>Card Description <span style='font-size:.62rem;color:var(--gold);font-weight:400'>— shown on back of card when hovered</span></label>" +
+  "<textarea id='svc-detail-" + i + "' rows='2' oninput='updateService(" + i + ")' placeholder='Short description shown on the back of the card...' style='margin-top:6px'>" + detail + "</textarea>" +
+  "</div>" +
+  /* row 3: image */
+  "<div class='field'>" +
   "<label style='display:flex;align-items:center;gap:8px'>Card Image <span style='font-size:.62rem;color:var(--gold);font-weight:400'>— Recommended: 600×400px JPG/PNG</span></label>" +
   "<div style='display:flex;align-items:center;gap:10px;margin-top:6px'>" +
   "<img id='svc-img-prev-" + i + "' src='" + imgSrc + "' style='width:80px;height:54px;object-fit:cover;border-radius:4px;border:1px solid var(--border)' onerror='this.style.opacity=0.3'>" +
   "<div style='flex:1'>" +
   "<input type='text' id='svc-img-" + i + "' value='" + imgSrc.replace(/'/g,"&#39;") + "' placeholder='images/filename.jpg or https://...' oninput='updateService(" + i + ");document.getElementById(\"svc-img-prev-" + i + "\").src=this.value' style='font-size:.78rem;margin-bottom:6px'>" +
   "<div style='display:flex;gap:8px'>" +
-  "<button class='btn btn-outline' style='font-size:.72rem;padding:6px 12px' onclick='triggerImageUpload(\"svc-file-" + i + "\")'>📁 Upload from Desktop</button>" +
+  "<button class='btn btn-outline' style='font-size:.72rem;padding:6px 12px;flex:1' onclick='triggerImageUpload(\"svc-file-" + i + "\")'>&#128193; Upload from Desktop</button>" +
   "<input type='file' id='svc-file-" + i + "' accept='image/*' style='display:none' onchange='uploadImageToGitHub(this.files[0],function(p){document.getElementById(\"svc-img-" + i + "\").value=p;document.getElementById(\"svc-img-prev-" + i + "\").src=p;updateService(" + i + ");})'>" +
   "</div></div></div></div>" +
   "</div>";
@@ -772,10 +781,12 @@ function renderServices() {
 function updateService(i) {
  if (!C.services) C.services = [];
  const imgEl = document.getElementById("svc-img-"+i);
+ const detailEl = document.getElementById("svc-detail-"+i);
  C.services[i] = {
   icon:document.getElementById("svc-icon-"+i).value,
   name:document.getElementById("svc-name-"+i).value,
   price:document.getElementById("svc-price-"+i).value,
+  detail:detailEl ? detailEl.value : (C.services[i] && C.services[i].detail) || '',
   image:imgEl ? imgEl.value : (C.services[i] && C.services[i].image) || 'images/aone-hero.jpg'
  };
  const prev = document.getElementById("svc-prev-"+i);
@@ -787,7 +798,7 @@ function updateService(i) {
 
 function addService() {
  if (!C.services) C.services = [];
- C.services.push({icon:"✦",name:"New Service",price:"from ₹0"});
+ C.services.push({icon:"✦",name:"New Service",price:"from ₹0",detail:"",image:"images/aone-hero.jpg"});
  renderServices(); isDirty = true;
  toast("Service added — fill in the details above", "info");
 }
@@ -798,21 +809,59 @@ function removeService(i) {
 }
 
 function renderTestimonials() {
- const list = document.getElementById("testiList");
+ const list = document.getElementById(“testiList”);
  const ts = C.testimonials||[];
- list.innerHTML = ts.map((t,i) =>
-  "<div class='item-row'>" +
-  "<div class='item-row-header'><div style='display:flex;align-items:center;gap:10px'>" +
-  "<div class='item-icon-preview' style='font-family:Georgia;font-size:1.4rem;color:var(--gold)'>“</div>" +
-  "<span class='item-row-label'>Testimonial " + (i+1) + "</span></div></div>" +
-  "<div class='form-grid col1'><div class='field'><label>Client Quote</label>" +
-  "<textarea id='testi-text-" + i + "' rows='3' oninput='updateTesti(" + i + ")'>" + t.text + "</textarea></div></div>" +
-  "<div class='form-grid' style='margin-top:10px'>" +
-  "<div class='field'><label>Client Name</label><input type='text' id='testi-name-" + i + "' value='" + t.name.replace(/'/g,"&#39;") + "' oninput='updateTesti(" + i + ")'></div>" +
-  "<div class='field'><label>Location</label><input type='text' id='testi-loc-" + i + "' value='" + t.location.replace(/'/g,"&#39;") + "' oninput='updateTesti(" + i + ")'></div>" +
-  "<div class='field'><label>Avatar Initial</label><input type='text' id='testi-init-" + i + "' value='" + t.initial + "' maxlength='2' oninput='updateTesti(" + i + ")' style='text-align:center'></div>" +
-  "</div></div>"
- ).join("");
+ list.innerHTML = ts.map((t,i) => {
+  const photoSrc = t.photo || '';
+  const avatarPreview = photoSrc
+   ? “<img src='” + photoSrc + “' style='width:100%;height:100%;object-fit:cover;border-radius:50%' onerror='this.style.opacity=0.3'>”
+   : “<span style='font-family:Georgia;font-size:1.1rem;color:var(--gold)'>” + (t.initial||'?') + “</span>”;
+  return “<div class='item-row'>” +
+  “<div class='item-row-header'><div style='display:flex;align-items:center;gap:10px'>” +
+  “<div class='item-icon-preview' id='testi-av-prev-” + i + “' style='display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:50%;padding:0'>” + avatarPreview + “</div>” +
+  “<span class='item-row-label'>Testimonial “ + (i+1) + “ — “ + t.name.replace(/'/g,”&#39;”) + “</span></div>” +
+  “<div class='item-row-actions'><button class='btn btn-red btn-sm' onclick='removeTesti(“ + i + “)'>Remove</button></div></div>” +
+  /* quote */
+  “<div class='form-grid col1' style='margin-bottom:10px'><div class='field'><label>Client Quote</label>” +
+  “<textarea id='testi-text-” + i + “' rows='3' oninput='updateTesti(“ + i + “)'>” + t.text.replace(/</g,”&lt;”) + “</textarea></div></div>” +
+  /* name, location, initial */
+  “<div class='form-grid col3' style='margin-bottom:10px'>” +
+  “<div class='field'><label>Client Name</label><input type='text' id='testi-name-” + i + “' value='” + t.name.replace(/'/g,”&#39;”) + “' oninput='updateTesti(“ + i + “)'></div>” +
+  “<div class='field'><label>Location / City</label><input type='text' id='testi-loc-” + i + “' value='” + t.location.replace(/'/g,”&#39;”) + “' oninput='updateTesti(“ + i + “)'></div>” +
+  “<div class='field'><label>Avatar Initial <span style='font-size:.62rem;color:var(--muted);font-weight:400'>— used if no photo</span></label><input type='text' id='testi-init-” + i + “' value='” + (t.initial||'').replace(/'/g,”&#39;”) + “' maxlength='2' oninput='updateTesti(“ + i + “)' style='text-align:center'></div>” +
+  “</div>” +
+  /* photo upload */
+  “<div class='field'>” +
+  “<label style='display:flex;align-items:center;gap:8px'>Client Photo <span style='font-size:.62rem;color:var(--gold);font-weight:400'>— Recommended: 200×200px square JPG/PNG. Leave blank to use initial.</span></label>” +
+  “<div style='display:flex;align-items:center;gap:10px;margin-top:6px'>” +
+  “<div id='testi-photo-ring-” + i + “' style='width:54px;height:54px;border-radius:50%;border:1px solid var(--border);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg2)'>” +
+  (photoSrc ? “<img src='” + photoSrc + “' style='width:100%;height:100%;object-fit:cover' onerror='this.style.opacity=0.3'>” : “<span style='font-size:.85rem;color:var(--muted)'>” + (t.initial||'?') + “</span>”) +
+  “</div>” +
+  “<div style='flex:1'>” +
+  “<input type='text' id='testi-photo-” + i + “' value='” + photoSrc.replace(/'/g,”&#39;”) + “' placeholder='images/filename.jpg or https://... (optional)' oninput='updateTesti(“ + i + “);updateTestiPhotoPreview(“ + i + “)' style='font-size:.78rem;margin-bottom:6px'>” +
+  “<div style='display:flex;gap:8px'>” +
+  “<button class='btn btn-outline' style='font-size:.72rem;padding:6px 12px;flex:1' onclick='triggerImageUpload(\”testi-file-” + i + “\”)'>&#128193; Upload Photo</button>” +
+  “<button class='btn btn-outline' style='font-size:.72rem;padding:6px 12px;color:var(--muted)' onclick='clearTestiPhoto(“ + i + “)'>&#10005; Remove Photo</button>” +
+  “</div>” +
+  “<input type='file' id='testi-file-” + i + “' accept='image/*' style='display:none' onchange='uploadImageToGitHub(this.files[0],function(p){document.getElementById(\”testi-photo-” + i + “\”).value=p;updateTesti(“ + i + “);updateTestiPhotoPreview(“ + i + “);})'>” +
+  “</div></div></div>” +
+  “</div>”;
+ }).join(“”);
+}
+
+function updateTestiPhotoPreview(i) {
+ const val = (document.getElementById(“testi-photo-”+i)||{}).value||'';
+ const ring = document.getElementById(“testi-photo-ring-”+i);
+ const avPrev = document.getElementById(“testi-av-prev-”+i);
+ const init = (document.getElementById(“testi-init-”+i)||{}).value||'?';
+ if (ring) ring.innerHTML = val ? “<img src='”+val+”' style='width:100%;height:100%;object-fit:cover' onerror='this.style.opacity=0.3'>” : “<span style='font-size:.85rem;color:var(--muted)'>”+init+”</span>”;
+ if (avPrev) avPrev.innerHTML = val ? “<img src='”+val+”' style='width:100%;height:100%;object-fit:cover;border-radius:50%'>” : “<span style='font-family:Georgia;font-size:1.1rem;color:var(--gold)'>”+init+”</span>”;
+}
+
+function clearTestiPhoto(i) {
+ const inp = document.getElementById(“testi-photo-”+i);
+ if (inp) inp.value = '';
+ updateTesti(i); updateTestiPhotoPreview(i);
 }
 
 function updateTesti(i) {
@@ -821,11 +870,24 @@ function updateTesti(i) {
   text:document.getElementById("testi-text-"+i).value,
   name:document.getElementById("testi-name-"+i).value,
   location:document.getElementById("testi-loc-"+i).value,
-  initial:document.getElementById("testi-init-"+i).value
+  initial:document.getElementById("testi-init-"+i).value,
+  photo:(document.getElementById("testi-photo-"+i)||{}).value||''
  };
  isDirty = true;
  document.getElementById("testiBadge").style.display = "inline-block";
  document.getElementById("statDraft").textContent = "● Unsaved";
+}
+
+function addTesti() {
+ if (!C.testimonials) C.testimonials = [];
+ C.testimonials.push({text:"Write the client review here.",name:"Client Name",location:"City, London",initial:"C",photo:""});
+ renderTestimonials(); isDirty = true;
+ toast("Testimonial added — fill in the details", "info");
+}
+
+function removeTesti(i) {
+ if (!confirm("Remove this testimonial?")) return;
+ C.testimonials.splice(i,1); renderTestimonials(); isDirty = true;
 }
 
 function dlog(msg, cls) {
