@@ -182,12 +182,6 @@
             "duration": "120 min"
           },
           {
-            "name": "Keratin Treatment",
-            "detail": "Brazilian keratin for frizz-free, smooth hair",
-            "price": "₹5,000 – ₹10,000",
-            "duration": "150 min"
-          },
-          {
             "name": "Hair Spa & Mask",
             "detail": "Deep conditioning + scalp massage + mask",
             "price": "₹1,500 – ₹3,000",
@@ -263,12 +257,6 @@
             "name": "Luxury Facial",
             "detail": "Deep cleanse + serum + massage + mask",
             "price": "₹2,000 – ₹4,500",
-            "duration": "60 min"
-          },
-          {
-            "name": "Nail Art (Hands)",
-            "detail": "Gel / acrylic / nail art extensions",
-            "price": "₹1,200 – ₹3,000",
             "duration": "60 min"
           },
           {
