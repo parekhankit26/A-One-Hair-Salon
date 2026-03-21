@@ -123,6 +123,7 @@
           <div class="svc-back">
             <div class="svc-back-icon">${s.icon}</div>
             <h3>${s.name}</h3>
+            ${s.detail ? `<p>${s.detail}</p>` : ''}
             <div class="price-tag">${s.price}</div>
             <a href="booking.html" style="margin-top:8px;padding:10px 24px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--bg);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;text-decoration:none">Book Now</a>
             <div class="svc-hint">Hover to flip · Click to book</div>
@@ -143,7 +144,7 @@
         <div class="stars">★★★★★</div>
         <p class="testi-text">${t.text}</p>
         <div class="testi-author">
-          <div class="testi-avatar">${t.initial}</div>
+          <div class="testi-avatar" style="${t.photo ? 'padding:0;overflow:hidden;' : ''}">${t.photo ? `<img src="${t.photo}" alt="${t.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">` : t.initial}</div>
           <div>
             <div class="testi-name">${t.name}</div>
             <div class="testi-loc">${t.location}</div>
