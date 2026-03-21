@@ -120,9 +120,6 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
    <div class="nav-item" data-panel="bookingsettings"><span class="ni-icon">&#128197;</span> Booking Settings</div>
   </div>
   <div class="nav-section">
-   <div class="nav-section-label">Dynamic Data</div>
-   <div class="nav-item" data-panel="services"><span class="ni-icon">&#9986;</span> Services</div>
-   <div class="nav-item" data-panel="testimonials"><span class="ni-icon">"</span> Testimonials</div>
   </div>
   <div class="nav-section">
    <div class="nav-section-label">Publish</div>
@@ -277,18 +274,23 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
     </div>
    </div>
    <div class="panel-section">
-    <div class="panel-section-title">Services Section</div>
-    <div class="form-grid col1">
-     <div class="field"><label>Services Section Label</label><input type="text" id="hp-svc-label" placeholder="Our Services"></div>
-     <div class="field"><label>Services Section Title</label><input type="text" id="hp-svc-title" placeholder="Signature Services"></div>
+    <div class="panel-section-title">Services Section <span class="changed-badge" id="svcBadge" style="display:none">unsaved</span></div>
+    <div class="form-grid col1" style="margin-bottom:20px">
+     <div class="field"><label>Section Label</label><input type="text" id="hp-svc-label" placeholder="Our Services"></div>
+     <div class="field"><label>Section Title</label><input type="text" id="hp-svc-title" placeholder="Signature Services"></div>
     </div>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Edit each service card shown on the homepage — name, price, icon and photo.</p>
+    <div class="item-list" id="svcList"></div>
+    <button class="btn btn-outline btn-sm" onclick="addService()">+ Add Service</button>
    </div>
    <div class="panel-section">
-    <div class="panel-section-title">Testimonials Section</div>
-    <div class="form-grid col1">
-     <div class="field"><label>Testimonials Label</label><input type="text" id="hp-testi-label" placeholder="What Our Clients Say"></div>
-     <div class="field"><label>Testimonials Title</label><input type="text" id="hp-testi-title" placeholder="Trusted by Hundreds"></div>
+    <div class="panel-section-title">Testimonials Section <span class="changed-badge" id="testiBadge" style="display:none">unsaved</span></div>
+    <div class="form-grid col1" style="margin-bottom:20px">
+     <div class="field"><label>Section Label</label><input type="text" id="hp-testi-label" placeholder="What Our Clients Say"></div>
+     <div class="field"><label>Section Title</label><input type="text" id="hp-testi-title" placeholder="Trusted by Hundreds"></div>
     </div>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Edit the client reviews shown on the home page — quote, name, city and initials.</p>
+    <div class="item-list" id="testiList"></div>
    </div>
    <div class="panel-section">
     <div class="panel-section-title">Booking CTA Section</div>
@@ -323,24 +325,6 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
    </div>
   </div>
 
-  <!-- SERVICES -->
-  <div class="panel" id="panel-services">
-   <div class="panel-section">
-    <div class="panel-section-title">Booking Services <span class="changed-badge" id="svcBadge" style="display:none">unsaved</span></div>
-    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">These services appear in the <strong style="color:var(--white)">Booking Form</strong> for clients to choose from. Edit names, prices and icons freely.</p>
-    <div class="item-list" id="svcList"></div>
-    <button class="btn btn-outline btn-sm" onclick="addService()">+ Add Service</button>
-   </div>
-  </div>
-
-  <!-- TESTIMONIALS -->
-  <div class="panel" id="panel-testimonials">
-   <div class="panel-section">
-    <div class="panel-section-title">Client Testimonials <span class="changed-badge" id="testiBadge" style="display:none">unsaved</span></div>
-    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">These 3 testimonials appear on the <strong style="color:var(--white)">Home Page</strong>. Edit the quote, client name, and city.</p>
-    <div class="item-list" id="testiList"></div>
-   </div>
-  </div>
 
   <!-- DEPLOY -->
   <div class="panel" id="panel-deploy">
