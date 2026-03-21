@@ -35,7 +35,17 @@
     "testimonials_label": "What Our Clients Say",
     "testimonials_title": "Trusted by Hundreds",
     "booking_cta_title": "Ready for Your Transformation?",
-    "booking_cta_text": "Secure your spot at A One Hair Salon. Walk-ins welcome, but appointments are recommended for priority service."
+    "booking_cta_text": "Secure your spot at A One Hair Salon. Walk-ins welcome, but appointments are recommended for priority service.",
+    "about_main_image": "images/aone-hero.jpg",
+    "about_accent_image": "",
+    "about_badge_num": "8+",
+    "about_badge_lbl": "Years",
+    "about_stat1_num": "1500",
+    "about_stat1_lbl": "Happy Clients",
+    "about_stat2_num": "12",
+    "about_stat2_lbl": "Services",
+    "about_stat3_num": "10",
+    "about_stat3_lbl": "Years Expertise"
   },
   "pages": {
     "services": {
