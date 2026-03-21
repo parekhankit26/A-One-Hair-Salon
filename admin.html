@@ -437,10 +437,22 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
   <!-- SERVICES DETAIL PAGE -->
   <div class="panel" id="panel-servicespage">
    <div class="panel-section">
-    <div class="panel-section-title">Services Page — Categories & Items</div>
+    <div class="panel-section-title">Services Page — Categories &amp; Items</div>
     <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Manage the detailed service listings shown on the Services page. Each category has a title, description, and service items with name, detail, price and duration.</p>
     <div id="svcPageCategories"></div>
     <button class="btn btn-outline" onclick="saveDraft()" style="margin-top:16px">&#10003; Save Draft</button>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">Curated Packages</div>
+    <div class="form-grid col2" style="margin-bottom:20px">
+     <div class="field"><label>Section Label <span class="field-note" style="display:inline">e.g. Value Bundles</span></label><input type="text" id="pkg-label" placeholder="Value Bundles"></div>
+     <div class="field"><label>Title — Main Word</label><input type="text" id="pkg-title" placeholder="Curated"></div>
+     <div class="field"><label>Title — Gold Italic Word</label><input type="text" id="pkg-title-em" placeholder="Packages"></div>
+    </div>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Edit each package card — name, subtitle, price, description, included items, and whether it shows as "Most Popular". <span style="color:var(--gold)">Each item in the list is one line.</span></p>
+    <div class="item-list" id="packagesList"></div>
+    <button class="btn btn-outline btn-sm" onclick="addPackage()">+ Add Package</button>
+    <button class="btn btn-gold" onclick="saveDraft()" style="margin-top:16px;margin-left:8px">&#10003; Save Draft</button>
    </div>
   </div>
 
@@ -645,7 +657,7 @@ function populateAll() {
  setVal("pt-con-intro",C.pages && C.pages.contact && C.pages.contact.intro);
  setVal("pt-book-title",C.pages && C.pages.booking && C.pages.booking.hero_title);
  setVal("pt-book-sub",C.pages && C.pages.booking && C.pages.booking.hero_sub);
- renderMarquee(); renderServices(); renderTestimonials(); renderGallery(); renderCarousel(); renderSvcPageCategories(); renderStylists(); updateDashboard();
+ renderMarquee(); renderServices(); renderTestimonials(); renderGallery(); renderCarousel(); renderPackages(); renderSvcPageCategories(); renderStylists(); updateDashboard();
  isDirty = false; document.getElementById("statDraft").textContent = "Saved";
 }
 
@@ -718,6 +730,7 @@ function collectAll() {
  C.booking.confirm_text   = (document.getElementById("hp-confirm-text")||{}).value || BK.confirm_text || 'Thank you for choosing A One Hair Salon. Your appointment is all set!';
  C.services_page = C.services_page || {};
  C.services_page.categories = collectSvcCategories();
+ collectPackages();
  C.booking.stylists = collectStylists();
  if (!C.carousel_items) C.carousel_items = [];
  C.carousel_items = (C.carousel_items || []).map(function(item, i) {
@@ -1025,6 +1038,110 @@ function updateCarouselItem(i) {
   };
   isDirty = true;
   document.getElementById("statDraft").textContent = "● Unsaved";
+}
+
+/* ── Packages renderer ── */
+function renderPackages() {
+  var list = document.getElementById("packagesList");
+  if (!list) return;
+  var sp = C.services_page || {};
+  var pkgs = sp.packages || [];
+  // populate header fields
+  var lEl = document.getElementById("pkg-label"); if (lEl && sp.packages_label) lEl.value = sp.packages_label;
+  var tEl = document.getElementById("pkg-title"); if (tEl && sp.packages_title) tEl.value = sp.packages_title;
+  var eEl = document.getElementById("pkg-title-em"); if (eEl && sp.packages_title_em) eEl.value = sp.packages_title_em;
+  list.innerHTML = pkgs.map(function(pkg, i) {
+    var itemsHtml = (pkg.items || []).map(function(it, j) {
+      return "<div style=\"display:flex;align-items:center;gap:8px;margin-bottom:6px\">" +
+        "<input type=\"text\" id=\"pkg-item-" + i + "-" + j + "\" value=\"" + it.replace(/\"/g,"&quot;") + "\" style=\"flex:1;font-size:.78rem\" oninput=\"isDirty=true\">" +
+        "<button class=\"btn btn-red\" style=\"padding:4px 10px;font-size:.7rem\" onclick=\"removePackageItem(" + i + "," + j + ")\">&#215;</button>" +
+        "</div>";
+    }).join("");
+    var featChecked = pkg.featured ? "checked" : "";
+    return "<div class=\"item-row\" id=\"pkg-row-" + i + "\">" +
+      "<div class=\"item-row-header\">" +
+        "<span class=\"item-row-label\">Package " + (i+1) + " — " + pkg.name + "</span>" +
+        "<div class=\"item-row-actions\">" +
+          "<label style=\"display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--gold);cursor:pointer;margin-right:10px\">" +
+            "<input type=\"checkbox\" id=\"pkg-featured-" + i + "\" " + featChecked + " onchange=\"isDirty=true\"> Most Popular</label>" +
+          "<button class=\"btn btn-red btn-sm\" onclick=\"removePackage(" + i + ")\">Remove</button>" +
+        "</div>" +
+      "</div>" +
+      "<div class=\"form-grid col2\" style=\"margin-bottom:10px\">" +
+        "<div class=\"field\"><label>Package Name</label><input type=\"text\" id=\"pkg-name-" + i + "\" value=\"" + pkg.name.replace(/\"/g,"&quot;") + "\" oninput=\"isDirty=true\"></div>" +
+        "<div class=\"field\"><label>Subtitle</label><input type=\"text\" id=\"pkg-sub-" + i + "\" value=\"" + (pkg.subtitle||"").replace(/\"/g,"&quot;") + "\" oninput=\"isDirty=true\"></div>" +
+        "<div class=\"field\"><label>Price <span style=\"font-size:.62rem;color:var(--muted)\">e.g. ₹1,800</span></label><input type=\"text\" id=\"pkg-price-" + i + "\" value=\"" + (pkg.price||"").replace(/\"/g,"&quot;") + "\" oninput=\"isDirty=true\"></div>" +
+        "<div class=\"field\" style=\"grid-column:1/-1\"><label>Description</label><textarea id=\"pkg-desc-" + i + "\" rows=\"2\" oninput=\"isDirty=true\">" + (pkg.description||"") + "</textarea></div>" +
+      "</div>" +
+      "<div class=\"field\"><label>Included Items <span style=\"font-size:.62rem;color:var(--muted)\">— one item per row</span></label>" +
+        "<div id=\"pkg-items-" + i + "\" style=\"margin-top:8px\">" + itemsHtml + "</div>" +
+        "<button class=\"btn btn-outline btn-sm\" style=\"margin-top:6px\" onclick=\"addPackageItem(" + i + ")\">+ Add Item</button>" +
+      "</div>" +
+    "</div>";
+  }).join("");
+}
+
+function collectPackages() {
+  var sp = C.services_page || {};
+  var lEl = document.getElementById("pkg-label"); if (lEl) sp.packages_label = lEl.value || sp.packages_label || "Value Bundles";
+  var tEl = document.getElementById("pkg-title"); if (tEl) sp.packages_title = tEl.value || sp.packages_title || "Curated";
+  var eEl = document.getElementById("pkg-title-em"); if (eEl) sp.packages_title_em = eEl.value || sp.packages_title_em || "Packages";
+  var pkgs = sp.packages || [];
+  sp.packages = pkgs.map(function(pkg, i) {
+    var nameEl = document.getElementById("pkg-name-" + i);
+    var subEl  = document.getElementById("pkg-sub-" + i);
+    var priceEl= document.getElementById("pkg-price-" + i);
+    var descEl = document.getElementById("pkg-desc-" + i);
+    var featEl = document.getElementById("pkg-featured-" + i);
+    var itemsWrap = document.getElementById("pkg-items-" + i);
+    var items = [];
+    if (itemsWrap) {
+      itemsWrap.querySelectorAll("input[type=text]").forEach(function(el) { if (el.value.trim()) items.push(el.value.trim()); });
+    }
+    return {
+      name:        nameEl  ? nameEl.value.trim()  : pkg.name,
+      subtitle:    subEl   ? subEl.value.trim()   : pkg.subtitle,
+      price:       priceEl ? priceEl.value.trim() : pkg.price,
+      description: descEl  ? descEl.value.trim()  : pkg.description,
+      featured:    featEl  ? featEl.checked        : pkg.featured,
+      items:       items.length > 0 ? items : pkg.items
+    };
+  });
+  C.services_page = sp;
+}
+
+function addPackageItem(pkgIdx) {
+  if (!C.services_page) C.services_page = {};
+  if (!C.services_page.packages) C.services_page.packages = [];
+  collectPackages();
+  if (!C.services_page.packages[pkgIdx]) return;
+  if (!C.services_page.packages[pkgIdx].items) C.services_page.packages[pkgIdx].items = [];
+  C.services_page.packages[pkgIdx].items.push("New Item");
+  renderPackages(); isDirty = true;
+}
+
+function removePackageItem(pkgIdx, itemIdx) {
+  collectPackages();
+  if (C.services_page && C.services_page.packages && C.services_page.packages[pkgIdx]) {
+    C.services_page.packages[pkgIdx].items.splice(itemIdx, 1);
+    renderPackages(); isDirty = true;
+  }
+}
+
+function addPackage() {
+  if (!C.services_page) C.services_page = {};
+  collectPackages();
+  if (!C.services_page.packages) C.services_page.packages = [];
+  C.services_page.packages.push({name:"New Package",subtitle:"",price:"₹0",description:"",featured:false,items:["Item 1"]});
+  renderPackages(); isDirty = true;
+  toast("Package added — fill in the details", "info");
+}
+
+function removePackage(i) {
+  if (!confirm("Remove this package?")) return;
+  collectPackages();
+  C.services_page.packages.splice(i, 1);
+  renderPackages(); isDirty = true;
 }
 
 function dlog(msg, cls) {
