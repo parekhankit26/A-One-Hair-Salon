@@ -262,6 +262,12 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
      <div class="field"><label>Confirmation Message</label><textarea id="hp-confirm-text" rows="2" placeholder="Thank you for choosing A One Hair Salon..."></textarea></div>
     </div>
    </div>
+   <div class="panel-section">
+    <div class="panel-section-title">Scrolling Marquee Strip</div>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:16px;line-height:1.7">These words scroll across the animated strip on the home page. Add, edit, reorder or delete any item — changes appear on site after Deploy.</p>
+    <div id="marqueeList" style="margin-bottom:12px"></div>
+    <button class="btn btn-outline btn-sm" onclick="addMarqueeItem()">+ Add Item</button>
+   </div>
   </div>
 
   <!-- SERVICES -->
@@ -571,7 +577,7 @@ function populateAll() {
  setVal("pt-con-intro",C.pages && C.pages.contact && C.pages.contact.intro);
  setVal("pt-book-title",C.pages && C.pages.booking && C.pages.booking.hero_title);
  setVal("pt-book-sub",C.pages && C.pages.booking && C.pages.booking.hero_sub);
- renderServices(); renderTestimonials(); renderSvcPageCategories(); renderStylists(); updateDashboard();
+ renderMarquee(); renderServices(); renderTestimonials(); renderSvcPageCategories(); renderStylists(); updateDashboard();
  isDirty = false; document.getElementById("statDraft").textContent = "Saved";
 }
 
@@ -644,6 +650,37 @@ function saveDraft() {
 function updateDashboard() {
  document.getElementById("statSvcCount").textContent = (C.services||[]).length;
  document.getElementById("statTestiCount").textContent = (C.testimonials||[]).length;
+}
+
+/* ── Marquee renderer ── */
+function renderMarquee() {
+  const list = document.getElementById("marqueeList");
+  if (!list) return;
+  const items = C.marquee || [];
+  list.innerHTML = items.length === 0
+    ? '<p style="color:var(--muted);font-size:.78rem">No items yet. Click + Add Item below.</p>'
+    : items.map((item, i) =>
+        '<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">' +
+        '<span style="color:var(--gold);font-size:.9rem;flex-shrink:0">✦</span>' +
+        '<input type="text" value="' + item.replace(/"/g,'&quot;') + '" style="flex:1" ' +
+        'onchange="updateMarqueeItem(' + i + ',this.value)">' +
+        '<button class="btn btn-red btn-sm" onclick="removeMarqueeItem(' + i + ')" style="flex-shrink:0">✕</button>' +
+        '</div>'
+      ).join('');
+}
+function updateMarqueeItem(i, val) {
+  if (!C.marquee) C.marquee = [];
+  C.marquee[i] = val; isDirty = true;
+}
+function addMarqueeItem() {
+  if (!C.marquee) C.marquee = [];
+  C.marquee.push('New Item');
+  renderMarquee(); isDirty = true;
+  toast("Item added — edit the text then Deploy", "info");
+}
+function removeMarqueeItem(i) {
+  if (!C.marquee) return;
+  C.marquee.splice(i, 1); renderMarquee(); isDirty = true;
 }
 
 function renderServices() {
