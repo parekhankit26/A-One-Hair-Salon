@@ -228,10 +228,52 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
    <div class="panel-section">
     <div class="panel-section-title">About Section</div>
     <div class="form-grid col1">
-     <div class="field"><label>About Paragraph 1</label><textarea id="hp-about1" rows="3" placeholder="Welcome to A One Hair Salon..."></textarea></div>
-     <div class="field"><label>About Paragraph 2</label><textarea id="hp-about2" rows="3" placeholder="From precision cuts and vibrant color..."></textarea></div>
-     <div class="field"><label>About Section Label</label><input type="text" id="hp-about-label" placeholder="About Us"></div>
-     <div class="field"><label>About Section Title</label><input type="text" id="hp-about-title" placeholder="Luxury Hair Care, Perfected"></div>
+     <div class="field"><label>Section Label</label><input type="text" id="hp-about-label" placeholder="About Us"></div>
+     <div class="field"><label>Section Title</label><input type="text" id="hp-about-title" placeholder="Luxury Hair Care, Perfected"></div>
+     <div class="field"><label>Paragraph 1</label><textarea id="hp-about1" rows="3" placeholder="Welcome to A One Hair Salon..."></textarea></div>
+     <div class="field"><label>Paragraph 2</label><textarea id="hp-about2" rows="3" placeholder="From precision cuts and vibrant color..."></textarea></div>
+    </div>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+     <div style="font-size:.7rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px">Photos <span style="color:var(--muted);font-size:.65rem;text-transform:none;letter-spacing:0">Recommended: 700 x 900 px portrait</span></div>
+     <div class="form-grid col2">
+      <div class="field">
+       <label>Main Photo (large background)</label>
+       <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+        <img id="about-main-prev" src="images/aone-hero.jpg" style="width:72px;height:72px;object-fit:cover;border-radius:4px;border:1px solid var(--border);flex-shrink:0" onerror="this.style.opacity=0.3">
+        <div style="flex:1">
+         <input type="text" id="hp-about-main-img" placeholder="images/filename.jpg or https://..." style="font-size:.78rem;margin-bottom:6px" oninput="document.getElementById('about-main-prev').src=this.value;isDirty=true;">
+         <button class="btn btn-outline" style="font-size:.72rem;padding:6px 12px;width:100%" onclick="triggerImageUpload('about-main-file')">&#128193; Upload from Desktop</button>
+         <input type="file" id="about-main-file" accept="image/*" style="display:none" onchange="uploadImageToGitHub(this.files[0],function(p){document.getElementById('hp-about-main-img').value=p;document.getElementById('about-main-prev').src=p;isDirty=true;})">
+        </div>
+       </div>
+      </div>
+      <div class="field">
+       <label>Accent Photo (small overlay)</label>
+       <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+        <img id="about-accent-prev" src="https://design.canva.ai/Eik3RiM2Z7JKqhd" style="width:72px;height:72px;object-fit:cover;border-radius:4px;border:1px solid var(--border);flex-shrink:0" onerror="this.style.opacity=0.3">
+        <div style="flex:1">
+         <input type="text" id="hp-about-accent-img" placeholder="images/filename.jpg or https://..." style="font-size:.78rem;margin-bottom:6px" oninput="document.getElementById('about-accent-prev').src=this.value;isDirty=true;">
+         <button class="btn btn-outline" style="font-size:.72rem;padding:6px 12px;width:100%" onclick="triggerImageUpload('about-accent-file')">&#128193; Upload from Desktop</button>
+         <input type="file" id="about-accent-file" accept="image/*" style="display:none" onchange="uploadImageToGitHub(this.files[0],function(p){document.getElementById('hp-about-accent-img').value=p;document.getElementById('about-accent-prev').src=p;isDirty=true;})">
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+     <div style="font-size:.7rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px">Badge &amp; Stats</div>
+     <div class="form-grid col2" style="margin-bottom:14px">
+      <div class="field"><label>Badge Number <span class="field-note" style="display:inline">e.g. 8+</span></label><input type="text" id="hp-badge-num" placeholder="8+"></div>
+      <div class="field"><label>Badge Label <span class="field-note" style="display:inline">e.g. Years</span></label><input type="text" id="hp-badge-lbl" placeholder="Years"></div>
+     </div>
+     <div class="form-grid col2" style="gap:10px">
+      <div class="field"><label>Stat 1 Number</label><input type="text" id="hp-stat1-num" placeholder="5000"></div>
+      <div class="field"><label>Stat 1 Label</label><input type="text" id="hp-stat1-lbl" placeholder="Happy Clients"></div>
+      <div class="field"><label>Stat 2 Number</label><input type="text" id="hp-stat2-num" placeholder="15"></div>
+      <div class="field"><label>Stat 2 Label</label><input type="text" id="hp-stat2-lbl" placeholder="Services"></div>
+      <div class="field"><label>Stat 3 Number</label><input type="text" id="hp-stat3-num" placeholder="8"></div>
+      <div class="field"><label>Stat 3 Label</label><input type="text" id="hp-stat3-lbl" placeholder="Years Expertise"></div>
+     </div>
     </div>
    </div>
    <div class="panel-section">
@@ -565,6 +607,13 @@ function populateAll() {
  setVal("hp-svc-label",H.services_label); setVal("hp-svc-title",H.services_title);
  setVal("hp-testi-label",H.testimonials_label); setVal("hp-testi-title",H.testimonials_title);
  setVal("hp-cta-title",H.booking_cta_title); setVal("hp-cta-text",H.booking_cta_text);
+ setVal("hp-about-main-img",H.about_main_image); setVal("hp-about-accent-img",H.about_accent_image);
+ if(H.about_main_image){var mp=document.getElementById("about-main-prev");if(mp)mp.src=H.about_main_image;}
+ if(H.about_accent_image){var ap=document.getElementById("about-accent-prev");if(ap)ap.src=H.about_accent_image;}
+ setVal("hp-badge-num",H.about_badge_num); setVal("hp-badge-lbl",H.about_badge_lbl);
+ setVal("hp-stat1-num",H.about_stat1_num); setVal("hp-stat1-lbl",H.about_stat1_lbl);
+ setVal("hp-stat2-num",H.about_stat2_num); setVal("hp-stat2-lbl",H.about_stat2_lbl);
+ setVal("hp-stat3-num",H.about_stat3_num); setVal("hp-stat3-lbl",H.about_stat3_lbl);
  setVal("hp-confirm-title", C.booking && C.booking.confirm_title);
  setVal("hp-confirm-text", C.booking && C.booking.confirm_text);
  setVal("pt-svc-title",C.pages && C.pages.services && C.pages.services.hero_title);
@@ -610,7 +659,17 @@ function collectAll() {
   testimonials_label:(document.getElementById("hp-testi-label")||{}).value||H.testimonials_label||'',
   testimonials_title:(document.getElementById("hp-testi-title")||{}).value||H.testimonials_title||'',
   booking_cta_title:(document.getElementById("hp-cta-title")||{}).value||H.booking_cta_title||'',
-  booking_cta_text:(document.getElementById("hp-cta-text")||{}).value||H.booking_cta_text||''
+  booking_cta_text:(document.getElementById("hp-cta-text")||{}).value||H.booking_cta_text||'',
+  about_main_image:(document.getElementById("hp-about-main-img")||{}).value||H.about_main_image||'images/aone-hero.jpg',
+  about_accent_image:(document.getElementById("hp-about-accent-img")||{}).value||H.about_accent_image||'',
+  about_badge_num:(document.getElementById("hp-badge-num")||{}).value||H.about_badge_num||'8+',
+  about_badge_lbl:(document.getElementById("hp-badge-lbl")||{}).value||H.about_badge_lbl||'Years',
+  about_stat1_num:(document.getElementById("hp-stat1-num")||{}).value||H.about_stat1_num||'5000',
+  about_stat1_lbl:(document.getElementById("hp-stat1-lbl")||{}).value||H.about_stat1_lbl||'Happy Clients',
+  about_stat2_num:(document.getElementById("hp-stat2-num")||{}).value||H.about_stat2_num||'15',
+  about_stat2_lbl:(document.getElementById("hp-stat2-lbl")||{}).value||H.about_stat2_lbl||'Services',
+  about_stat3_num:(document.getElementById("hp-stat3-num")||{}).value||H.about_stat3_num||'8',
+  about_stat3_lbl:(document.getElementById("hp-stat3-lbl")||{}).value||H.about_stat3_lbl||'Years Expertise'
  };
  const P = C.pages || {}; const PS = P.services||{}; const PG = P.gallery||{}; const PC = P.contact||{}; const PB = P.booking||{};
  if (!C.pages) C.pages = {};
