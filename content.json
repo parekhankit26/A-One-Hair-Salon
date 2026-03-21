@@ -75,48 +75,56 @@
    "icon": "✂",
    "name": "Women's Haircut",
    "price": "from ₹800",
+   "detail": "Precision cut, blowdry & finish by our expert stylists.",
    "image": "images/aone-hero.jpg"
   },
   {
    "icon": "✦",
    "name": "Men's Haircut",
    "price": "from ₹350",
+   "detail": "Classic & modern cuts, scissor or machine, wash & style.",
    "image": "images/aone-hero.jpg"
   },
   {
    "icon": "◉",
    "name": "Balayage & Color",
    "price": "from ₹4,000",
+   "detail": "Freehand painting for natural sun-kissed highlights blended seamlessly.",
    "image": "images/aone-hero.jpg"
   },
   {
    "icon": "♛",
    "name": "Bridal Styling",
    "price": "from ₹5,000",
+   "detail": "Complete bridal packages — hair, makeup & day-of styling.",
    "image": "images/aone-hero.jpg"
   },
   {
    "icon": "◈",
    "name": "Hair Spa",
    "price": "from ₹1,500",
+   "detail": "Deep conditioning, scalp massage & nourishing mask treatment.",
    "image": "images/aone-hero.jpg"
   },
   {
    "icon": "✿",
    "name": "Keratin Treatment",
    "price": "from ₹5,000",
+   "detail": "Brazilian keratin for frizz-free, silky smooth hair.",
    "image": "images/aone-hero.jpg"
   },
   {
    "icon": "❋",
    "name": "Luxury Facial",
    "price": "from ₹2,000",
+   "detail": "Deep cleanse, serum, facial massage & premium mask.",
    "image": "images/aone-hero.jpg"
   },
   {
    "icon": "◆",
    "name": "Nail Art",
    "price": "from ₹1,200",
+   "detail": "Gel, acrylic & custom nail art extensions by specialists.",
    "image": "images/aone-hero.jpg"
   }
  ],
@@ -319,19 +327,22 @@
    "text": "The balayage treatment transformed my hair completely. Absolutely loved the result — the salon has a magical ambiance.",
    "name": "Priya Sharma",
    "location": "West End, London",
-   "initial": "P"
+   "initial": "P",
+   "photo": ""
   },
   {
    "text": "Best men's haircut I've ever gotten. Clean, precise, and the hot towel shave was incredibly relaxing. Worth every penny.",
    "name": "Rohan Mehta",
    "location": "Mayfair, London",
-   "initial": "R"
+   "initial": "R",
+   "photo": ""
   },
   {
    "text": "My bridal look was beyond perfection. The team understood exactly what I wanted. I felt like royalty on my wedding day!",
    "name": "Ayesha Khan",
    "location": "Chelsea, London",
-   "initial": "A"
+   "initial": "A",
+   "photo": ""
   }
  ]
 }
