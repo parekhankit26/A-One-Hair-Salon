@@ -137,7 +137,7 @@
         "id": "hair",
         "title": "Hair Services",
         "desc": "Precision cuts for women, men & kids",
-        "banner_image": "images/aone-hero.jpg",
+        "banner_image": "images/istockphoto-1267162278-612x612.jpg",
         "items": [
           {
             "name": "Women's Haircut & Blowdry",
@@ -213,7 +213,7 @@
         "id": "bridal",
         "title": "Bridal Services",
         "desc": "Look flawless on your most special day",
-        "banner_image": "images/aone-hero.jpg",
+        "banner_image": "images/istockphoto-1267162278-612x612.jpg",
         "items": [
           {
             "name": "Bridal Hair Styling",
@@ -239,7 +239,7 @@
         "id": "grooming",
         "title": "Men's Grooming",
         "desc": "Precision services for the modern man",
-        "banner_image": "images/aone-hero.jpg",
+        "banner_image": "images/pngtree-4d-rendering-of-a-hair-salon-with-3-chairs-image_2691250.jpg",
         "items": [
           {
             "name": "Beard Trim & Shape",
