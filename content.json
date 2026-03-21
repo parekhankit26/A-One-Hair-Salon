@@ -13,9 +13,7 @@
     "Bridal Styling",
     "Men's Grooming",
     "Hair Spa",
-    "Nail Art",
     "Facials",
-    "Keratin Treatment",
     "Hair Extensions"
   ],
   "footer": {
@@ -42,7 +40,7 @@
     "about_accent_image": "images/aone-hero.jpg",
     "about_badge_num": "10+",
     "about_badge_lbl": "Years",
-    "about_stat1_num": "1500",
+    "about_stat1_num": "1400",
     "about_stat1_lbl": "Happy Clients",
     "about_stat2_num": "13",
     "about_stat2_lbl": "Services",
