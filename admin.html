@@ -115,6 +115,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
    <div class="nav-item" data-panel="siteinfo"><span class="ni-icon">&#10022;</span> Salon Info</div>
    <div class="nav-item" data-panel="footer"><span class="ni-icon">&#9636;</span> Footer &amp; Hours</div>
    <div class="nav-item" data-panel="homepage"><span class="ni-icon">&#9672;</span> Home Page</div>
+   <div class="nav-item" data-panel="carousel"><span class="ni-icon">&#9654;</span> Home Carousel</div>
    <div class="nav-item" data-panel="pagetitles"><span class="ni-icon">&#9671;</span> Page Titles</div>
    <div class="nav-item" data-panel="servicespage"><span class="ni-icon">&#9998;</span> Services Detail</div>
    <div class="nav-item" data-panel="bookingsettings"><span class="ni-icon">&#128197;</span> Booking Settings</div>
@@ -454,6 +455,16 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
    </div>
   </div>
 
+  <!-- HOME CAROUSEL -->
+  <div class="panel" id="panel-carousel">
+   <div class="panel-section">
+    <div class="panel-section-title">Home Carousel</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Edit the 5 rotating 3D image panels shown in the hero section of the home page. Upload a photo and set a label for each panel. <span style="color:var(--gold)">Recommended: square images, 600x600px JPG/PNG.</span></p>
+    <div class="item-list" id="carouselList"></div>
+    <button class="btn btn-gold" onclick="saveDraft()" style="margin-top:16px">&#10003; Save Draft</button>
+   </div>
+  </div>
+
   <!-- SECURITY -->
   <div class="panel" id="panel-security">
    <div class="panel-section">
@@ -634,7 +645,7 @@ function populateAll() {
  setVal("pt-con-intro",C.pages && C.pages.contact && C.pages.contact.intro);
  setVal("pt-book-title",C.pages && C.pages.booking && C.pages.booking.hero_title);
  setVal("pt-book-sub",C.pages && C.pages.booking && C.pages.booking.hero_sub);
- renderMarquee(); renderServices(); renderTestimonials(); renderGallery(); renderSvcPageCategories(); renderStylists(); updateDashboard();
+ renderMarquee(); renderServices(); renderTestimonials(); renderGallery(); renderCarousel(); renderSvcPageCategories(); renderStylists(); updateDashboard();
  isDirty = false; document.getElementById("statDraft").textContent = "Saved";
 }
 
@@ -708,6 +719,15 @@ function collectAll() {
  C.services_page = C.services_page || {};
  C.services_page.categories = collectSvcCategories();
  C.booking.stylists = collectStylists();
+ if (!C.carousel_items) C.carousel_items = [];
+ C.carousel_items = (C.carousel_items || []).map(function(item, i) {
+  var imgEl = document.getElementById("car-img-" + i);
+  var lblEl = document.getElementById("car-label-" + i);
+  return {
+   image: (imgEl && imgEl.value) ? imgEl.value : item.image || "images/aone-hero.jpg",
+   label: (lblEl && lblEl.value) ? lblEl.value : item.label || "Panel"
+  };
+ });
  return C;
 }
 
@@ -955,6 +975,56 @@ function addGalleryItem() {
 function removeGalleryItem(i) {
   if (!confirm("Remove this gallery photo?")) return;
   C.gallery_items.splice(i, 1); renderGallery(); isDirty = true;
+}
+
+/* ── Carousel renderer ── */
+function renderCarousel() {
+  var list = document.getElementById("carouselList");
+  if (!list) return;
+  if (!C.carousel_items || C.carousel_items.length < 5) {
+    C.carousel_items = [
+      {image:"images/aone-hero.jpg",label:"Salon Interior"},
+      {image:"images/aone-hero.jpg",label:"Balayage"},
+      {image:"images/aone-hero.jpg",label:"Bridal Styling"},
+      {image:"images/aone-hero.jpg",label:"Men's Grooming"},
+      {image:"images/aone-hero.jpg",label:"Hair Spa"}
+    ];
+  }
+  var labels = ["Panel 1 (Front)", "Panel 2", "Panel 3", "Panel 4", "Panel 5"];
+  list.innerHTML = C.carousel_items.map(function(item, i) {
+    var imgSrc = item.image || "images/aone-hero.jpg";
+    return "<div class=\"item-row\">" +
+    "<div class=\"item-row-header\"><div style=\"display:flex;align-items:center;gap:10px\">" +
+    "<div class=\"item-icon-preview\" style=\"padding:0;overflow:hidden\">" +
+    "<img src=\"" + imgSrc + "\" style=\"width:100%;height:100%;object-fit:cover\" onerror=\"this.style.opacity=0.3\">" +
+    "</div>" +
+    "<span class=\"item-row-label\">" + labels[i] + " &mdash; " + item.label + "</span></div></div>" +
+    "<div class=\"form-grid col2\" style=\"margin-bottom:10px\">" +
+    "<div class=\"field\"><label>Label <span style=\"font-size:.62rem;color:var(--muted);font-weight:400\">— short name for this panel</span></label>" +
+    "<input type=\"text\" id=\"car-label-" + i + "\" value=\"" + item.label.replace(/\"/g,"&quot;") + "\" oninput=\"updateCarouselItem(" + i + ")\"></div>" +
+    "</div>" +
+    "<div class=\"field\">" +
+    "<label style=\"display:flex;align-items:center;gap:8px\">Photo <span style=\"font-size:.62rem;color:var(--gold);font-weight:400\">— Recommended: 600x600px square JPG/PNG</span></label>" +
+    "<div style=\"display:flex;align-items:center;gap:10px;margin-top:6px\">" +
+    "<img id=\"car-img-prev-" + i + "\" src=\"" + imgSrc + "\" style=\"width:80px;height:80px;object-fit:cover;border-radius:4px;border:1px solid var(--border)\" onerror=\"this.style.opacity=0.3\">" +
+    "<div style=\"flex:1\">" +
+    "<input type=\"text\" id=\"car-img-" + i + "\" value=\"" + imgSrc.replace(/\"/g,"&quot;") + "\" placeholder=\"images/filename.jpg or https://...\" oninput=\"updateCarouselItem(" + i + ");document.getElementById('car-img-prev-" + i + "').src=this.value\" style=\"font-size:.78rem;margin-bottom:6px\">" +
+    "<button class=\"btn btn-outline\" style=\"font-size:.72rem;padding:6px 12px;width:100%\" onclick=\"triggerImageUpload('car-file-" + i + "')\">&#128193; Upload from Desktop</button>" +
+    "<input type=\"file\" id=\"car-file-" + i + "\" accept=\"image/*\" style=\"display:none\" onchange=\"uploadImageToGitHub(this.files[0],function(p){document.getElementById('car-img-" + i + "').value=p;document.getElementById('car-img-prev-" + i + "').src=p;updateCarouselItem(" + i + ");})\"></div>" +
+    "</div></div></div>";
+  }).join("");
+}
+
+function updateCarouselItem(i) {
+  if (!C.carousel_items) C.carousel_items = [];
+  var imgEl = document.getElementById("car-img-" + i);
+  var lblEl = document.getElementById("car-label-" + i);
+  C.carousel_items[i] = {
+    image: imgEl ? imgEl.value : (C.carousel_items[i] && C.carousel_items[i].image) || "images/aone-hero.jpg",
+    label: lblEl ? lblEl.value : (C.carousel_items[i] && C.carousel_items[i].label) || "Panel"
+  };
+  isDirty = true;
+  document.getElementById("statDraft").textContent = "● Unsaved";
 }
 
 function dlog(msg, cls) {
