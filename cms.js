@@ -214,7 +214,39 @@
   }
 
   /* ══════════════════════════════════════════════════════════
-     11. BOOKING PAGE — rebuild service pick cards
+     11. SERVICES PAGE — Curated Packages section
+  ══════════════════════════════════════════════════════════ */
+  const SP = C.services_page || {};
+  const pkgLabelEl = document.getElementById('cmsPackagesLabel');
+  const pkgTitleEl = document.getElementById('cmsPackagesTitle');
+  const pkgTitleEmEl = document.getElementById('cmsPackagesTitleEm');
+  if (pkgLabelEl && SP.packages_label) pkgLabelEl.textContent = SP.packages_label;
+  if (pkgTitleEl && SP.packages_title) pkgTitleEl.textContent = SP.packages_title;
+  if (pkgTitleEmEl && SP.packages_title_em) pkgTitleEmEl.textContent = SP.packages_title_em;
+  const pkgGrid = document.getElementById('cmsPackagesGrid');
+  if (pkgGrid && Array.isArray(SP.packages) && SP.packages.length > 0) {
+    const delays = ['', 'style="transition-delay:.12s"', 'style="transition-delay:.24s"', 'style="transition-delay:.36s"'];
+    pkgGrid.innerHTML = SP.packages.map(function(pkg, i) {
+      const featuredClass = pkg.featured ? ' featured' : '';
+      const badge = pkg.featured ? '<div class="pkg-badge">Most Popular</div>' : '';
+      const items = Array.isArray(pkg.items) ? pkg.items.map(function(it) {
+        return '<li>' + it + '</li>';
+      }).join('') : '';
+      return '<div class="pkg-card' + featuredClass + ' reveal visible" ' + (delays[i] || '') + '>' +
+        badge +
+        '<div class="pkg-name">' + pkg.name + '</div>' +
+        '<div class="pkg-subtitle">' + pkg.subtitle + '</div>' +
+        '<div class="pkg-price">' + pkg.price + '</div>' +
+        '<p class="pkg-desc">' + pkg.description + '</p>' +
+        '<ul class="pkg-includes">' + items + '</ul>' +
+        '<a href="booking.html" class="pkg-cta">Book This Package</a>' +
+        '</div>';
+    }).join('');
+    reObserve(pkgGrid);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     12. BOOKING PAGE — rebuild service pick cards
   ══════════════════════════════════════════════════════════ */
   const bookGrid = document.getElementById('cmsBookingServices');
   if (bookGrid && Array.isArray(C.services)) {
