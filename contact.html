@@ -387,6 +387,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     <div class="fs-icon">✦</div>
     <h3>Message Sent!</h3>
     <p>Thank you for reaching out. Our team will respond to you within 24 hours.</p>
+    <p id="fsActivationNote" style="display:none;margin-top:14px;font-size:.7rem;color:var(--gold);line-height:1.7;background:rgba(201,168,76,.08);padding:10px 14px;border:1px solid rgba(201,168,76,.2)"></p>
     <a href="booking.html" style="display:inline-block;margin-top:24px;padding:12px 28px;border:1px solid var(--gold);color:var(--gold);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;transition:all .3s;cursor:none" onmouseenter="this.style.background='var(--gold)';this.style.color='var(--bg)'" onmouseleave="this.style.background='transparent';this.style.color='var(--gold)'">Book Appointment →</a>
    </div>
   </div>
@@ -597,9 +598,18 @@ async function sendMessage(){
 
   if(data.success){
    document.getElementById('contactFormInner').style.display = 'none';
-   document.getElementById('formSuccess').style.display = 'block';
+   var fs = document.getElementById('formSuccess');
+   fs.style.display = 'block';
+   /* Show activation note if this looks like a first-time send */
+   var apiMsg = data.message || '';
+   var noteEl = document.getElementById('fsActivationNote');
+   if(noteEl){
+    noteEl.style.display = 'block';
+    noteEl.textContent = apiMsg ? 'Web3Forms says: ' + apiMsg : '';
+   }
   } else {
-   errBox.textContent = data.message || 'Something went wrong. Please try again or call us directly.';
+   var errDetail = data.message || 'Something went wrong. Please try again or call us directly.';
+   errBox.textContent = errDetail;
    errBox.style.display = 'block';
    btn.disabled = false;
    btn.textContent = 'Send Message \u2192';
