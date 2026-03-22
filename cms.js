@@ -278,28 +278,6 @@
   }
 
   /* ══════════════════════════════════════════════════════════
-     12. BOOKING PAGE — rebuild stylist chips
-  ══════════════════════════════════════════════════════════ */
-  const stylistWrap = document.getElementById('cmsStylists');
-  if (stylistWrap && C.booking && Array.isArray(C.booking.stylists)) {
-    stylistWrap.innerHTML = C.booking.stylists.map((st, i) => `
-      <div class="stylist-chip${i === 0 ? ' selected' : ''}" data-stylist="${st.name}">
-        <span class="sc-name">${st.name}</span>
-        <span class="sc-spec">${st.specialty}</span>
-      </div>`).join('');
-
-    stylistWrap.querySelectorAll('.stylist-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        stylistWrap.querySelectorAll('.stylist-chip').forEach(c => c.classList.remove('selected'));
-        chip.classList.add('selected');
-        if (window.B) window.B.stylist = chip.dataset.stylist;
-        const el = document.getElementById('summaryStylist');
-        if (el) el.textContent = chip.dataset.stylist;
-      });
-    });
-  }
-
-  /* ══════════════════════════════════════════════════════════
      13. HOME PAGE — Hero Carousel
   ══════════════════════════════════════════════════════════ */
   const carouselWrap = document.getElementById('carousel3d');
@@ -423,6 +401,13 @@
         '<div class="sty-chip-spec">' + (s.specialty || '') + '</div>' +
         '</div></div>';
     }).join('');
+    /* Auto-select first chip ("Any Available") so stylist is pre-set */
+    var firstChip = bkStyRow.querySelector('.sty-chip');
+    if (firstChip) {
+      firstChip.classList.add('selected');
+      if (window.B) window.B.stylist = firstChip.dataset.stylist;
+      if (typeof window.checkStep2 === 'function') window.checkStep2();
+    }
   }
 
   /* ── 17. Expose content globally ───────────────────────── */
