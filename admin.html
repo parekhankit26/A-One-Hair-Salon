@@ -117,6 +117,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
    <div class="nav-item" data-panel="homepage"><span class="ni-icon">&#9672;</span> Home Page</div>
    <div class="nav-item" data-panel="carousel"><span class="ni-icon">&#9654;</span> Home Carousel</div>
    <div class="nav-item" data-panel="gallerypage"><span class="ni-icon">&#9724;</span> Gallery Page</div>
+   <div class="nav-item" data-panel="contactpage"><span class="ni-icon">&#9993;</span> Contact Page</div>
    <div class="nav-item" data-panel="pagetitles"><span class="ni-icon">&#9671;</span> Page Titles</div>
    <div class="nav-item" data-panel="servicespage"><span class="ni-icon">&#9998;</span> Services Detail</div>
    <div class="nav-item" data-panel="bookingsettings"><span class="ni-icon">&#128197;</span> Booking Settings</div>
@@ -493,6 +494,89 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
    </div>
   </div>
 
+  <!-- CONTACT PAGE -->
+  <div class="panel" id="panel-contactpage">
+
+   <!-- Hero Image -->
+   <div class="panel-section">
+    <div class="panel-section-title">Contact Page — Hero Image</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">The banner image shown at the top of the Contact page. <span style="color:var(--gold)">Recommended: 1400x600px landscape JPG/PNG.</span></p>
+    <div class="field">
+     <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+      <img id="cp-hero-prev" src="images/aone-hero.jpg" style="width:120px;height:68px;object-fit:cover;border-radius:4px;border:1px solid var(--border);flex-shrink:0" onerror="this.style.opacity=0.3">
+      <div style="flex:1">
+       <input type="text" id="cp-hero-img" placeholder="images/filename.jpg or https://..." style="font-size:.78rem;margin-bottom:6px" oninput="document.getElementById('cp-hero-prev').src=this.value;isDirty=true;">
+       <button class="btn btn-outline" style="font-size:.72rem;padding:6px 12px;width:100%" onclick="triggerImageUpload('cp-hero-file')">&#128193; Upload Hero Image</button>
+       <input type="file" id="cp-hero-file" accept="image/*" style="display:none" onchange="uploadImageToGitHub(this.files[0],function(p){document.getElementById('cp-hero-img').value=p;document.getElementById('cp-hero-prev').src=p;isDirty=true;})">
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <!-- Page Intro -->
+   <div class="panel-section">
+    <div class="panel-section-title">Page Intro &amp; Section Header</div>
+    <div class="form-grid col2">
+     <div class="field"><label>Section Label <span class="field-note" style="display:inline">e.g. Get In Touch</span></label><input type="text" id="cp-section-label" oninput="isDirty=true"></div>
+     <div class="field"><label>Section Title</label><input type="text" id="cp-section-title" oninput="isDirty=true"></div>
+     <div class="field" style="grid-column:1/-1"><label>Intro Text</label><textarea id="cp-intro" rows="3" oninput="isDirty=true"></textarea></div>
+    </div>
+   </div>
+
+   <!-- Contact Card Details -->
+   <div class="panel-section">
+    <div class="panel-section-title">Contact Details</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Phone, email and address come from <strong style="color:var(--gold)">Salon Info</strong>. Edit the sub-labels and hours display text below.</p>
+    <div class="form-grid col2">
+     <div class="field"><label>Location Sub-text</label><input type="text" id="cp-loc-sub" placeholder="London, United Kingdom" oninput="isDirty=true"></div>
+     <div class="field"><label>Phone Sub-text</label><input type="text" id="cp-phone-sub" placeholder="Call or WhatsApp for appointments" oninput="isDirty=true"></div>
+     <div class="field"><label>Email Sub-text</label><input type="text" id="cp-email-sub" placeholder="We reply within 24 hours" oninput="isDirty=true"></div>
+     <div class="field"><label>Hours Today Display <span class="field-note" style="display:inline">shown on today's hours card</span></label><input type="text" id="cp-hours-today" placeholder="10:00 AM – 8:00 PM" oninput="isDirty=true"></div>
+     <div class="field" style="grid-column:1/-1"><label>Hours Card Sub-text</label><input type="text" id="cp-hours-sub" placeholder="Walk-ins welcome · Appointments preferred" oninput="isDirty=true"></div>
+    </div>
+   </div>
+
+   <!-- Opening Hours Cards -->
+   <div class="panel-section">
+    <div class="panel-section-title">Opening Hours Cards</div>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Edit the 3 hours cards displayed at the bottom of the contact page. <span style="color:var(--gold)">Badge colour: "green" = open indicator, "gold" = weekend style.</span></p>
+    <div id="cpHoursList"></div>
+    <button class="btn btn-gold" onclick="saveDraft()" style="margin-top:16px">&#10003; Save Draft</button>
+   </div>
+
+   <!-- Social Links -->
+   <div class="panel-section">
+    <div class="panel-section-title">Social Links</div>
+    <div class="form-grid col2">
+     <div class="field"><label>Facebook URL</label><input type="text" id="cp-fb-url" placeholder="https://facebook.com/..." oninput="isDirty=true"></div>
+     <div class="field"><label>Instagram URL</label><input type="text" id="cp-ig-url" placeholder="https://instagram.com/..." oninput="isDirty=true"></div>
+     <div class="field"><label>LinkedIn URL</label><input type="text" id="cp-li-url" placeholder="https://linkedin.com/..." oninput="isDirty=true"></div>
+    </div>
+   </div>
+
+   <!-- Map -->
+   <div class="panel-section">
+    <div class="panel-section-title">Map &amp; Location</div>
+    <div class="form-grid col2">
+     <div class="field" style="grid-column:1/-1"><label>Google Maps Embed URL <span class="field-note" style="display:inline">the src="" value from a Google Maps embed code</span></label><input type="text" id="cp-map-url" oninput="isDirty=true"></div>
+     <div class="field"><label>Address Name <span class="field-note" style="display:inline">bold line in map panel</span></label><input type="text" id="cp-map-name" placeholder="A One Hair Salon" oninput="isDirty=true"></div>
+     <div class="field"><label>Address Line</label><input type="text" id="cp-map-line" placeholder="Shop 12, 12 King Street, London" oninput="isDirty=true"></div>
+     <div class="field" style="grid-column:1/-1"><label>Google Maps Link <span class="field-note" style="display:inline">"Open in Google Maps" href</span></label><input type="text" id="cp-map-link" oninput="isDirty=true"></div>
+    </div>
+   </div>
+
+   <!-- Form Header -->
+   <div class="panel-section">
+    <div class="panel-section-title">Contact Form</div>
+    <div class="form-grid col2">
+     <div class="field"><label>Form Title</label><input type="text" id="cp-form-title" placeholder="Send a Message" oninput="isDirty=true"></div>
+     <div class="field"><label>Form Subtitle</label><input type="text" id="cp-form-sub" placeholder="Fill in the form and we'll get back to you shortly." oninput="isDirty=true"></div>
+    </div>
+    <button class="btn btn-gold" onclick="saveDraft()" style="margin-top:16px">&#10003; Save Draft</button>
+   </div>
+
+  </div>
+
   <!-- HOME CAROUSEL -->
   <div class="panel" id="panel-carousel">
    <div class="panel-section">
@@ -683,7 +767,7 @@ function populateAll() {
  setVal("pt-con-intro",C.pages && C.pages.contact && C.pages.contact.intro);
  setVal("pt-book-title",C.pages && C.pages.booking && C.pages.booking.hero_title);
  setVal("pt-book-sub",C.pages && C.pages.booking && C.pages.booking.hero_sub);
- renderMarquee(); renderServices(); renderTestimonials(); renderGallery(); renderCarousel(); renderGalPage(); renderPackages(); renderSvcPageCategories(); renderStylists(); updateDashboard();
+ renderMarquee(); renderServices(); renderTestimonials(); renderGallery(); renderCarousel(); renderGalPage(); renderContactPage(); renderPackages(); renderSvcPageCategories(); renderStylists(); updateDashboard();
  isDirty = false; document.getElementById("statDraft").textContent = "Saved";
 }
 
@@ -758,6 +842,7 @@ function collectAll() {
  C.services_page.categories = collectSvcCategories();
  collectPackages();
  collectGalPage();
+ collectContactPage();
  C.booking.stylists = collectStylists();
  if (!C.carousel_items) C.carousel_items = [];
  C.carousel_items = (C.carousel_items || []).map(function(item, i) {
@@ -1068,6 +1153,105 @@ function updateCarouselItem(i) {
 }
 
 /* ── Gallery Page renderer ── */
+/* ── Contact Page renderer ── */
+function renderContactPage() {
+  var CP = C.contact_page || {};
+  function sv(id, val) { var el=document.getElementById(id); if(el&&val!=null) el.value=val; }
+  function sp(id, val) { var el=document.getElementById(id); if(el&&val!=null) { var p=document.getElementById(id+'-prev'); el.value=val; if(p) p.src=val; } }
+  sp('cp-hero-img', CP.hero_image);
+  var hprev = document.getElementById('cp-hero-prev'); if(hprev && CP.hero_image) hprev.src = CP.hero_image;
+  // Page section (from pages.contact)
+  var PC = (C.pages && C.pages.contact) || {};
+  sv('cp-section-label', PC.section_label);
+  sv('cp-section-title', PC.section_title);
+  sv('cp-intro', PC.intro);
+  // Contact card subs
+  sv('cp-loc-sub',     CP.location_sub);
+  sv('cp-phone-sub',   CP.phone_sub);
+  sv('cp-email-sub',   CP.email_sub);
+  sv('cp-hours-today', CP.hours_today);
+  sv('cp-hours-sub',   CP.hours_today_sub);
+  // Social
+  sv('cp-fb-url', CP.social_facebook_url);
+  sv('cp-ig-url', CP.social_instagram_url);
+  sv('cp-li-url', CP.social_linkedin_url);
+  // Map
+  sv('cp-map-url',  CP.map_embed_url);
+  sv('cp-map-name', CP.map_address_name);
+  sv('cp-map-line', CP.map_address_line);
+  sv('cp-map-link', CP.map_link);
+  // Form
+  sv('cp-form-title', CP.form_title);
+  sv('cp-form-sub',   CP.form_subtitle);
+  // Hours cards
+  renderCpHours();
+}
+
+function renderCpHours() {
+  var list = document.getElementById("cpHoursList");
+  if (!list) return;
+  var CP = C.contact_page || {};
+  var hours = CP.hours || [];
+  var delays = ["0s", ".12s", ".24s"];
+  list.innerHTML = hours.map(function(h, i) {
+    var badgeSel = [
+      "<option value=\"green\"" + (h.badge_type==="green"?" selected":"") + ">Green (Open Today)</option>",
+      "<option value=\"gold\"" + (h.badge_type==="gold"?" selected":"") + ">Gold (Weekend)</option>"
+    ].join("");
+    return "<div class=\"item-row\">" +
+      "<div class=\"item-row-header\"><span class=\"item-row-label\">Hours Card " + (i+1) + " \u2014 " + h.title + "</span></div>" +
+      "<div class=\"form-grid col2\" style=\"margin-bottom:6px\">" +
+        "<div class=\"field\"><label>Day Title</label><input type=\"text\" id=\"cph-title-" + i + "\" value=\"" + h.title.replace(/\"/g,"&quot;") + "\" oninput=\"isDirty=true\"></div>" +
+        "<div class=\"field\"><label>Day Range <span style=\"font-size:.62rem;color:var(--muted)\">e.g. Monday \u2014 Friday</span></label><input type=\"text\" id=\"cph-range-" + i + "\" value=\"" + h.day_range.replace(/\"/g,"&quot;") + "\" oninput=\"isDirty=true\"></div>" +
+        "<div class=\"field\"><label>Opening Time <span style=\"font-size:.62rem;color:var(--muted)\">e.g. 10:00</span></label><input type=\"text\" id=\"cph-open-" + i + "\" value=\"" + h.open_time + "\" oninput=\"isDirty=true\"></div>" +
+        "<div class=\"field\"><label>Closing Time <span style=\"font-size:.62rem;color:var(--muted)\">e.g. 8:00</span></label><input type=\"text\" id=\"cph-close-" + i + "\" value=\"" + h.close_time + "\" oninput=\"isDirty=true\"></div>" +
+        "<div class=\"field\"><label>Note Text</label><input type=\"text\" id=\"cph-note-" + i + "\" value=\"" + h.note.replace(/\"/g,"&quot;") + "\" oninput=\"isDirty=true\"></div>" +
+        "<div class=\"field\"><label>Badge Text</label><input type=\"text\" id=\"cph-badge-" + i + "\" value=\"" + h.badge.replace(/\"/g,"&quot;") + "\" oninput=\"isDirty=true\"></div>" +
+        "<div class=\"field\"><label>Badge Style</label><select id=\"cph-btype-" + i + "\" onchange=\"isDirty=true\">" + badgeSel + "</select></div>" +
+      "</div></div>";
+  }).join("");
+}
+
+function collectContactPage() {
+  if (!C.contact_page) C.contact_page = {};
+  var CP = C.contact_page;
+  function gv(id) { var el=document.getElementById(id); return el?el.value.trim():''; }
+  var hi = gv('cp-hero-img'); if(hi) CP.hero_image = hi;
+  var locSub = gv('cp-loc-sub'); if(locSub) CP.location_sub = locSub;
+  var phSub = gv('cp-phone-sub'); if(phSub) CP.phone_sub = phSub;
+  var emSub = gv('cp-email-sub'); if(emSub) CP.email_sub = emSub;
+  var ht = gv('cp-hours-today'); if(ht) CP.hours_today = ht;
+  var hs = gv('cp-hours-sub'); if(hs) CP.hours_today_sub = hs;
+  var fbU = gv('cp-fb-url'); if(fbU) CP.social_facebook_url = fbU;
+  var igU = gv('cp-ig-url'); if(igU) CP.social_instagram_url = igU;
+  var liU = gv('cp-li-url'); if(liU) CP.social_linkedin_url = liU;
+  var mu = gv('cp-map-url'); if(mu) CP.map_embed_url = mu;
+  var mn = gv('cp-map-name'); if(mn) CP.map_address_name = mn;
+  var ml = gv('cp-map-line'); if(ml) CP.map_address_line = ml;
+  var mlk = gv('cp-map-link'); if(mlk) CP.map_link = mlk;
+  var ft = gv('cp-form-title'); if(ft) CP.form_title = ft;
+  var fs = gv('cp-form-sub'); if(fs) CP.form_subtitle = fs;
+  // Section label/title/intro -> pages.contact
+  if (!C.pages) C.pages = {};
+  if (!C.pages.contact) C.pages.contact = {};
+  var sl = gv('cp-section-label'); if(sl) C.pages.contact.section_label = sl;
+  var st = gv('cp-section-title'); if(st) C.pages.contact.section_title = st;
+  var si = gv('cp-intro'); if(si) C.pages.contact.intro = si;
+  // Hours
+  var hrs = CP.hours || [];
+  CP.hours = hrs.map(function(h, i) {
+    return {
+      title:      gv('cph-title-' + i)  || h.title,
+      day_range:  gv('cph-range-' + i)  || h.day_range,
+      open_time:  gv('cph-open-' + i)   || h.open_time,
+      close_time: gv('cph-close-' + i)  || h.close_time,
+      note:       gv('cph-note-' + i)   || h.note,
+      badge:      gv('cph-badge-' + i)  || h.badge,
+      badge_type: (function(){ var el=document.getElementById('cph-btype-'+i); return el?el.value:h.badge_type; })()
+    };
+  });
+}
+
 function renderGalPage() {
   var list = document.getElementById("galPageList");
   if (!list) return;
