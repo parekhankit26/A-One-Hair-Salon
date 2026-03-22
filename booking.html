@@ -6,8 +6,7 @@
 <title>Book Appointment — A One Hair Salon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- EmailJS for real email confirmations -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- Booking engine — notifications via Web3Forms -->
 <style>
 :root {
  --gold:#c9a84c; --gold-lt:#f0d47a; --gold-dk:#8a6f2e; --gold-glow:rgba(201,168,76,.35);
@@ -644,15 +643,11 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
   A ONE SALON — BOOKING ENGINE (3-Step)
   ===================================================== */
 
-/* -- EmailJS Config -- */
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-const EMAIL_ENABLED = EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY';
-if (EMAIL_ENABLED) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+/* Salon WhatsApp — injected by cms.js from content.json (booking_page.salon_whatsapp) */
+var SALON_WA = '';
 
 /* Booking state */
-const B = { svc:'', price:'', stylist:'', date:'', time:'', fname:'', lname:'', email:'', mobile:'' };
+const B = { svc:'', price:'', stylist:'', date:'', time:'', fname:'', lname:'', email:'', mobile:'', notes:'' };
 let currentStep = 1;
 
 /* ── Cursor ── */
@@ -703,15 +698,16 @@ function goStep(n){
 }
 window.goStep = goStep;
 
-/* ── Step 1: Service ── */
-document.querySelectorAll('.svc-pick-card').forEach(card=>{
- card.addEventListener('click',()=>{
-  document.querySelectorAll('.svc-pick-card').forEach(c=>c.classList.remove('selected'));
-  card.classList.add('selected');
-  B.svc  = card.dataset.svc;
-  B.price = card.dataset.price;
-  document.getElementById('next1').disabled = false;
- });
+/* ── Step 1: Service (event delegation — works after cms.js injects cards) ── */
+document.getElementById('cmsBookingServices').addEventListener('click', function(e){
+ var card = e.target.closest('.svc-pick-card');
+ if(!card) return;
+ document.querySelectorAll('.svc-pick-card').forEach(function(c){ c.classList.remove('selected'); });
+ card.classList.add('selected');
+ B.svc   = card.dataset.svc;
+ B.price = card.dataset.price;
+ document.getElementById('next1').disabled = false;
+ refreshCursorTargets();
 });
 
 /* ── Step 2: Full Calendar ── */
@@ -800,14 +796,15 @@ document.querySelectorAll('.time-slot:not(.taken)').forEach(slot=>{
  });
 });
 
-/* ── Step 2: Stylist chips ── */
-document.querySelectorAll('.sty-chip').forEach(chip=>{
- chip.addEventListener('click',()=>{
-  document.querySelectorAll('.sty-chip').forEach(c=>c.classList.remove('selected'));
-  chip.classList.add('selected');
-  B.stylist = chip.dataset.stylist;
-  checkStep2();
- });
+/* ── Step 2: Stylist chips (event delegation — works after cms.js injects chips) ── */
+document.getElementById('cmsStylists').addEventListener('click', function(e){
+ var chip = e.target.closest('.sty-chip');
+ if(!chip) return;
+ document.querySelectorAll('.sty-chip').forEach(function(c){ c.classList.remove('selected'); });
+ chip.classList.add('selected');
+ B.stylist = chip.dataset.stylist;
+ checkStep2();
+ refreshCursorTargets();
 });
 
 function checkStep2(){
@@ -837,77 +834,132 @@ window.validateStep3 = validateStep3;
 
 /* ── Confirm Booking ── */
 async function confirmBooking(){
- const btn = document.getElementById('confirmBtn');
+ var btn = document.getElementById('confirmBtn');
  btn.textContent = 'Processing...';
  btn.disabled = true;
 
- /* Save to localStorage */
- let bid = '#AOH-00000';
- if (window.SalonDB) {
-  bid = window.SalonDB.saveBooking({ ...B });
- } else {
-  bid = '#AOH-' + Math.floor(Math.random()*90000+10000);
-  try {
-   const existing = JSON.parse(localStorage.getItem('salon_bookings')||'[]');
-   existing.unshift({ ...B, id:bid, timestamp:new Date().toISOString(), status:'confirmed' });
-   localStorage.setItem('salon_bookings', JSON.stringify(existing));
-  } catch(e){}
- }
+ /* Generate booking ID */
+ var bid = '#AOH-' + Math.floor(Math.random()*90000+10000);
 
- /* Send Email via EmailJS */
- if (EMAIL_ENABLED) {
-  try {
-   await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-    to_email:  B.email,
-    to_name:   B.fname + ' ' + B.lname,
-    booking_id: bid,
-    service:   B.svc,
-    stylist:   B.stylist,
-    date:    B.date,
-    time:    B.time,
-    mobile:   B.mobile,
-    price:    B.price,
-    salon_name: 'A One Hair Salon',
-    salon_phone: '+91 98765 43210',
-    salon_addr: '12 King Street, London'
-   });
-  } catch(err){ console.warn('EmailJS error:', err); }
- }
+ /* Save locally as backup */
+ try {
+  var existing = JSON.parse(localStorage.getItem('salon_bookings')||'[]');
+  existing.unshift({ svc:B.svc, price:B.price, stylist:B.stylist, date:B.date, time:B.time,
+   fname:B.fname, lname:B.lname, email:B.email, mobile:B.mobile,
+   id:bid, timestamp:new Date().toISOString(), status:'pending' });
+  localStorage.setItem('salon_bookings', JSON.stringify(existing));
+ } catch(e){}
 
- /* Build WhatsApp link */
- const waMsg = encodeURIComponent(
-  'Hi! Your appointment at A One Hair Salon is confirmed.\n\n' +
+ /* Build customer phone (digits only for wa.me links) */
+ var custPhone = B.mobile.replace(/\D/g,'');
+
+ /* --- WhatsApp message templates for salon to send to customer --- */
+ var confirmMsg = encodeURIComponent(
+  'Hi ' + B.fname + '! Your appointment at A One Hair Salon is CONFIRMED.\n\n' +
   'Booking ID: ' + bid + '\n' +
   'Service: ' + B.svc + '\n' +
   'Stylist: ' + B.stylist + '\n' +
-  'Date: ' + B.date + '\n' +
-  'Time: ' + B.time + '\n' +
-  'Estimated: ' + B.price + '\n\n' +
-  'Please arrive 10 mins early. Call us: +91 98765 43210'
+  'Date & Time: ' + B.date + ' at ' + B.time + '\n' +
+  'Est. Price: ' + B.price + '\n\n' +
+  'Please arrive 10 minutes early. We look forward to seeing you!\n' +
+  '-- A One Hair Salon'
  );
- const rawMobile = B.mobile.replace(/\D/g,'');
- const waLink = 'https://wa.me/91' + rawMobile + '?text=' + waMsg;
+ var declineMsg = encodeURIComponent(
+  'Hi ' + B.fname + ', we are sorry but the requested slot is not available.\n\n' +
+  'Service: ' + B.svc + '\n' +
+  'Requested: ' + B.date + ' at ' + B.time + '\n\n' +
+  'Please contact us to find an alternative time. We apologise for the inconvenience.\n' +
+  '-- A One Hair Salon'
+ );
+ var rescheduleMsg = encodeURIComponent(
+  'Hi ' + B.fname + ', regarding your appointment request for ' + B.svc + ' on ' + B.date + ' at ' + B.time + '.\n\n' +
+  'We would like to offer you an alternative time slot. Please reply with your availability and we will arrange a suitable time.\n' +
+  '-- A One Hair Salon'
+ );
 
- /* Show success */
+ var waConfirm    = 'https://wa.me/' + custPhone + '?text=' + confirmMsg;
+ var waDecline    = 'https://wa.me/' + custPhone + '?text=' + declineMsg;
+ var waReschedule = 'https://wa.me/' + custPhone + '?text=' + rescheduleMsg;
+
+ /* --- Send notification to salon via Web3Forms --- */
+ var notesVal = (document.getElementById('notes') ? document.getElementById('notes').value.trim() : '') || 'None';
+ var salonMsg =
+  'NEW BOOKING REQUEST\n' +
+  '==================\n\n' +
+  'Booking ID : ' + bid + '\n' +
+  'Customer   : ' + B.fname + ' ' + B.lname + '\n' +
+  'Service    : ' + B.svc + '\n' +
+  'Stylist    : ' + B.stylist + '\n' +
+  'Date       : ' + B.date + '\n' +
+  'Time       : ' + B.time + '\n' +
+  'Est. Price : ' + B.price + '\n' +
+  'Mobile     : ' + B.mobile + '\n' +
+  'Email      : ' + B.email + '\n' +
+  'Notes      : ' + notesVal + '\n\n' +
+  '--- QUICK ACTIONS (tap on your phone) ---\n\n' +
+  'CONFIRM via WhatsApp:\n' + waConfirm + '\n\n' +
+  'DECLINE via WhatsApp:\n' + waDecline + '\n\n' +
+  'RESCHEDULE via WhatsApp:\n' + waReschedule + '\n\n' +
+  '--- Or reply to this email to contact the customer directly ---\n' +
+  '(Reply-To is set to the customer email above)';
+
+ var w3fKey = window.WEB3FORMS_KEY || '3c4dfd8f-dbb8-4d05-873e-bfb44d23d3dd';
+ try {
+  await fetch('https://api.web3forms.com/submit', {
+   method: 'POST',
+   headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+   body: JSON.stringify({
+    access_key: w3fKey,
+    subject:    'New Booking: ' + B.svc + ' — ' + B.fname + ' ' + B.lname + ' — ' + B.date + ' ' + B.time,
+    from_name:  'A One Hair Salon Booking System',
+    name:       B.fname + ' ' + B.lname,
+    email:      B.email,
+    replyto:    B.email,
+    phone:      B.mobile,
+    message:    salonMsg,
+    botcheck:   ''
+   })
+  });
+ } catch(e){ console.warn('Booking notification error:', e); }
+
+ /* --- Build customer WhatsApp button (customer taps to message the salon) --- */
+ var salonWANum = window.SALON_WA || SALON_WA || '';
+ var custWaMsg = encodeURIComponent(
+  'Hi A One Hair Salon! I just submitted a booking request.\n\n' +
+  'Booking ID: ' + bid + '\n' +
+  'Name: ' + B.fname + ' ' + B.lname + '\n' +
+  'Service: ' + B.svc + '\n' +
+  'Date & Time: ' + B.date + ' at ' + B.time + '\n\n' +
+  'Could you please confirm my appointment? Thank you!'
+ );
+ var custWaLink = salonWANum ? 'https://wa.me/' + salonWANum + '?text=' + custWaMsg : '';
+
+ /* --- Show success view --- */
  document.getElementById('progressWrap').style.display = 'none';
- document.querySelectorAll('.form-step').forEach(s=>s.style.display='none');
- const sv = document.getElementById('successView');
+ document.querySelectorAll('.form-step').forEach(function(s){ s.style.display='none'; });
+ var sv = document.getElementById('successView');
  sv.style.display = 'block';
- document.getElementById('bookingId').textContent = bid;
- document.getElementById('cd-svc').textContent   = B.svc;
- document.getElementById('cd-sty').textContent   = B.stylist;
- document.getElementById('cd-dt').textContent   = B.date + ' at ' + B.time;
- document.getElementById('cd-email').textContent  = B.email;
- document.getElementById('cd-sms').textContent   = B.mobile;
+ document.getElementById('bookingId').textContent  = bid;
+ document.getElementById('cd-svc').textContent     = B.svc;
+ document.getElementById('cd-sty').textContent     = B.stylist;
+ document.getElementById('cd-dt').textContent      = B.date + ' at ' + B.time;
+ document.getElementById('cd-email').textContent   = B.email;
+ document.getElementById('cd-sms').textContent     = B.mobile;
 
- const waBtn = document.getElementById('waSmsBtn');
- if(waBtn){ waBtn.href = waLink; waBtn.style.display='inline-block'; }
+ var waBtn = document.getElementById('waSmsBtn');
+ if(waBtn){
+  if(custWaLink){
+   waBtn.href = custWaLink;
+   waBtn.textContent = 'Message Us on WhatsApp';
+   waBtn.style.display = 'inline-block';
+  } else {
+   waBtn.style.display = 'none';
+  }
+ }
 
- const emailNote = document.getElementById('emailStatusNote');
+ var emailNote = document.getElementById('emailStatusNote');
  if(emailNote){
-  emailNote.textContent = EMAIL_ENABLED
-   ? 'Confirmation email sent to ' + B.email
-   : 'See you soon at A One Hair Salon, ' + B.fname + '!';
+  emailNote.textContent = 'Booking request received! We will confirm your appointment via WhatsApp within 2 hours. You will also receive a confirmation to ' + B.email + '.';
  }
 
  sv.scrollIntoView({behavior:'smooth',block:'start'});
