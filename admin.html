@@ -593,6 +593,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
       <input type="password" id="cp-w3f-key" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" style="flex:1;font-family:monospace;font-size:.82rem;letter-spacing:.04em" oninput="updateKeyStatus(this.value);isDirty=true;">
       <button type="button" class="btn btn-outline" style="padding:0 14px;font-size:.72rem;flex-shrink:0" onclick="toggleKeyVisibility()">&#128065; Show</button>
      </div>
+     <button type="button" class="btn btn-gold" style="margin-top:10px;width:100%;font-size:.75rem" onclick="testW3FKey()">&#9993; Send Test Email to info@aonehairsalon.com</button>
+     <div id="w3fTestResult" style="display:none;margin-top:10px;padding:12px 14px;border-radius:3px;font-size:.76rem;line-height:1.7"></div>
     </div>
    </div>
    <div style="margin-top:16px">
@@ -1198,6 +1200,54 @@ function toggleKeyVisibility() {
   if (!inp) return;
   if (inp.type === "password") { inp.type = "text"; if(btn) btn.innerHTML = "&#128065; Hide"; }
   else { inp.type = "password"; if(btn) btn.innerHTML = "&#128065; Show"; }
+}
+async function testW3FKey() {
+  var key = (document.getElementById("cp-w3f-key").value || "").trim();
+  var res = document.getElementById("w3fTestResult");
+  if (!key) {
+    res.style.display = "block";
+    res.style.background = "rgba(255,80,80,.1)";
+    res.style.border = "1px solid rgba(255,80,80,.3)";
+    res.style.color = "#ff8080";
+    res.textContent = "No key entered. Please paste your Web3Forms access key first.";
+    return;
+  }
+  res.style.display = "block";
+  res.style.background = "rgba(201,168,76,.06)";
+  res.style.border = "1px solid rgba(201,168,76,.2)";
+  res.style.color = "var(--gold)";
+  res.textContent = "Sending test email...";
+  try {
+    var r = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        access_key: key,
+        subject: "Test — A One Hair Salon Contact Form",
+        name: "Admin Test",
+        email: "admin@aonehairsalon.com",
+        message: "This is a test submission from the A One Hair Salon admin panel to verify the contact form email delivery.",
+        botcheck: ""
+      })
+    });
+    var data = await r.json();
+    if (data.success) {
+      res.style.background = "rgba(107,203,119,.1)";
+      res.style.border = "1px solid rgba(107,203,119,.3)";
+      res.style.color = "#6bcb77";
+      res.innerHTML = "<strong>&#10003; Web3Forms accepted the submission.</strong><br>API message: \"" + (data.message || "Email sent successfully!") + "\"<br><br><strong>If you are not receiving emails, please check:</strong><br>1. Inbox of the email you used to generate this key<br>2. Spam / Junk folder of that inbox<br>3. Click the activation/confirmation link Web3Forms sent you on first use";
+    } else {
+      res.style.background = "rgba(255,80,80,.1)";
+      res.style.border = "1px solid rgba(255,80,80,.3)";
+      res.style.color = "#ff8080";
+      res.innerHTML = "<strong>&#10007; Web3Forms rejected the submission.</strong><br>Error: \"" + (data.message || "Unknown error") + "\"<br><br>Your key may be invalid or expired. Go to web3forms.com and generate a new key using info@aonehairsalon.com.";
+    }
+  } catch(e) {
+    res.style.background = "rgba(255,80,80,.1)";
+    res.style.border = "1px solid rgba(255,80,80,.3)";
+    res.style.color = "#ff8080";
+    res.textContent = "Network error: " + e.message;
+  }
 }
 /* ── Contact Page renderer ── */
 function renderContactPage() {
