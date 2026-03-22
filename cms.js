@@ -378,7 +378,7 @@
         '<h3>' + h.title + '</h3>' +
         '<div class="day-range">' + h.day_range + '</div>' +
         '<div class="hours-time">' + h.open_time +
-          '<br><span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">AM</span>' +
+          ' <span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">AM</span>' +
           ' \u2014 ' + h.close_time +
           ' <span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">PM</span>' +
         '</div>' +
