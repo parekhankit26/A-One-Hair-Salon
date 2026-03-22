@@ -344,7 +344,51 @@
     if (typeof window.initGalleryPage === 'function') window.initGalleryPage();
   }
 
-  /* ── 15. Expose content globally ───────────────────────── */
+  /* ══════════════════════════════════════════════════════════
+     15. CONTACT PAGE — hero, hours cards, map, social links, form
+  ══════════════════════════════════════════════════════════ */
+  var CP = C.contact_page || {};
+  var cHero = document.getElementById('cmsContactHeroBg');
+  if (cHero && CP.hero_image) cHero.src = CP.hero_image;
+  function _setText(id, val) { var el=document.getElementById(id); if(el&&val) el.textContent=val; }
+  _setText('cmsContactLocSub',   CP.location_sub);
+  _setText('cmsContactPhoneSub', CP.phone_sub);
+  _setText('cmsContactEmailSub', CP.email_sub);
+  _setText('cmsContactHoursToday', CP.hours_today);
+  _setText('cmsContactHoursSub',   CP.hours_today_sub);
+  _setText('cmsContactFormTitle',  CP.form_title);
+  _setText('cmsContactFormSub',    CP.form_subtitle);
+  _setText('cmsMapAddrName', CP.map_address_name);
+  _setText('cmsMapAddrLine', CP.map_address_line);
+  function _setHref(id, href) { var el=document.getElementById(id); if(el&&href&&href!=='#') el.href=href; }
+  _setHref('cmsContactFbLink', CP.social_facebook_url);
+  _setHref('cmsContactIgLink', CP.social_instagram_url);
+  _setHref('cmsContactLiLink', CP.social_linkedin_url);
+  var mapIframe = document.getElementById('cmsMapEmbed');
+  if (mapIframe && CP.map_embed_url) mapIframe.src = CP.map_embed_url;
+  var mapLink = document.getElementById('cmsMapLink');
+  if (mapLink && CP.map_link) mapLink.href = CP.map_link;
+  var hoursSection = document.getElementById('cmsHoursSection');
+  if (hoursSection && Array.isArray(CP.hours) && CP.hours.length > 0) {
+    var delays = ['', 'style="transition-delay:.12s"', 'style="transition-delay:.24s"'];
+    hoursSection.innerHTML = CP.hours.map(function(h, i) {
+      var badgeStyle = h.badge_type === 'gold'
+        ? 'style="border-color:rgba(201,168,76,.4);color:var(--gold)"' : '';
+      return '<div class="hours-card reveal visible" ' + (delays[i]||'') + '>' +
+        '<h3>' + h.title + '</h3>' +
+        '<div class="day-range">' + h.day_range + '</div>' +
+        '<div class="hours-time">' + h.open_time +
+          '<br><span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">AM</span>' +
+          ' \u2014 ' + h.close_time +
+          ' <span style="font-size:1rem;color:var(--muted);font-family:var(--sans)">PM</span>' +
+        '</div>' +
+        '<div class="hours-note">' + h.note + '</div>' +
+        '<div class="hours-open" ' + badgeStyle + '>' + h.badge + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  /* ── 16. Expose content globally ───────────────────────── */
   window.AONE_CONTENT = C;
 
 })();
