@@ -572,7 +572,31 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
      <div class="field"><label>Form Title</label><input type="text" id="cp-form-title" placeholder="Send a Message" oninput="isDirty=true"></div>
      <div class="field"><label>Form Subtitle</label><input type="text" id="cp-form-sub" placeholder="Fill in the form and we'll get back to you shortly." oninput="isDirty=true"></div>
     </div>
-    <button class="btn btn-gold" onclick="saveDraft()" style="margin-top:16px">&#10003; Save Draft</button>
+   </div>
+
+   <!-- Web3Forms API Key -->
+   <div class="panel-section" style="border:1px solid rgba(201,168,76,.25);background:rgba(201,168,76,.04);border-radius:6px;padding:24px">
+    <div class="panel-section-title" style="margin-bottom:6px">&#9993; Email Delivery — Web3Forms Key</div>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.8">
+     Paste your <strong style="color:var(--gold)">Web3Forms access key</strong> here to activate form email delivery to <span style="color:var(--white)">info@aonehairsalon.com</span>.<br>
+     Don't have a key yet? <strong style="color:var(--gold)">3 easy steps:</strong><br>
+     1. Go to <a href="https://web3forms.com" target="_blank" style="color:var(--gold);border-bottom:1px solid rgba(201,168,76,.4)">web3forms.com</a><br>
+     2. Enter <span style="color:var(--white)">info@aonehairsalon.com</span> &rarr; click <em>Create Access Key</em><br>
+     3. Check your inbox &rarr; copy the key &rarr; paste below &rarr; Save &amp; Deploy
+    </p>
+    <div class="field" style="margin-bottom:0">
+     <label style="display:flex;align-items:center;justify-content:space-between">
+      Web3Forms Access Key
+      <span id="cpKeyStatus" style="font-size:.62rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:rgba(255,80,80,.12);color:#ff8080">Not configured</span>
+     </label>
+     <div style="display:flex;gap:8px;margin-top:8px">
+      <input type="password" id="cp-w3f-key" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" style="flex:1;font-family:monospace;font-size:.82rem;letter-spacing:.04em" oninput="updateKeyStatus(this.value);isDirty=true;">
+      <button type="button" class="btn btn-outline" style="padding:0 14px;font-size:.72rem;flex-shrink:0" onclick="toggleKeyVisibility()">&#128065; Show</button>
+     </div>
+    </div>
+   </div>
+   <div style="margin-top:16px">
+    <button class="btn btn-gold" onclick="saveDraft()" style="width:auto;padding:12px 28px">&#10003; Save Draft</button>
    </div>
 
   </div>
@@ -1153,6 +1177,28 @@ function updateCarouselItem(i) {
 }
 
 /* ── Gallery Page renderer ── */
+/* ── Contact Page helpers ── */
+function updateKeyStatus(val) {
+  var el = document.getElementById("cpKeyStatus");
+  if (!el) return;
+  var k = (val||"").trim();
+  if (k && k.length > 10) {
+    el.textContent = "\u2713 Key saved";
+    el.style.background = "rgba(107,203,119,.12)";
+    el.style.color = "#6bcb77";
+  } else {
+    el.textContent = "Not configured";
+    el.style.background = "rgba(255,80,80,.12)";
+    el.style.color = "#ff8080";
+  }
+}
+function toggleKeyVisibility() {
+  var inp = document.getElementById("cp-w3f-key");
+  var btn = inp ? inp.nextElementSibling : null;
+  if (!inp) return;
+  if (inp.type === "password") { inp.type = "text"; if(btn) btn.innerHTML = "&#128065; Hide"; }
+  else { inp.type = "password"; if(btn) btn.innerHTML = "&#128065; Show"; }
+}
 /* ── Contact Page renderer ── */
 function renderContactPage() {
   var CP = C.contact_page || {};
@@ -1183,6 +1229,9 @@ function renderContactPage() {
   // Form
   sv('cp-form-title', CP.form_title);
   sv('cp-form-sub',   CP.form_subtitle);
+  // Web3Forms key
+  var kEl = document.getElementById('cp-w3f-key');
+  if (kEl && CP.web3forms_key) { kEl.value = CP.web3forms_key; updateKeyStatus(CP.web3forms_key); }
   // Hours cards
   renderCpHours();
 }
@@ -1231,6 +1280,7 @@ function collectContactPage() {
   var mlk = gv('cp-map-link'); if(mlk) CP.map_link = mlk;
   var ft = gv('cp-form-title'); if(ft) CP.form_title = ft;
   var fs = gv('cp-form-sub'); if(fs) CP.form_subtitle = fs;
+  var wk = gv('cp-w3f-key'); CP.web3forms_key = wk;
   // Section label/title/intro -> pages.contact
   if (!C.pages) C.pages = {};
   if (!C.pages.contact) C.pages.contact = {};
