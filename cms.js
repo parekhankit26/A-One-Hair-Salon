@@ -311,7 +311,40 @@
     }).join('');
   }
 
-  /* ── 14. Expose content globally ───────────────────────── */
+  /* ══════════════════════════════════════════════════════════
+     14. GALLERY PAGE — full grid + hero image
+  ══════════════════════════════════════════════════════════ */
+  const GP = C.gallery_page || {};
+  // Hero background image
+  const galHeroBg = document.getElementById('cmsGalleryHeroBg');
+  if (galHeroBg && GP.hero_image) galHeroBg.src = GP.hero_image;
+  // Gallery grid
+  const galPageGrid = document.getElementById('galleryGrid');
+  if (galPageGrid && Array.isArray(GP.items) && GP.items.length > 0) {
+    const catLabels = {
+      interior:'Salon Interior', color:'Color', hair:'Hair Styling',
+      grooming:"Men's Grooming", bridal:'Bridal', nails:'Nails', skin:'Skin'
+    };
+    galPageGrid.innerHTML = GP.items.map(function(item) {
+      var sizeClass = item.size ? ' ' + item.size : '';
+      var catLabel = catLabels[item.category] || item.category || '';
+      return '<div class="gal-item' + sizeClass + '" data-cat="' + (item.category||'') + '">' +
+        '<img src="' + (item.image || 'images/aone-hero.jpg') + '" alt="' + item.title + '">' +
+        '<div class="gal-overlay">' +
+          '<div class="gal-cat">' + catLabel + '</div>' +
+          '<div class="gal-title">' + item.title + '</div>' +
+        '</div>' +
+        '<button class="gal-expand">&#10238;</button>' +
+      '</div>';
+    }).join('');
+    // Update photo count
+    var countEl = document.getElementById('countNum');
+    if (countEl) countEl.textContent = GP.items.length;
+    // Re-init gallery interactions (filter, lightbox via delegation already set up)
+    if (typeof window.initGalleryPage === 'function') window.initGalleryPage();
+  }
+
+  /* ── 15. Expose content globally ───────────────────────── */
   window.AONE_CONTENT = C;
 
 })();
