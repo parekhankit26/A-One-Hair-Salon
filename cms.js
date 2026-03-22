@@ -348,6 +348,8 @@
      15. CONTACT PAGE — hero, hours cards, map, social links, form
   ══════════════════════════════════════════════════════════ */
   var CP = C.contact_page || {};
+  // Inject Web3Forms key so the contact form can send emails
+  if (CP.web3forms_key) window.WEB3FORMS_KEY = CP.web3forms_key;
   var cHero = document.getElementById('cmsContactHeroBg');
   if (cHero && CP.hero_image) cHero.src = CP.hero_image;
   function _setText(id, val) { var el=document.getElementById(id); if(el&&val) el.textContent=val; }
