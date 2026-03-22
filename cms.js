@@ -390,7 +390,42 @@
     }).join('');
   }
 
-  /* ── 16. Expose content globally ───────────────────────── */
+  /* ── 16. BOOKING PAGE — services, stylists, salon WhatsApp ─ */
+  var BP = C.booking_page || {};
+
+  /* Inject salon WhatsApp number for booking confirmations */
+  if (BP.salon_whatsapp) {
+    window.SALON_WA = BP.salon_whatsapp;
+    if (typeof SALON_WA !== 'undefined') { try { SALON_WA = BP.salon_whatsapp; } catch(e){} }
+  }
+
+  /* Inject service cards */
+  var bkSvcGrid = document.getElementById('cmsBookingServices');
+  if (bkSvcGrid && Array.isArray(BP.services) && BP.services.length > 0) {
+    bkSvcGrid.innerHTML = BP.services.map(function(s) {
+      return '<div class="svc-pick-card" data-svc="' + s.name + '" data-price="' + s.price + '">' +
+        '<div class="spk-icon">' + (s.icon || '\u2726') + '</div>' +
+        '<div class="spk-name">' + s.name + '</div>' +
+        '<div class="spk-price">' + s.price + '</div>' +
+        '<div class="spk-check">\u2713</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  /* Inject stylist chips */
+  var bkStyRow = document.getElementById('cmsStylists');
+  if (bkStyRow && Array.isArray(BP.stylists) && BP.stylists.length > 0) {
+    bkStyRow.innerHTML = BP.stylists.map(function(s) {
+      return '<div class="sty-chip" data-stylist="' + s.name + '">' +
+        '<div class="sty-chip-av">' + (s.initials || s.name.charAt(0)) + '</div>' +
+        '<div>' +
+        '<div class="sty-chip-name">' + s.name + '</div>' +
+        '<div class="sty-chip-spec">' + (s.specialty || '') + '</div>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  /* ── 17. Expose content globally ───────────────────────── */
   window.AONE_CONTENT = C;
 
 })();
