@@ -276,7 +276,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
 <!-- PAGE HERO -->
 <div class="page-hero">
  <div class="page-hero-bg">
-  <img src="images/aone-hero.jpg" alt="Salon Interior">
+  <img src="images/aone-hero.jpg" alt="Salon Interior" id="cmsContactHeroBg">
  </div>
  <div class="page-hero-content">
   <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Contact</div>
@@ -302,7 +302,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     <div class="cc-body">
      <div class="cc-label">Location</div>
      <div class="cc-value" data-cms="site.address_full">Shop 12, 12 King Street, London</div>
-     <div class="cc-sub">London, United Kingdom</div>
+     <div class="cc-sub" id="cmsContactLocSub">London, United Kingdom</div>
     </div>
    </div>
    <div class="contact-card">
@@ -310,7 +310,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     <div class="cc-body">
      <div class="cc-label">Phone</div>
      <div class="cc-value" data-cms="site.phone">+91 98765 43210</div>
-     <div class="cc-sub">Call or WhatsApp for appointments</div>
+     <div class="cc-sub" id="cmsContactPhoneSub">Call or WhatsApp for appointments</div>
     </div>
    </div>
    <div class="contact-card">
@@ -318,24 +318,24 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     <div class="cc-body">
      <div class="cc-label">Email</div>
      <div class="cc-value" data-cms="site.email">hello@aonehairsalon.com</div>
-     <div class="cc-sub">We reply within 24 hours</div>
+     <div class="cc-sub" id="cmsContactEmailSub">We reply within 24 hours</div>
     </div>
    </div>
    <div class="contact-card">
     <div class="cc-icon">🕐</div>
     <div class="cc-body">
      <div class="cc-label">Hours Today</div>
-     <div class="cc-value">10:00 AM – 8:00 PM</div>
-     <div class="cc-sub">Walk-ins welcome · Appointments preferred</div>
+     <div class="cc-value" id="cmsContactHoursToday">10:00 AM – 8:00 PM</div>
+     <div class="cc-sub" id="cmsContactHoursSub">Walk-ins welcome · Appointments preferred</div>
     </div>
    </div>
   </div>
   <div class="social-links reveal-l" style="transition-delay:.2s">
    <h4>Follow Us</h4>
    <div class="socials-row">
-    <a href="#" class="social-pill">f Facebook</a>
-    <a href="#" class="social-pill">✦ Instagram</a>
-    <a href="#" class="social-pill">in LinkedIn</a>
+    <a href="#" class="social-pill" id="cmsContactFbLink">f Facebook</a>
+    <a href="#" class="social-pill" id="cmsContactIgLink">✦ Instagram</a>
+    <a href="#" class="social-pill" id="cmsContactLiLink">in LinkedIn</a>
    </div>
   </div>
  </div>
@@ -344,8 +344,8 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
  <div class="contact-form-col reveal-r">
   <div class="contact-form-wrap">
    <div id="contactFormInner">
-    <h3 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--white);margin-bottom:6px">Send a Message</h3>
-    <p style="font-size:.78rem;color:var(--muted);margin-bottom:32px">Fill in the form and we'll get back to you shortly.</p>
+    <h3 id="cmsContactFormTitle" style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--white);margin-bottom:6px">Send a Message</h3>
+    <p id="cmsContactFormSub" style="font-size:.78rem;color:var(--muted);margin-bottom:32px">Fill in the form and we'll get back to you shortly.</p>
     <div class="form-row">
      <div class="form-group">
       <label class="form-label">First Name *</label>
@@ -395,7 +395,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
 <!-- MAP SECTION -->
 <div class="map-section">
  <div class="map-wrapper">
-  <iframe
+  <iframe id="cmsMapEmbed"
    src="https://maps.google.com/maps?q=King+Street,+London,+United+Kingdom&t=&z=15&ie=UTF8&iwloc=&output=embed"
    width="100%" height="100%"
    style="border:0;display:block;"
@@ -405,16 +405,16 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
    title="A One Hair Salon Location">
   </iframe>
   <div class="map-address">
-   <strong>A One Hair Salon</strong>
-   <span>Shop 12, 12 King Street, London</span>
+   <strong id="cmsMapAddrName">A One Hair Salon</strong>
+   <span id="cmsMapAddrLine">Shop 12, 12 King Street, London</span>
    <br>
-   <a href="https://maps.google.com/maps?q=King+Street,+London,+United+Kingdom" target="_blank">Open in Google Maps →</a>
+   <a id="cmsMapLink" href="https://maps.google.com/maps?q=King+Street,+London,+United+Kingdom" target="_blank">Open in Google Maps →</a>
   </div>
  </div>
 </div>
 
 <!-- HOURS SECTION -->
-<section class="hours-section">
+<section class="hours-section" id="cmsHoursSection">
  <div class="hours-card reveal">
   <h3>Weekdays</h3>
   <div class="day-range">Monday — Friday</div>
