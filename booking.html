@@ -402,52 +402,52 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     <p>Select the treatment you'd like to book</p>
    </div>
    <div class="svc-pick-grid" id="cmsBookingServices">
-    <div class="svc-pick-card" data-svc="Women's Haircut" data-price="₹800">
+    <div class="svc-pick-card" data-svc="Women's Haircut" data-price="from £35">
      <div class="spk-icon">✂</div>
      <div class="spk-name">Women's Haircut</div>
-     <div class="spk-price">from ₹800</div>
+     <div class="spk-price">from £35</div>
      <div class="spk-check">✓</div>
     </div>
-    <div class="svc-pick-card" data-svc="Men's Haircut" data-price="₹350">
+    <div class="svc-pick-card" data-svc="Men's Haircut" data-price="from £25">
      <div class="spk-icon">✦</div>
      <div class="spk-name">Men's Haircut</div>
-     <div class="spk-price">from ₹350</div>
+     <div class="spk-price">from £25</div>
      <div class="spk-check">✓</div>
     </div>
-    <div class="svc-pick-card" data-svc="Balayage & Color" data-price="₹4,000">
+    <div class="svc-pick-card" data-svc="Balayage &amp; Color" data-price="from £85">
      <div class="spk-icon">◉</div>
      <div class="spk-name">Balayage &amp; Color</div>
-     <div class="spk-price">from ₹4,000</div>
+     <div class="spk-price">from £85</div>
      <div class="spk-check">✓</div>
     </div>
-    <div class="svc-pick-card" data-svc="Bridal Styling" data-price="₹5,000">
+    <div class="svc-pick-card" data-svc="Bridal Styling" data-price="from £150">
      <div class="spk-icon">♛</div>
      <div class="spk-name">Bridal Styling</div>
-     <div class="spk-price">from ₹5,000</div>
+     <div class="spk-price">from £150</div>
      <div class="spk-check">✓</div>
     </div>
-    <div class="svc-pick-card" data-svc="Hair Spa" data-price="₹1,500">
+    <div class="svc-pick-card" data-svc="Hair Spa" data-price="from £45">
      <div class="spk-icon">◈</div>
      <div class="spk-name">Hair Spa</div>
-     <div class="spk-price">from ₹1,500</div>
+     <div class="spk-price">from £45</div>
      <div class="spk-check">✓</div>
     </div>
-    <div class="svc-pick-card" data-svc="Keratin Treatment" data-price="₹5,000">
+    <div class="svc-pick-card" data-svc="Keratin Treatment" data-price="from £120">
      <div class="spk-icon">✿</div>
      <div class="spk-name">Keratin Treatment</div>
-     <div class="spk-price">from ₹5,000</div>
+     <div class="spk-price">from £120</div>
      <div class="spk-check">✓</div>
     </div>
-    <div class="svc-pick-card" data-svc="Luxury Facial" data-price="₹2,000">
+    <div class="svc-pick-card" data-svc="Luxury Facial" data-price="from £55">
      <div class="spk-icon">❋</div>
      <div class="spk-name">Luxury Facial</div>
-     <div class="spk-price">from ₹2,000</div>
+     <div class="spk-price">from £55</div>
      <div class="spk-check">✓</div>
     </div>
-    <div class="svc-pick-card" data-svc="Nail Art" data-price="₹1,200">
+    <div class="svc-pick-card" data-svc="Nail Art" data-price="from £30">
      <div class="spk-icon">◆</div>
      <div class="spk-name">Nail Art</div>
-     <div class="spk-price">from ₹1,200</div>
+     <div class="spk-price">from £30</div>
      <div class="spk-check">✓</div>
     </div>
    </div>
@@ -620,7 +620,7 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
     <div class="cd-row"><span class="cd-label">Stylist</span><span class="cd-val" id="cd-sty">—</span></div>
     <div class="cd-row"><span class="cd-label">Date &amp; Time</span><span class="cd-val" id="cd-dt">—</span></div>
     <div class="cd-row"><span class="cd-label">Confirmation sent to</span><span class="cd-val" id="cd-email">—</span></div>
-    <div class="cd-row"><span class="cd-label">WhatsApp confirmation to</span><span class="cd-val" id="cd-sms">—</span></div>
+    <div class="cd-row"><span class="cd-label">WhatsApp confirmation</span><span class="cd-val" id="cd-sms">—</span></div>
    </div>
    <div class="confirm-note" id="emailStatusNote">
     See you soon at A One Hair Salon!
@@ -646,9 +646,9 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
 /* Salon WhatsApp — injected by cms.js from content.json (booking_page.salon_whatsapp) */
 var SALON_WA = '';
 
-/* Booking state */
-const B = { svc:'', price:'', stylist:'', date:'', time:'', fname:'', lname:'', email:'', mobile:'', notes:'' };
-let currentStep = 1;
+/* Booking state — var so window.B works (cms.js reads it) */
+var B = { svc:'', price:'', stylist:'', date:'', time:'', fname:'', lname:'', email:'', mobile:'', notes:'' };
+var currentStep = 1;
 
 /* ── Cursor ── */
 const ring = document.getElementById('cursorRing');
@@ -810,6 +810,7 @@ document.getElementById('cmsStylists').addEventListener('click', function(e){
 function checkStep2(){
  document.getElementById('next2').disabled = !(B.date && B.time && B.stylist);
 }
+window.checkStep2 = checkStep2;
 
 /* ── Step 3: Populate mini summary ── */
 function populateMiniSummary(){
@@ -883,10 +884,29 @@ async function confirmBooking(){
 
  /* --- Send notification to salon via Web3Forms --- */
  var notesVal = (document.getElementById('notes') ? document.getElementById('notes').value.trim() : '') || 'None';
+ /* Build customer email confirmation template (for salon to forward) */
+ var custEmailSubject = encodeURIComponent('Booking Confirmation — A One Hair Salon (' + bid + ')');
+ var custEmailBody = encodeURIComponent(
+  'Dear ' + B.fname + ' ' + B.lname + ',\n\n' +
+  'Thank you for booking with A One Hair Salon! Your appointment is CONFIRMED.\n\n' +
+  'BOOKING DETAILS\n' +
+  '===============\n' +
+  'Booking ID  : ' + bid + '\n' +
+  'Service     : ' + B.svc + '\n' +
+  'Stylist     : ' + B.stylist + '\n' +
+  'Date & Time : ' + B.date + ' at ' + B.time + '\n' +
+  'Est. Price  : ' + B.price + '\n\n' +
+  'Please arrive 10 minutes before your appointment time.\n' +
+  'Cancellations must be made at least 24 hours in advance.\n\n' +
+  'We look forward to seeing you!\n\n' +
+  'A One Hair Salon\n' +
+  'info@aonehairsalon.com'
+ );
+ var mailtoCustomer = 'mailto:' + B.email + '?subject=' + custEmailSubject + '&body=' + custEmailBody;
+
  var salonMsg =
-  'NEW BOOKING REQUEST\n' +
-  '==================\n\n' +
-  'Booking ID : ' + bid + '\n' +
+  'NEW BOOKING REQUEST — ' + bid + '\n' +
+  '==========================================\n\n' +
   'Customer   : ' + B.fname + ' ' + B.lname + '\n' +
   'Service    : ' + B.svc + '\n' +
   'Stylist    : ' + B.stylist + '\n' +
@@ -896,12 +916,22 @@ async function confirmBooking(){
   'Mobile     : ' + B.mobile + '\n' +
   'Email      : ' + B.email + '\n' +
   'Notes      : ' + notesVal + '\n\n' +
-  '--- QUICK ACTIONS (tap on your phone) ---\n\n' +
-  'CONFIRM via WhatsApp:\n' + waConfirm + '\n\n' +
-  'DECLINE via WhatsApp:\n' + waDecline + '\n\n' +
-  'RESCHEDULE via WhatsApp:\n' + waReschedule + '\n\n' +
-  '--- Or reply to this email to contact the customer directly ---\n' +
-  '(Reply-To is set to the customer email above)';
+  '==========================================\n' +
+  'STEP 1 — REPLY TO CUSTOMER VIA WHATSAPP\n' +
+  '==========================================\n\n' +
+  'CONFIRM (tap to open WhatsApp with message ready):\n' + waConfirm + '\n\n' +
+  'DECLINE (tap to open WhatsApp with message ready):\n' + waDecline + '\n\n' +
+  'RESCHEDULE (tap to open WhatsApp with message ready):\n' + waReschedule + '\n\n' +
+  '==========================================\n' +
+  'STEP 2 — SEND EMAIL CONFIRMATION TO CUSTOMER\n' +
+  '==========================================\n\n' +
+  'Click the link below to open a pre-written confirmation email to the customer:\n\n' +
+  mailtoCustomer + '\n\n' +
+  '(Tip: On iPhone/Android, tap the link above to open Mail with everything pre-filled)\n\n' +
+  '==========================================\n' +
+  'STEP 3 — OR REPLY TO THIS EMAIL\n' +
+  '==========================================\n' +
+  'Hit Reply on this email — it goes directly to ' + B.email;
 
  var w3fKey = window.WEB3FORMS_KEY || '3c4dfd8f-dbb8-4d05-873e-bfb44d23d3dd';
  try {
@@ -950,16 +980,23 @@ async function confirmBooking(){
  if(waBtn){
   if(custWaLink){
    waBtn.href = custWaLink;
-   waBtn.textContent = 'Message Us on WhatsApp';
+   waBtn.innerHTML = '&#128172; Message Us on WhatsApp';
    waBtn.style.display = 'inline-block';
   } else {
    waBtn.style.display = 'none';
   }
  }
+ /* Show cd-sms as phone number */
+ var cdSms = document.getElementById('cd-sms');
+ if(cdSms) cdSms.textContent = B.mobile;
 
  var emailNote = document.getElementById('emailStatusNote');
  if(emailNote){
-  emailNote.textContent = 'Booking request received! We will confirm your appointment via WhatsApp within 2 hours. You will also receive a confirmation to ' + B.email + '.';
+  emailNote.innerHTML =
+   '✦ Your booking request has been received!<br>' +
+   '✦ We will confirm via <strong>WhatsApp</strong> to <strong>' + B.mobile + '</strong> within 2 hours.<br>' +
+   '✦ A confirmation email will be sent to <strong>' + B.email + '</strong>.<br>' +
+   '✦ Please arrive 10 minutes before your appointment time.';
  }
 
  sv.scrollIntoView({behavior:'smooth',block:'start'});
