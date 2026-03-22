@@ -116,6 +116,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
    <div class="nav-item" data-panel="footer"><span class="ni-icon">&#9636;</span> Footer &amp; Hours</div>
    <div class="nav-item" data-panel="homepage"><span class="ni-icon">&#9672;</span> Home Page</div>
    <div class="nav-item" data-panel="carousel"><span class="ni-icon">&#9654;</span> Home Carousel</div>
+   <div class="nav-item" data-panel="gallerypage"><span class="ni-icon">&#9724;</span> Gallery Page</div>
    <div class="nav-item" data-panel="pagetitles"><span class="ni-icon">&#9671;</span> Page Titles</div>
    <div class="nav-item" data-panel="servicespage"><span class="ni-icon">&#9998;</span> Services Detail</div>
    <div class="nav-item" data-panel="bookingsettings"><span class="ni-icon">&#128197;</span> Booking Settings</div>
@@ -467,6 +468,31 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
    </div>
   </div>
 
+  <!-- GALLERY PAGE -->
+  <div class="panel" id="panel-gallerypage">
+   <div class="panel-section">
+    <div class="panel-section-title">Gallery Page — Hero Image</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">The full-width banner image shown at the top of the Gallery page. <span style="color:var(--gold)">Recommended: 1400x600px landscape JPG/PNG.</span></p>
+    <div class="field">
+     <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+      <img id="galpg-hero-prev" src="images/aone-hero.jpg" style="width:120px;height:68px;object-fit:cover;border-radius:4px;border:1px solid var(--border);flex-shrink:0" onerror="this.style.opacity=0.3">
+      <div style="flex:1">
+       <input type="text" id="galpg-hero-img" placeholder="images/filename.jpg or https://..." style="font-size:.78rem;margin-bottom:6px" oninput="document.getElementById('galpg-hero-prev').src=this.value;isDirty=true;">
+       <button class="btn btn-outline" style="font-size:.72rem;padding:6px 12px;width:100%" onclick="triggerImageUpload('galpg-hero-file')">&#128193; Upload Hero Image</button>
+       <input type="file" id="galpg-hero-file" accept="image/*" style="display:none" onchange="uploadImageToGitHub(this.files[0],function(p){document.getElementById('galpg-hero-img').value=p;document.getElementById('galpg-hero-prev').src=p;isDirty=true;})">
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="panel-section">
+    <div class="panel-section-title">Gallery Page — Photos</div>
+    <p style="font-size:.75rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Upload and manage all photos in the gallery grid. Set the title, category (used for filtering), and size for each photo. <span style="color:var(--gold)">Recommended: 800x800px square JPG/PNG.</span></p>
+    <div class="item-list" id="galPageList"></div>
+    <button class="btn btn-outline btn-sm" onclick="addGalPageItem()" style="margin-top:4px">+ Add Photo</button>
+    <button class="btn btn-gold" onclick="saveDraft()" style="margin-top:12px;margin-left:8px">&#10003; Save Draft</button>
+   </div>
+  </div>
+
   <!-- HOME CAROUSEL -->
   <div class="panel" id="panel-carousel">
    <div class="panel-section">
@@ -657,7 +683,7 @@ function populateAll() {
  setVal("pt-con-intro",C.pages && C.pages.contact && C.pages.contact.intro);
  setVal("pt-book-title",C.pages && C.pages.booking && C.pages.booking.hero_title);
  setVal("pt-book-sub",C.pages && C.pages.booking && C.pages.booking.hero_sub);
- renderMarquee(); renderServices(); renderTestimonials(); renderGallery(); renderCarousel(); renderPackages(); renderSvcPageCategories(); renderStylists(); updateDashboard();
+ renderMarquee(); renderServices(); renderTestimonials(); renderGallery(); renderCarousel(); renderGalPage(); renderPackages(); renderSvcPageCategories(); renderStylists(); updateDashboard();
  isDirty = false; document.getElementById("statDraft").textContent = "Saved";
 }
 
@@ -731,6 +757,7 @@ function collectAll() {
  C.services_page = C.services_page || {};
  C.services_page.categories = collectSvcCategories();
  collectPackages();
+ collectGalPage();
  C.booking.stylists = collectStylists();
  if (!C.carousel_items) C.carousel_items = [];
  C.carousel_items = (C.carousel_items || []).map(function(item, i) {
@@ -1038,6 +1065,86 @@ function updateCarouselItem(i) {
   };
   isDirty = true;
   document.getElementById("statDraft").textContent = "● Unsaved";
+}
+
+/* ── Gallery Page renderer ── */
+function renderGalPage() {
+  var list = document.getElementById("galPageList");
+  if (!list) return;
+  var GP = C.gallery_page || {};
+  // populate hero image
+  var hiEl = document.getElementById("galpg-hero-img");
+  var hpEl = document.getElementById("galpg-hero-prev");
+  if (hiEl && GP.hero_image) { hiEl.value = GP.hero_image; }
+  if (hpEl && GP.hero_image) { hpEl.src = GP.hero_image; }
+  var items = GP.items || [];
+  var cats = [{v:"interior",l:"Salon Interior"},{v:"color",l:"Color"},{v:"hair",l:"Hair Styling"},{v:"grooming",l:"Men's Grooming"},{v:"bridal",l:"Bridal"},{v:"nails",l:"Nails"},{v:"skin",l:"Skin"}];
+  var catOpts = cats.map(function(c){return "<option value=\""+c.v+"\">"+c.l+"</option>";}).join("");
+  var sizeOpts = "<option value=\"\">Normal</option><option value=\"tall\">Tall (2x height)</option><option value=\"wide\">Wide (2x width)</option>";
+  list.innerHTML = items.map(function(item, i) {
+    var imgSrc = item.image || "images/aone-hero.jpg";
+    var catSel = cats.map(function(c){ return "<option value=\""+c.v+"\"" + (item.category===c.v?" selected":"") + ">"+c.l+"</option>"; }).join("");
+    var sizeSel = [
+      "<option value=\"\"" + (!item.size?" selected":"") + ">Normal</option>",
+      "<option value=\"tall\"" + (item.size==="tall"?" selected":"") + ">Tall (2x height)</option>",
+      "<option value=\"wide\"" + (item.size==="wide"?" selected":"") + ">Wide (2x width)</option>"
+    ].join("");
+    return "<div class=\"item-row\">" +
+    "<div class=\"item-row-header\"><div style=\"display:flex;align-items:center;gap:10px\">" +
+    "<div class=\"item-icon-preview\" style=\"padding:0;overflow:hidden\">" +
+    "<img src=\"" + imgSrc + "\" style=\"width:100%;height:100%;object-fit:cover\" onerror=\"this.style.opacity=0.3\">" +
+    "</div><span class=\"item-row-label\">Photo " + (i+1) + ": " + item.title + "</span></div>" +
+    "<div class=\"item-row-actions\"><button class=\"btn btn-red btn-sm\" onclick=\"removeGalPageItem(" + i + ")\">Remove</button></div></div>" +
+    "<div class=\"form-grid col2\" style=\"margin-bottom:10px\">" +
+    "<div class=\"field\"><label>Photo Title</label><input type=\"text\" id=\"gp-title-" + i + "\" value=\"" + item.title.replace(/\"/g,"&quot;") + "\" oninput=\"isDirty=true\"></div>" +
+    "<div class=\"field\"><label>Category <span style=\"font-size:.62rem;color:var(--muted)\">— filter tab</span></label>" +
+    "<select id=\"gp-cat-" + i + "\" onchange=\"isDirty=true\">" + catSel + "</select></div>" +
+    "<div class=\"field\"><label>Size</label><select id=\"gp-size-" + i + "\" onchange=\"isDirty=true\">" + sizeSel + "</select></div>" +
+    "</div>" +
+    "<div class=\"field\"><label>Photo <span style=\"font-size:.62rem;color:var(--gold)\">— Recommended: 800x800px JPG/PNG</span></label>" +
+    "<div style=\"display:flex;align-items:center;gap:10px;margin-top:6px\">" +
+    "<img id=\"gp-prev-" + i + "\" src=\"" + imgSrc + "\" style=\"width:80px;height:80px;object-fit:cover;border-radius:4px;border:1px solid var(--border)\" onerror=\"this.style.opacity=0.3\">" +
+    "<div style=\"flex:1\">" +
+    "<input type=\"text\" id=\"gp-img-" + i + "\" value=\"" + imgSrc.replace(/\"/g,"&quot;") + "\" placeholder=\"images/filename.jpg or https://...\" style=\"font-size:.78rem;margin-bottom:6px\" oninput=\"isDirty=true;document.getElementById('gp-prev-" + i + "').src=this.value\">" +
+    "<button class=\"btn btn-outline\" style=\"font-size:.72rem;padding:6px 12px;width:100%\" onclick=\"triggerImageUpload('gp-file-" + i + "')\">&#128193; Upload from Desktop</button>" +
+    "<input type=\"file\" id=\"gp-file-" + i + "\" accept=\"image/*\" style=\"display:none\" onchange=\"uploadImageToGitHub(this.files[0],function(p){document.getElementById('gp-img-" + i + "').value=p;document.getElementById('gp-prev-" + i + "').src=p;isDirty=true;})\">" +
+    "</div></div></div></div>";
+  }).join("");
+}
+
+function collectGalPage() {
+  if (!C.gallery_page) C.gallery_page = {};
+  var hiEl = document.getElementById("galpg-hero-img");
+  if (hiEl && hiEl.value) C.gallery_page.hero_image = hiEl.value;
+  var items = C.gallery_page.items || [];
+  C.gallery_page.items = items.map(function(item, i) {
+    var tEl = document.getElementById("gp-title-" + i);
+    var cEl = document.getElementById("gp-cat-" + i);
+    var sEl = document.getElementById("gp-size-" + i);
+    var iEl = document.getElementById("gp-img-" + i);
+    return {
+      image:    (iEl && iEl.value) ? iEl.value : item.image || "images/aone-hero.jpg",
+      title:    (tEl && tEl.value) ? tEl.value : item.title || "Photo",
+      category: (cEl && cEl.value) ? cEl.value : item.category || "interior",
+      size:     (sEl) ? sEl.value : item.size || ""
+    };
+  });
+}
+
+function addGalPageItem() {
+  if (!C.gallery_page) C.gallery_page = {};
+  if (!C.gallery_page.items) C.gallery_page.items = [];
+  collectGalPage();
+  C.gallery_page.items.push({image:"images/aone-hero.jpg",title:"New Photo",category:"interior",size:""});
+  renderGalPage(); isDirty = true;
+  toast("Photo added — upload your image and set the details", "info");
+}
+
+function removeGalPageItem(i) {
+  if (!confirm("Remove this gallery photo?")) return;
+  collectGalPage();
+  C.gallery_page.items.splice(i, 1);
+  renderGalPage(); isDirty = true;
 }
 
 /* ── Packages renderer ── */
