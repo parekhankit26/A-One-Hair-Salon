@@ -564,8 +564,8 @@ async function sendMessage(){
  btn.disabled = true;
  btn.textContent = 'Sending…';
 
- /* If key not set, show friendly error */
- if(WEB3FORMS_KEY === 'YOUR_WEB3FORMS_KEY'){
+ /* If key not set or empty, show friendly error */
+ if(!WEB3FORMS_KEY || WEB3FORMS_KEY === 'YOUR_WEB3FORMS_KEY'){
   setTimeout(function(){
    errBox.textContent = 'Contact form not yet configured. Please set up Web3Forms access key.';
    errBox.style.display = 'block';
