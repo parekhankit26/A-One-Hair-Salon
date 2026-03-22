@@ -460,13 +460,38 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);display:fle
 
   <!-- BOOKING SETTINGS -->
   <div class="panel" id="panel-bookingsettings">
-   <div class="panel-section">
-    <div class="panel-section-title">Booking — Stylist Management</div>
-    <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Manage the stylists clients can choose from in the booking form. Add, edit, or remove stylists as your team changes.</p>
-    <div id="stylistsList"></div>
-    <button class="btn btn-outline" onclick="addStylist()" style="margin-top:12px">+ Add Stylist</button>
-    <button class="btn btn-gold" onclick="saveDraft()" style="margin-top:12px;margin-left:8px">&#10003; Save Draft</button>
+
+   <!-- WhatsApp Number -->
+   <div class="panel-section" style="border:1px solid rgba(37,211,102,.2);background:rgba(37,211,102,.04);padding:20px 24px;margin-bottom:2px">
+    <div class="panel-section-title" style="color:#25d366">&#128241; Salon WhatsApp Number</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:14px;line-height:1.7">Enter your salon WhatsApp Business number in international format — <strong style="color:var(--gold)">digits only, no + or spaces</strong>. Example: for UK 07911 123456 enter <strong style="color:var(--gold)">447911123456</strong>. This is what customers use to message you directly after booking.</p>
+    <div class="field">
+     <label>WhatsApp Number (international, digits only)</label>
+     <input type="text" id="bp-wa-number" placeholder="447911123456" oninput="isDirty=true;" style="font-family:monospace;font-size:.9rem;letter-spacing:.05em">
+     <div style="font-size:.68rem;color:var(--muted);margin-top:6px">UK numbers: 07XXX XXXXXX &#8594; 447XXXXXXXXX &nbsp;|&nbsp; Also used in salon notification emails for WhatsApp action links</div>
+    </div>
    </div>
+
+   <!-- Services -->
+   <div class="panel-section">
+    <div class="panel-section-title">Booking — Services Menu</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">These are the service cards customers can choose from in Step 1 of the booking form. Add or remove services and update prices anytime.</p>
+    <div class="item-list" id="bpServicesList"></div>
+    <button class="btn btn-outline" onclick="addBpService()" style="margin-top:10px">+ Add Service</button>
+   </div>
+
+   <!-- Stylists -->
+   <div class="panel-section">
+    <div class="panel-section-title">Booking — Stylists</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.7">Manage the stylists customers can choose from in Step 2 of the booking form.</p>
+    <div class="item-list" id="bpStylistsList"></div>
+    <button class="btn btn-outline" onclick="addBpStylist()" style="margin-top:10px">+ Add Stylist</button>
+   </div>
+
+   <div style="margin-top:16px">
+    <button class="btn btn-gold" onclick="saveDraft()" style="width:auto;padding:12px 28px">&#10003; Save Draft</button>
+   </div>
+
   </div>
 
   <!-- GALLERY PAGE -->
@@ -793,7 +818,9 @@ function populateAll() {
  setVal("pt-con-intro",C.pages && C.pages.contact && C.pages.contact.intro);
  setVal("pt-book-title",C.pages && C.pages.booking && C.pages.booking.hero_title);
  setVal("pt-book-sub",C.pages && C.pages.booking && C.pages.booking.hero_sub);
- renderMarquee(); renderServices(); renderTestimonials(); renderGallery(); renderCarousel(); renderGalPage(); renderContactPage(); renderPackages(); renderSvcPageCategories(); renderStylists(); updateDashboard();
+ renderMarquee(); renderServices(); renderTestimonials(); renderGallery(); renderCarousel(); renderGalPage(); renderContactPage(); renderPackages(); renderSvcPageCategories(); renderBpServices(); renderBpStylists();
+ var bpWaEl = document.getElementById('bp-wa-number'); if(bpWaEl && C.booking_page) bpWaEl.value = C.booking_page.salon_whatsapp || '';
+ updateDashboard();
  isDirty = false; document.getElementById("statDraft").textContent = "Saved";
 }
 
@@ -870,6 +897,7 @@ function collectAll() {
  collectGalPage();
  collectContactPage();
  C.booking.stylists = collectStylists();
+ collectBookingPage();
  if (!C.carousel_items) C.carousel_items = [];
  C.carousel_items = (C.carousel_items || []).map(function(item, i) {
   var imgEl = document.getElementById("car-img-" + i);
@@ -1739,20 +1767,75 @@ function addSvcCat() { if(!C.services_page) C.services_page={}; if(!C.services_p
 function collectSvcCategories() { return (C.services_page && C.services_page.categories) ? C.services_page.categories : []; }
 
 /* ── Stylists renderer ── */
-function renderStylists() {
-  const wrap = document.getElementById('stylistsList');
-  if (!wrap || !C.booking || !C.booking.stylists) return;
-  wrap.innerHTML = C.booking.stylists.map((st, i) => `
-    <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
-      <input type="text" value="${st.name}" placeholder="Stylist name" style="flex:1" onchange="updateStylist(${i},'name',this.value)">
-      <input type="text" value="${st.specialty}" placeholder="Specialty" style="flex:1" onchange="updateStylist(${i},'specialty',this.value)">
-      <button class="btn btn-outline" style="padding:8px 12px;color:#e88;border-color:#e88;flex-shrink:0" onclick="removeStylist(${i})">✕</button>
-    </div>`).join('');
+/* ── Booking Page — Services ── */
+function renderBpServices() {
+  var wrap = document.getElementById('bpServicesList');
+  if (!wrap) return;
+  var arr = (C.booking_page && C.booking_page.services) ? C.booking_page.services : [];
+  if (arr.length === 0) { wrap.innerHTML = '<p style="font-size:.75rem;color:var(--muted)">No services yet. Click + Add Service.</p>'; return; }
+  wrap.innerHTML = arr.map(function(s, i) {
+    return '<div class="item-card" style="display:grid;grid-template-columns:60px 1fr 1fr 36px;gap:8px;align-items:center;margin-bottom:8px">' +
+      '<input type="text" value="' + (s.icon||'') + '" placeholder="Icon" title="Emoji icon e.g. ✂ ✦" style="text-align:center;font-size:1.2rem" onchange="updateBpService(' + i + ',\'icon\',this.value);isDirty=true;">' +
+      '<input type="text" value="' + (s.name||'') + '" placeholder="Service name" onchange="updateBpService(' + i + ',\'name\',this.value);isDirty=true;">' +
+      '<input type="text" value="' + (s.price||'') + '" placeholder="e.g. from £35" onchange="updateBpService(' + i + ',\'price\',this.value);isDirty=true;">' +
+      '<button class="btn btn-outline" style="padding:8px;color:#e88;border-color:#e88" onclick="removeBpService(' + i + ')">&#10005;</button>' +
+      '</div>';
+  }).join('');
 }
-function updateStylist(i, field, val) { if(C.booking && C.booking.stylists[i]) { C.booking.stylists[i][field]=val; isDirty=true; } }
-function removeStylist(i) { if(confirm('Remove this stylist?')) { C.booking.stylists.splice(i,1); renderStylists(); isDirty=true; } }
-function addStylist() { if(!C.booking) C.booking={}; if(!C.booking.stylists) C.booking.stylists=[]; C.booking.stylists.push({name:'New Stylist',specialty:'All services'}); renderStylists(); isDirty=true; }
-function collectStylists() { return (C.booking && C.booking.stylists) ? C.booking.stylists : []; }
+function updateBpService(i, field, val) {
+  if (!C.booking_page) C.booking_page = {};
+  if (!C.booking_page.services) C.booking_page.services = [];
+  if (C.booking_page.services[i]) { C.booking_page.services[i][field] = val; isDirty = true; }
+}
+function removeBpService(i) {
+  if (!confirm('Remove this service?')) return;
+  if (C.booking_page && C.booking_page.services) { C.booking_page.services.splice(i, 1); renderBpServices(); isDirty = true; }
+}
+function addBpService() {
+  if (!C.booking_page) C.booking_page = {};
+  if (!C.booking_page.services) C.booking_page.services = [];
+  C.booking_page.services.push({ icon: '\u2726', name: 'New Service', price: 'from \u00a330' });
+  renderBpServices(); isDirty = true;
+}
+
+/* ── Booking Page — Stylists ── */
+function renderBpStylists() {
+  var wrap = document.getElementById('bpStylistsList');
+  if (!wrap) return;
+  var arr = (C.booking_page && C.booking_page.stylists) ? C.booking_page.stylists : [];
+  if (arr.length === 0) { wrap.innerHTML = '<p style="font-size:.75rem;color:var(--muted)">No stylists yet. Click + Add Stylist.</p>'; return; }
+  wrap.innerHTML = arr.map(function(s, i) {
+    return '<div class="item-card" style="display:grid;grid-template-columns:70px 1fr 1fr 36px;gap:8px;align-items:center;margin-bottom:8px">' +
+      '<input type="text" value="' + (s.initials||'') + '" placeholder="Initials" title="Short initials shown in avatar" style="text-align:center;font-weight:700" onchange="updateBpStylist(' + i + ',\'initials\',this.value);isDirty=true;">' +
+      '<input type="text" value="' + (s.name||'') + '" placeholder="Full name" onchange="updateBpStylist(' + i + ',\'name\',this.value);isDirty=true;">' +
+      '<input type="text" value="' + (s.specialty||'') + '" placeholder="Specialty e.g. Color Expert" onchange="updateBpStylist(' + i + ',\'specialty\',this.value);isDirty=true;">' +
+      '<button class="btn btn-outline" style="padding:8px;color:#e88;border-color:#e88" onclick="removeBpStylist(' + i + ')">&#10005;</button>' +
+      '</div>';
+  }).join('');
+}
+function updateBpStylist(i, field, val) {
+  if (!C.booking_page) C.booking_page = {};
+  if (!C.booking_page.stylists) C.booking_page.stylists = [];
+  if (C.booking_page.stylists[i]) { C.booking_page.stylists[i][field] = val; isDirty = true; }
+}
+function removeBpStylist(i) {
+  if (!confirm('Remove this stylist?')) return;
+  if (C.booking_page && C.booking_page.stylists) { C.booking_page.stylists.splice(i, 1); renderBpStylists(); isDirty = true; }
+}
+function addBpStylist() {
+  if (!C.booking_page) C.booking_page = {};
+  if (!C.booking_page.stylists) C.booking_page.stylists = [];
+  C.booking_page.stylists.push({ initials: 'N', name: 'New Stylist', specialty: 'All services' });
+  renderBpStylists(); isDirty = true;
+}
+function collectBookingPage() {
+  if (!C.booking_page) C.booking_page = {};
+  var waEl = document.getElementById('bp-wa-number');
+  if (waEl) C.booking_page.salon_whatsapp = waEl.value.replace(/\D/g,'');
+}
+/* legacy stub — keep old C.booking.stylists also populated for backward compat */
+function renderStylists() { renderBpStylists(); }
+function collectStylists() { return (C.booking_page && C.booking_page.stylists) ? C.booking_page.stylists : []; }
 
 /* ══════════════════════════════════════
    TOKEN & ADMIN URL MANAGEMENT
