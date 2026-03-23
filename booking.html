@@ -854,41 +854,71 @@ async function confirmBooking(){
  /* Build customer phone (digits only for wa.me links) */
  var custPhone = B.mobile.replace(/\D/g,'');
 
- /* --- WhatsApp message templates for salon to send to customer --- */
- var confirmMsg = encodeURIComponent(
-  'Hi ' + B.fname + '! Your appointment at A One Hair Salon is CONFIRMED.\n\n' +
-  'Booking ID: ' + bid + '\n' +
-  'Service: ' + B.svc + '\n' +
-  'Stylist: ' + B.stylist + '\n' +
-  'Date & Time: ' + B.date + ' at ' + B.time + '\n' +
-  'Est. Price: ' + B.price + '\n\n' +
-  'Please arrive 10 minutes early. We look forward to seeing you!\n' +
-  '-- A One Hair Salon'
+ /* ── WhatsApp pre-filled messages (salon → customer) ── */
+ var waConfirm = 'https://wa.me/' + custPhone + '?text=' + encodeURIComponent(
+  'Hi ' + B.fname + '! \u2705 Your appointment at A One Hair Salon is CONFIRMED.\n\n' +
+  'Booking ID: ' + bid + '\nService: ' + B.svc + '\nStylist: ' + B.stylist +
+  '\nDate & Time: ' + B.date + ' at ' + B.time + '\nPrice: ' + B.price +
+  '\n\nPlease arrive 10 minutes early. See you soon!\n\u2014 A One Hair Salon'
  );
- var declineMsg = encodeURIComponent(
-  'Hi ' + B.fname + ', we are sorry but the requested slot is not available.\n\n' +
-  'Service: ' + B.svc + '\n' +
-  'Requested: ' + B.date + ' at ' + B.time + '\n\n' +
-  'Please contact us to find an alternative time. We apologise for the inconvenience.\n' +
-  '-- A One Hair Salon'
- );
- var rescheduleMsg = encodeURIComponent(
-  'Hi ' + B.fname + ', regarding your appointment request for ' + B.svc + ' on ' + B.date + ' at ' + B.time + '.\n\n' +
-  'We would like to offer you an alternative time slot. Please reply with your availability and we will arrange a suitable time.\n' +
-  '-- A One Hair Salon'
+ var waDecline = 'https://wa.me/' + custPhone + '?text=' + encodeURIComponent(
+  'Hi ' + B.fname + ', we\'re sorry but this time slot is unavailable.\n\n' +
+  'Service: ' + B.svc + '\nRequested: ' + B.date + ' at ' + B.time +
+  '\n\nPlease contact us to arrange an alternative. We apologise!\n\u2014 A One Hair Salon'
  );
 
- var waConfirm    = 'https://wa.me/' + custPhone + '?text=' + confirmMsg;
- var waDecline    = 'https://wa.me/' + custPhone + '?text=' + declineMsg;
- var waReschedule = 'https://wa.me/' + custPhone + '?text=' + rescheduleMsg;
-
- /* --- Send notification to salon via Web3Forms --- */
  var notesVal = (document.getElementById('notes') ? document.getElementById('notes').value.trim() : '') || 'None';
- /* Build customer email confirmation template (for salon to forward) */
- var custEmailSubject = encodeURIComponent('Booking Confirmation — A One Hair Salon (' + bid + ')');
- var custEmailBody = encodeURIComponent(
+
+ /* ── ADMIN EMAIL — clean HTML with CONFIRM + REJECT buttons only ── */
+ var adminHtml =
+  '<div style="font-family:Arial,sans-serif;max-width:580px;margin:0 auto;background:#ffffff">' +
+  '<div style="background:#1a1a2e;padding:28px 32px;text-align:center">' +
+   '<h1 style="color:#c9a84c;margin:0;font-size:22px;letter-spacing:3px;font-family:Georgia,serif">A ONE HAIR SALON</h1>' +
+   '<p style="color:#aaa;margin:8px 0 0;font-size:11px;letter-spacing:2px;text-transform:uppercase">New Booking Request</p>' +
+  '</div>' +
+  '<div style="padding:28px 32px;background:#f8f8f8">' +
+   '<p style="margin:0 0 18px;font-size:13px;color:#999">Booking ID: <strong style="color:#333;font-size:14px">' + bid + '</strong></p>' +
+   '<table style="width:100%;border-collapse:collapse;font-size:14px">' +
+    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee;width:130px">Customer</td>' +
+     '<td style="padding:10px 0;border-bottom:1px solid #eee;font-weight:700;color:#222">' + B.fname + ' ' + B.lname + '</td></tr>' +
+    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Service</td>' +
+     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">' + B.svc + '</td></tr>' +
+    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Stylist</td>' +
+     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">' + B.stylist + '</td></tr>' +
+    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Date</td>' +
+     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">' + B.date + '</td></tr>' +
+    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Time</td>' +
+     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">' + B.time + '</td></tr>' +
+    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Price</td>' +
+     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#c9a84c;font-weight:700">' + B.price + '</td></tr>' +
+    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Mobile</td>' +
+     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">' + B.mobile + '</td></tr>' +
+    '<tr><td style="padding:10px 0;color:#999' + (notesVal !== 'None' ? ';border-bottom:1px solid #eee' : '') + '">Email</td>' +
+     '<td style="padding:10px 0;color:#333' + (notesVal !== 'None' ? ';border-bottom:1px solid #eee' : '') + '">' + B.email + '</td></tr>' +
+    (notesVal !== 'None' ? '<tr><td style="padding:10px 0;color:#999">Notes</td><td style="padding:10px 0;color:#555;font-style:italic">' + notesVal + '</td></tr>' : '') +
+   '</table>' +
+  '</div>' +
+  '<div style="padding:32px;text-align:center;background:#ffffff;border-top:3px solid #c9a84c">' +
+   '<p style="margin:0 0 24px;font-size:13px;color:#555;font-weight:600;letter-spacing:1px;text-transform:uppercase">Respond to Customer via WhatsApp</p>' +
+   '<a href="' + waConfirm + '" style="display:inline-block;background:#25d366;color:#ffffff;padding:18px 44px;text-decoration:none;font-size:16px;font-weight:800;border-radius:6px;margin:0 8px 12px">' +
+    '&#10003; CONFIRM</a>' +
+   '<a href="' + waDecline + '" style="display:inline-block;background:#e53935;color:#ffffff;padding:18px 44px;text-decoration:none;font-size:16px;font-weight:800;border-radius:6px;margin:0 8px 12px">' +
+    '&#10007; REJECT</a>' +
+  '</div>' +
+  '<div style="padding:16px 32px;background:#f0f0f0;text-align:center;border-top:1px solid #ddd">' +
+   '<p style="color:#999;font-size:11px;margin:0;line-height:1.8">' +
+    'Tap <strong>CONFIRM</strong> or <strong>REJECT</strong> &mdash; WhatsApp opens with a message ready for ' + B.fname + '.<br>' +
+    'Or hit <strong>Reply</strong> on this email to write to the customer at ' + B.email + '</p>' +
+  '</div>' +
+  '</div>';
+
+ /* ── CUSTOMER CONFIRMATION — auto-sent via Formsubmit.co ──
+    First booking triggers a one-time verification email to info@aonehairsalon.com.
+    Click the verify link ONCE — after that, every booking auto-emails the customer. */
+ var custAutoText =
   'Dear ' + B.fname + ' ' + B.lname + ',\n\n' +
-  'Thank you for booking with A One Hair Salon! Your appointment is CONFIRMED.\n\n' +
+  'Thank you for booking with A One Hair Salon!\n\n' +
+  'We have received your appointment request and will confirm within 2 hours via WhatsApp to ' + B.mobile + '.\n\n' +
   'BOOKING DETAILS\n' +
   '===============\n' +
   'Booking ID  : ' + bid + '\n' +
@@ -896,85 +926,71 @@ async function confirmBooking(){
   'Stylist     : ' + B.stylist + '\n' +
   'Date & Time : ' + B.date + ' at ' + B.time + '\n' +
   'Est. Price  : ' + B.price + '\n\n' +
-  'Please arrive 10 minutes before your appointment time.\n' +
-  'Cancellations must be made at least 24 hours in advance.\n\n' +
-  'We look forward to seeing you!\n\n' +
+  'Please arrive 10 minutes before your appointment.\n' +
+  'Cancellations require at least 24 hours notice.\n\n' +
+  'See you soon!\n' +
   'A One Hair Salon\n' +
-  'info@aonehairsalon.com'
- );
- var mailtoCustomer = 'mailto:' + B.email + '?subject=' + custEmailSubject + '&body=' + custEmailBody;
-
- var salonMsg =
-  'NEW BOOKING REQUEST — ' + bid + '\n' +
-  '==========================================\n\n' +
-  'Customer   : ' + B.fname + ' ' + B.lname + '\n' +
-  'Service    : ' + B.svc + '\n' +
-  'Stylist    : ' + B.stylist + '\n' +
-  'Date       : ' + B.date + '\n' +
-  'Time       : ' + B.time + '\n' +
-  'Est. Price : ' + B.price + '\n' +
-  'Mobile     : ' + B.mobile + '\n' +
-  'Email      : ' + B.email + '\n' +
-  'Notes      : ' + notesVal + '\n\n' +
-  '==========================================\n' +
-  'STEP 1 — REPLY TO CUSTOMER VIA WHATSAPP\n' +
-  '==========================================\n\n' +
-  'CONFIRM (tap to open WhatsApp with message ready):\n' + waConfirm + '\n\n' +
-  'DECLINE (tap to open WhatsApp with message ready):\n' + waDecline + '\n\n' +
-  'RESCHEDULE (tap to open WhatsApp with message ready):\n' + waReschedule + '\n\n' +
-  '==========================================\n' +
-  'STEP 2 — SEND EMAIL CONFIRMATION TO CUSTOMER\n' +
-  '==========================================\n\n' +
-  'Click the link below to open a pre-written confirmation email to the customer:\n\n' +
-  mailtoCustomer + '\n\n' +
-  '(Tip: On iPhone/Android, tap the link above to open Mail with everything pre-filled)\n\n' +
-  '==========================================\n' +
-  'STEP 3 — OR REPLY TO THIS EMAIL\n' +
-  '==========================================\n' +
-  'Hit Reply on this email — it goes directly to ' + B.email;
+  'info@aonehairsalon.com';
 
  var w3fKey = window.WEB3FORMS_KEY || '3c4dfd8f-dbb8-4d05-873e-bfb44d23d3dd';
+
+ /* Send admin notification (HTML email with CONFIRM/REJECT buttons) */
  try {
   await fetch('https://api.web3forms.com/submit', {
    method: 'POST',
    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
    body: JSON.stringify({
     access_key: w3fKey,
-    subject:    'New Booking: ' + B.svc + ' — ' + B.fname + ' ' + B.lname + ' — ' + B.date + ' ' + B.time,
-    from_name:  'A One Hair Salon Booking System',
+    subject:    'New Booking: ' + B.svc + ' \u2014 ' + B.fname + ' ' + B.lname + ' \u2014 ' + B.date,
+    from_name:  'A One Hair Salon Bookings',
     name:       B.fname + ' ' + B.lname,
     email:      B.email,
     replyto:    B.email,
-    phone:      B.mobile,
-    message:    salonMsg,
+    message:    adminHtml,
     botcheck:   ''
    })
   });
- } catch(e){ console.warn('Booking notification error:', e); }
+ } catch(e){ console.warn('Admin notification error:', e); }
 
- /* --- Build customer WhatsApp button (customer taps to message the salon) --- */
+ /* Send customer confirmation auto-email (Formsubmit.co → _autoresponse goes to customer) */
+ try {
+  await fetch('https://formsubmit.co/ajax/info@aonehairsalon.com', {
+   method: 'POST',
+   headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+   body: JSON.stringify({
+    name:          B.fname + ' ' + B.lname,
+    email:         B.email,
+    _subject:      'Booking Received \u2014 A One Hair Salon (' + bid + ')',
+    _autoresponse: custAutoText,
+    _template:     'box',
+    _captcha:      'false',
+    booking_id:    bid,
+    service:       B.svc,
+    date_time:     B.date + ' at ' + B.time
+   })
+  });
+ } catch(e){ console.warn('Customer confirmation error:', e); }
+
+ /* ── Build customer WhatsApp button (for success page) ── */
  var salonWANum = window.SALON_WA || SALON_WA || '';
- var custWaMsg = encodeURIComponent(
-  'Hi A One Hair Salon! I just submitted a booking request.\n\n' +
-  'Booking ID: ' + bid + '\n' +
-  'Name: ' + B.fname + ' ' + B.lname + '\n' +
-  'Service: ' + B.svc + '\n' +
-  'Date & Time: ' + B.date + ' at ' + B.time + '\n\n' +
-  'Could you please confirm my appointment? Thank you!'
- );
- var custWaLink = salonWANum ? 'https://wa.me/' + salonWANum + '?text=' + custWaMsg : '';
+ var custWaLink = salonWANum ? 'https://wa.me/' + salonWANum + '?text=' + encodeURIComponent(
+  'Hi A One Hair Salon! I just booked an appointment.\n\nBooking ID: ' + bid +
+  '\nName: ' + B.fname + ' ' + B.lname + '\nService: ' + B.svc +
+  '\nDate & Time: ' + B.date + ' at ' + B.time + '\n\nCould you please confirm? Thank you!'
+ ) : '';
 
- /* --- Show success view --- */
+ /* ── Show success view ── */
  document.getElementById('progressWrap').style.display = 'none';
  document.querySelectorAll('.form-step').forEach(function(s){ s.style.display='none'; });
  var sv = document.getElementById('successView');
  sv.style.display = 'block';
- document.getElementById('bookingId').textContent  = bid;
- document.getElementById('cd-svc').textContent     = B.svc;
- document.getElementById('cd-sty').textContent     = B.stylist;
- document.getElementById('cd-dt').textContent      = B.date + ' at ' + B.time;
- document.getElementById('cd-email').textContent   = B.email;
- document.getElementById('cd-sms').textContent     = B.mobile;
+ document.getElementById('bookingId').textContent = bid;
+ document.getElementById('cd-svc').textContent    = B.svc;
+ document.getElementById('cd-sty').textContent    = B.stylist;
+ document.getElementById('cd-dt').textContent     = B.date + ' at ' + B.time;
+ document.getElementById('cd-email').textContent  = B.email;
+ var cdSms = document.getElementById('cd-sms');
+ if(cdSms) cdSms.textContent = B.mobile;
 
  var waBtn = document.getElementById('waSmsBtn');
  if(waBtn){
@@ -986,17 +1002,13 @@ async function confirmBooking(){
    waBtn.style.display = 'none';
   }
  }
- /* Show cd-sms as phone number */
- var cdSms = document.getElementById('cd-sms');
- if(cdSms) cdSms.textContent = B.mobile;
 
  var emailNote = document.getElementById('emailStatusNote');
  if(emailNote){
   emailNote.innerHTML =
-   '✦ Your booking request has been received!<br>' +
-   '✦ We will confirm via <strong>WhatsApp</strong> to <strong>' + B.mobile + '</strong> within 2 hours.<br>' +
-   '✦ A confirmation email will be sent to <strong>' + B.email + '</strong>.<br>' +
-   '✦ Please arrive 10 minutes before your appointment time.';
+   '\u2714 Booking request received! A confirmation has been sent to <strong>' + B.email + '</strong>.<br>' +
+   '\u2714 We will confirm your appointment via <strong>WhatsApp</strong> to <strong>' + B.mobile + '</strong> within 2 hours.<br>' +
+   '\u2714 Please arrive 10 minutes before your appointment time.';
  }
 
  sv.scrollIntoView({behavior:'smooth',block:'start'});
