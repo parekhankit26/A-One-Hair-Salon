@@ -5,273 +5,349 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EmailJS Setup — A One Hair Salon</title>
 <style>
-body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;margin:0;padding:20px;color:#1a1a2e}
-.wrap{max-width:860px;margin:0 auto}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;padding:20px;color:#1a1a2e}
+.wrap{max-width:900px;margin:0 auto}
 h1{text-align:center;color:#1a1a2e;font-size:26px;margin-bottom:4px}
 .sub{text-align:center;color:#666;font-size:14px;margin-bottom:32px}
 .card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:28px;margin-bottom:24px}
-.step-badge{display:inline-block;background:#c9a84c;color:#fff;width:30px;height:30px;border-radius:50%;text-align:center;line-height:30px;font-weight:700;font-size:15px;margin-right:10px;flex-shrink:0}
-.step-title{display:flex;align-items:center;font-size:18px;font-weight:700;color:#1a1a2e;margin-bottom:14px}
-p{color:#555;line-height:1.65;margin:0 0 12px}
+.step-title{display:flex;align-items:center;font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:14px;gap:10px}
+.step-badge{display:inline-flex;align-items:center;justify-content:center;background:#c9a84c;color:#fff;width:30px;height:30px;min-width:30px;border-radius:50%;font-weight:700;font-size:14px}
+p{color:#555;line-height:1.7;margin-bottom:10px}
 a{color:#c9a84c;font-weight:600}
-.code-block{background:#1a1a2e;color:#f0d47a;padding:16px;border-radius:8px;font-family:'Courier New',monospace;font-size:13px;white-space:pre-wrap;overflow-x:auto;margin:12px 0;position:relative}
-.copy-btn{position:absolute;top:10px;right:10px;background:#c9a84c;color:#1a1a2e;border:none;padding:5px 12px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer}
-.copy-btn:hover{background:#f0d47a}
-.tip{background:#fff8e1;border-left:4px solid #c9a84c;padding:12px 16px;border-radius:0 8px 8px 0;font-size:13px;color:#555;margin:12px 0}
-.success{background:#e8f5e9;border-left:4px solid #43a047;padding:12px 16px;border-radius:0 8px 8px 0;font-size:13px;color:#2e7d32;margin:12px 0}
-.img-hint{background:#f5f5f5;border:2px dashed #ddd;border-radius:8px;padding:20px;text-align:center;font-size:13px;color:#999;margin:12px 0}
+code{background:#f5f5f5;padding:2px 6px;border-radius:4px;font-size:13px;color:#c9a84c}
+.tip{background:#fff8e1;border-left:4px solid #c9a84c;padding:12px 16px;border-radius:0 8px 8px 0;font-size:13px;color:#555;margin:10px 0;line-height:1.6}
 table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
-table.tbl th{background:#1a1a2e;color:#c9a84c;padding:9px 12px;text-align:left}
-table.tbl td{padding:9px 12px;border-bottom:1px solid #eee;color:#555}
+table.tbl th{background:#1a1a2e;color:#c9a84c;padding:9px 12px;text-align:left;font-weight:600}
+table.tbl td{padding:9px 12px;border-bottom:1px solid #eee;color:#555;vertical-align:top}
 table.tbl tr:last-child td{border-bottom:none}
-.final-code{background:#1a1a2e;color:#7ec8e3;padding:20px;border-radius:8px;font-family:'Courier New',monospace;font-size:13px;white-space:pre-wrap;margin:12px 0;position:relative}
-.done-box{background:#1a1a2e;color:#c9a84c;padding:24px;border-radius:10px;text-align:center;margin-top:24px}
-.done-box h2{color:#f0d47a;margin:0 0 10px}
-.done-box p{color:#aaa;margin:0}
+.code-wrap{position:relative;margin:12px 0}
+.code-block{background:#1a1a2e;color:#f0d47a;padding:16px;border-radius:8px;font-family:'Courier New',monospace;font-size:12px;white-space:pre-wrap;overflow-x:auto;max-height:300px;overflow-y:auto;border:1px solid rgba(201,168,76,.2)}
+.copy-btn{position:absolute;top:8px;right:8px;background:#c9a84c;color:#1a1a2e;border:none;padding:5px 13px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;z-index:1}
+.copy-btn:hover{background:#f0d47a}
+.tpl-preview{border:2px solid #e8e8e8;border-radius:8px;overflow:hidden;margin:12px 0}
+.tpl-label{background:#f5f5f5;padding:8px 14px;font-size:12px;font-weight:700;color:#666;border-bottom:1px solid #e8e8e8;letter-spacing:.05em}
+.tpl-inner{padding:0}
+.config-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.config-field label{display:block;font-size:12px;font-weight:700;color:#1a1a2e;margin-bottom:4px}
+.config-field input{width:100%;padding:9px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:13px;outline:none;transition:border-color .3s}
+.config-field input:focus{border-color:#c9a84c}
+.gen-code{background:#1a1a2e;color:#7ec8e3;padding:20px;border-radius:8px;font-family:'Courier New',monospace;font-size:13px;white-space:pre-wrap;margin:12px 0;min-height:80px}
+.done-box{background:#1a1a2e;color:#c9a84c;padding:28px;border-radius:10px;text-align:center;margin-top:24px}
+.done-box h2{color:#f0d47a;margin-bottom:12px;font-size:20px}
+.done-box p{color:#aaa;line-height:1.8;font-size:14px}
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <h1>✂ EmailJS Setup Guide</h1>
-<p class="sub">Set up free email with real CONFIRM &amp; REJECT buttons — takes about 10 minutes</p>
+<p class="sub">3 email templates · real HTML buttons · direct customer emails · ~10 minutes to set up</p>
 
 <!-- STEP 1 -->
 <div class="card">
  <div class="step-title"><span class="step-badge">1</span>Create a free EmailJS account</div>
- <p>Go to <a href="https://emailjs.com" target="_blank">emailjs.com</a> and click <strong>Sign Up Free</strong>.<br>
-    Use your email and create a password. The free plan gives you <strong>200 emails per month</strong> — plenty for the salon.</p>
- <div class="tip">💡 Use <strong>info@aonehairsalon.com</strong> so everything stays in one place.</div>
+ <p>Go to <a href="https://emailjs.com" target="_blank">emailjs.com</a> → <strong>Sign Up Free</strong>. The free plan gives you <strong>200 emails/month</strong>.</p>
+ <div class="tip">💡 Use <strong>info@aonehairsalon.com</strong> to keep everything in one place.</div>
 </div>
 
 <!-- STEP 2 -->
 <div class="card">
  <div class="step-title"><span class="step-badge">2</span>Connect your email (create a service)</div>
- <p>After logging in, click <strong>Email Services</strong> in the left menu, then <strong>Add New Service</strong>.</p>
- <p>Choose <strong>Gmail</strong> (or Outlook if you prefer). Click <strong>Connect Account</strong> and sign in with <strong>info@aonehairsalon.com</strong>.</p>
- <p>Give it the name <strong>Salon Email</strong> and click <strong>Create Service</strong>.</p>
- <p>👉 <strong>Copy the Service ID</strong> — it looks like <code>service_abc1234</code>. You will need it later.</p>
- <div class="tip">💡 If you see a yellow warning about Gmail, click "Click here to enable" — it opens Google, you accept, then come back.</div>
+ <p>After logging in → <strong>Email Services</strong> → <strong>Add New Service</strong> → choose <strong>Gmail</strong> → sign in with info@aonehairsalon.com → name it <strong>Salon Email</strong> → click <strong>Create Service</strong>.</p>
+ <p>👉 Copy the <strong>Service ID</strong> that appears (looks like <code>service_abc1234</code>) — you will need it later.</p>
 </div>
 
-<!-- STEP 3 -->
+<!-- STEP 3 — Admin Template -->
 <div class="card">
- <div class="step-title"><span class="step-badge">3</span>Create the ADMIN email template (with CONFIRM + REJECT buttons)</div>
- <p>Click <strong>Email Templates</strong> → <strong>Create New Template</strong>.</p>
+ <div class="step-title"><span class="step-badge">3</span>Create Admin Notification template (new booking)</div>
+ <p>Click <strong>Email Templates</strong> → <strong>Create New Template</strong></p>
 
- <p><strong>Template Settings:</strong></p>
  <table class="tbl">
-  <tr><th>Field</th><th>What to enter</th></tr>
+  <tr><th>Field</th><th>Value to enter</th></tr>
   <tr><td>Template Name</td><td>Admin Booking Notification</td></tr>
-  <tr><td>Template ID</td><td>Type: <strong>template_admin_booking</strong></td></tr>
+  <tr><td><strong>Template ID</strong></td><td>Type exactly: <code>template_admin_booking</code></td></tr>
   <tr><td>Subject</td><td><code>New Booking: {{service}} | {{from_name}} | {{date}} {{time}}</code></td></tr>
   <tr><td>To Email</td><td><code>info@aonehairsalon.com</code></td></tr>
   <tr><td>From Name</td><td><code>A One Hair Salon Bookings</code></td></tr>
   <tr><td>Reply To</td><td><code>{{customer_email}}</code></td></tr>
  </table>
 
- <p style="margin-top:16px"><strong>Body (HTML) — copy everything below and paste into the Body field:</strong></p>
- <p>In EmailJS template editor, click the <strong>&lt;/&gt; Code</strong> button (or switch to HTML mode) then paste this:</p>
- <div class="code-block" id="adminTpl"><!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"></head>
-<body style="margin:0;padding:0;background:#f0f2f5;font-family:Arial,Helvetica,sans-serif">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f2f5;padding:24px 0">
-<tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.12)">
+ <p style="margin-top:14px">Switch the body to <strong>HTML mode</strong> (look for the &lt;/&gt; button in the editor), then paste:</p>
+ <div class="code-wrap">
+  <button class="copy-btn" onclick="copyEl('tpl-admin',this)">Copy</button>
+  <div class="code-block" id="tpl-admin">&#60;table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f2f5;padding:20px 0;font-family:Arial,Helvetica,sans-serif"&#62;
+&#60;tr&#62;&#60;td align="center"&#62;
+&#60;table width="580" cellpadding="0" cellspacing="0" style="background:#ffffff"&#62;
 
-  <!-- HEADER -->
-  <tr><td style="background:#1a1a2e;padding:28px 32px;text-align:center">
-    <h1 style="color:#c9a84c;margin:0;font-size:24px;letter-spacing:2px">✂ A ONE HAIR SALON</h1>
-    <p style="color:#999;margin:8px 0 0;font-size:13px;letter-spacing:1px">NEW BOOKING REQUEST</p>
-  </td></tr>
+  &#60;!-- HEADER --&#62;
+  &#60;tr&#62;&#60;td style="background:#1a1a2e;padding:24px 32px;text-align:center"&#62;
+    &#60;p style="color:#c9a84c;font-size:22px;font-weight:bold;margin:0;letter-spacing:2px"&#62;&#9986; A ONE HAIR SALON&#60;/p&#62;
+    &#60;p style="color:#aaa;font-size:12px;margin:6px 0 0;letter-spacing:1px"&#62;NEW BOOKING REQUEST&#60;/p&#62;
+  &#60;/td&#62;&#60;/tr&#62;
 
-  <!-- BOOKING DETAILS TABLE -->
-  <tr><td style="padding:28px 32px">
-    <h2 style="color:#1a1a2e;margin:0 0 18px;font-size:17px">📋 Booking Details</h2>
-    <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px">
-      <tr style="background:#f9f9f9"><td style="padding:11px 14px;border:1px solid #e8e8e8;width:38%;font-weight:700;color:#1a1a2e">Booking ID</td><td style="padding:11px 14px;border:1px solid #e8e8e8;color:#c9a84c;font-weight:700">{{booking_id}}</td></tr>
-      <tr><td style="padding:11px 14px;border:1px solid #e8e8e8;font-weight:700;color:#1a1a2e">Customer</td><td style="padding:11px 14px;border:1px solid #e8e8e8;color:#555">{{from_name}}</td></tr>
-      <tr style="background:#f9f9f9"><td style="padding:11px 14px;border:1px solid #e8e8e8;font-weight:700;color:#1a1a2e">Service</td><td style="padding:11px 14px;border:1px solid #e8e8e8;color:#555">{{service}}</td></tr>
-      <tr><td style="padding:11px 14px;border:1px solid #e8e8e8;font-weight:700;color:#1a1a2e">Stylist</td><td style="padding:11px 14px;border:1px solid #e8e8e8;color:#555">{{stylist}}</td></tr>
-      <tr style="background:#f9f9f9"><td style="padding:11px 14px;border:1px solid #e8e8e8;font-weight:700;color:#1a1a2e">Date</td><td style="padding:11px 14px;border:1px solid #e8e8e8;color:#555">{{date}}</td></tr>
-      <tr><td style="padding:11px 14px;border:1px solid #e8e8e8;font-weight:700;color:#1a1a2e">Time</td><td style="padding:11px 14px;border:1px solid #e8e8e8;color:#555">{{time}}</td></tr>
-      <tr style="background:#f9f9f9"><td style="padding:11px 14px;border:1px solid #e8e8e8;font-weight:700;color:#1a1a2e">Price</td><td style="padding:11px 14px;border:1px solid #e8e8e8;color:#555">{{price}}</td></tr>
-      <tr><td style="padding:11px 14px;border:1px solid #e8e8e8;font-weight:700;color:#1a1a2e">Mobile</td><td style="padding:11px 14px;border:1px solid #e8e8e8;color:#555">{{mobile}}</td></tr>
-      <tr style="background:#f9f9f9"><td style="padding:11px 14px;border:1px solid #e8e8e8;font-weight:700;color:#1a1a2e">Customer Email</td><td style="padding:11px 14px;border:1px solid #e8e8e8;color:#555">{{customer_email}}</td></tr>
-      <tr><td style="padding:11px 14px;border:1px solid #e8e8e8;font-weight:700;color:#1a1a2e">Notes</td><td style="padding:11px 14px;border:1px solid #e8e8e8;color:#555">{{notes}}</td></tr>
-    </table>
+  &#60;!-- BOOKING TABLE --&#62;
+  &#60;tr&#62;&#60;td style="padding:28px 32px"&#62;
+    &#60;p style="font-size:15px;font-weight:bold;color:#1a1a2e;margin:0 0 16px"&#62;&#128203; Booking Details&#60;/p&#62;
+    &#60;table width="100%" cellpadding="0" cellspacing="0" style="font-size:13px;border-collapse:collapse"&#62;
+      &#60;tr style="background:#f9f9f9"&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;width:36%;font-weight:bold;color:#333"&#62;Booking ID&#60;/td&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;color:#c9a84c;font-weight:bold"&#62;{{booking_id}}&#60;/td&#62;&#60;/tr&#62;
+      &#60;tr&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#333"&#62;Customer&#60;/td&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;color:#555"&#62;{{from_name}}&#60;/td&#62;&#60;/tr&#62;
+      &#60;tr style="background:#f9f9f9"&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#333"&#62;Service&#60;/td&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;color:#555"&#62;{{service}}&#60;/td&#62;&#60;/tr&#62;
+      &#60;tr&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#333"&#62;Stylist&#60;/td&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;color:#555"&#62;{{stylist}}&#60;/td&#62;&#60;/tr&#62;
+      &#60;tr style="background:#f9f9f9"&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#333"&#62;Date&#60;/td&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;color:#555"&#62;{{date}}&#60;/td&#62;&#60;/tr&#62;
+      &#60;tr&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#333"&#62;Time&#60;/td&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;color:#555"&#62;{{time}}&#60;/td&#62;&#60;/tr&#62;
+      &#60;tr style="background:#f9f9f9"&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#333"&#62;Price&#60;/td&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;color:#555"&#62;{{price}}&#60;/td&#62;&#60;/tr&#62;
+      &#60;tr&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#333"&#62;Mobile&#60;/td&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;color:#555"&#62;{{mobile}}&#60;/td&#62;&#60;/tr&#62;
+      &#60;tr style="background:#f9f9f9"&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#333"&#62;Email&#60;/td&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;color:#555"&#62;{{customer_email}}&#60;/td&#62;&#60;/tr&#62;
+      &#60;tr&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#333"&#62;Notes&#60;/td&#62;&#60;td style="padding:10px 12px;border:1px solid #e0e0e0;color:#555"&#62;{{notes}}&#60;/td&#62;&#60;/tr&#62;
+    &#60;/table&#62;
 
-    <!-- ACTION BUTTONS -->
-    <div style="margin:28px 0 8px;text-align:center">
-      <p style="color:#666;font-size:13px;margin:0 0 18px">Tap a button below — WhatsApp opens with the message ready, just tap <strong>SEND</strong></p>
-      <a href="{{confirm_link}}" style="display:inline-block;background:#25d366;color:#ffffff;padding:15px 36px;border-radius:8px;font-size:16px;font-weight:700;text-decoration:none;margin:6px;letter-spacing:.5px">✅ CONFIRM BOOKING</a>
-      &nbsp;&nbsp;
-      <a href="{{reject_link}}" style="display:inline-block;background:#e53935;color:#ffffff;padding:15px 36px;border-radius:8px;font-size:16px;font-weight:700;text-decoration:none;margin:6px;letter-spacing:.5px">❌ REJECT BOOKING</a>
-    </div>
+    &#60;!-- ACTION BUTTONS --&#62;
+    &#60;table width="100%" cellpadding="0" cellspacing="0" style="margin:24px 0 0"&#62;
+      &#60;tr&#62;&#60;td style="text-align:center;padding-bottom:10px"&#62;
+        &#60;p style="font-size:12px;color:#888;margin:0 0 14px"&#62;Tap a button — WhatsApp opens with the message ready. Just tap SEND.&#60;/p&#62;
+      &#60;/td&#62;&#60;/tr&#62;
+      &#60;tr&#62;&#60;td align="center"&#62;
+        &#60;table cellpadding="0" cellspacing="0"&#62;&#60;tr&#62;
+          &#60;td style="padding:6px"&#62;&#60;a href="{{confirm_link}}" style="display:block;background:#25d366;color:#ffffff;padding:14px 30px;font-size:15px;font-weight:bold;text-decoration:none;font-family:Arial,sans-serif"&#62;&#9989; CONFIRM BOOKING&#60;/a&#62;&#60;/td&#62;
+          &#60;td style="padding:6px"&#62;&#60;a href="{{reject_link}}" style="display:block;background:#e53935;color:#ffffff;padding:14px 30px;font-size:15px;font-weight:bold;text-decoration:none;font-family:Arial,sans-serif"&#62;&#10060; REJECT BOOKING&#60;/a&#62;&#60;/td&#62;
+        &#60;/tr&#62;&#60;/table&#62;
+      &#60;/td&#62;&#60;/tr&#62;
+    &#60;/table&#62;
 
-    <p style="font-size:12px;color:#aaa;text-align:center;margin-top:16px">Hit <strong>Reply</strong> on this email to write directly to the customer.</p>
-  </td></tr>
+    &#60;p style="font-size:11px;color:#bbb;text-align:center;margin-top:16px"&#62;Reply to this email to write directly to the customer.&#60;/p&#62;
+  &#60;/td&#62;&#60;/tr&#62;
 
-  <!-- FOOTER -->
-  <tr><td style="background:#1a1a2e;padding:16px 32px;text-align:center">
-    <p style="color:#666;font-size:12px;margin:0">A One Hair Salon | info@aonehairsalon.com</p>
-  </td></tr>
+  &#60;!-- FOOTER --&#62;
+  &#60;tr&#62;&#60;td style="background:#1a1a2e;padding:14px 32px;text-align:center"&#62;
+    &#60;p style="color:#555;font-size:11px;margin:0"&#62;A One Hair Salon &#124; info@aonehairsalon.com&#60;/p&#62;
+  &#60;/td&#62;&#60;/tr&#62;
 
-</table>
-</td></tr>
-</table>
-</body>
-</html><button class="copy-btn" onclick="copyCode('adminTpl',this)">Copy</button></div>
-
- <p>Click <strong>Save Template</strong> when done.</p>
+&#60;/table&#62;
+&#60;/td&#62;&#60;/tr&#62;
+&#60;/table&#62;</div>
+ </div>
+ <p>Click <strong>Save Template</strong>.</p>
 </div>
 
-<!-- STEP 4 -->
+<!-- STEP 4 — Customer Receipt Template -->
 <div class="card">
- <div class="step-title"><span class="step-badge">4</span>Create the CUSTOMER confirmation template</div>
- <p>Click <strong>Email Templates</strong> → <strong>Create New Template</strong> again.</p>
-
- <p><strong>Template Settings:</strong></p>
+ <div class="step-title"><span class="step-badge">4</span>Create Customer Receipt template (sent when booking is submitted)</div>
+ <p>Click <strong>Email Templates</strong> → <strong>Create New Template</strong></p>
  <table class="tbl">
-  <tr><th>Field</th><th>What to enter</th></tr>
-  <tr><td>Template Name</td><td>Customer Booking Confirmation</td></tr>
-  <tr><td>Template ID</td><td>Type: <strong>template_cust_confirm</strong></td></tr>
-  <tr><td>Subject</td><td><code>Booking Request Received — {{booking_id}} | A One Hair Salon</code></td></tr>
-  <tr><td>To Email</td><td><code>{{to_email}}</code>  ← This sends directly to the customer!</td></tr>
+  <tr><th>Field</th><th>Value to enter</th></tr>
+  <tr><td>Template Name</td><td>Customer Booking Receipt</td></tr>
+  <tr><td><strong>Template ID</strong></td><td>Type exactly: <code>template_cust_confirm</code></td></tr>
+  <tr><td>Subject</td><td><code>Booking Received — {{booking_id}} | A One Hair Salon</code></td></tr>
+  <tr><td><strong>To Email</strong></td><td><code>{{to_email}}</code> ← sends directly to the customer!</td></tr>
   <tr><td>From Name</td><td><code>A One Hair Salon</code></td></tr>
   <tr><td>Reply To</td><td><code>info@aonehairsalon.com</code></td></tr>
  </table>
+ <p style="margin-top:14px">Switch to HTML mode, then paste:</p>
+ <div class="code-wrap">
+  <button class="copy-btn" onclick="copyEl('tpl-cust',this)">Copy</button>
+  <div class="code-block" id="tpl-cust">&#60;table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f2f5;padding:20px 0;font-family:Arial,Helvetica,sans-serif"&#62;
+&#60;tr&#62;&#60;td align="center"&#62;
+&#60;table width="580" cellpadding="0" cellspacing="0" style="background:#ffffff"&#62;
 
- <p style="margin-top:16px"><strong>Body (HTML) — copy and paste:</strong></p>
- <div class="code-block" id="custTpl"><!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"></head>
-<body style="margin:0;padding:0;background:#f0f2f5;font-family:Arial,Helvetica,sans-serif">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f2f5;padding:24px 0">
-<tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.12)">
+  &#60;!-- HEADER --&#62;
+  &#60;tr&#62;&#60;td style="background:#1a1a2e;padding:28px 32px;text-align:center"&#62;
+    &#60;p style="color:#c9a84c;font-size:24px;font-weight:bold;margin:0;letter-spacing:2px"&#62;&#9986; A ONE HAIR SALON&#60;/p&#62;
+    &#60;p style="color:#c9a84c;font-size:11px;margin:8px 0 0;letter-spacing:3px"&#62;BOOKING RECEIVED&#60;/p&#62;
+  &#60;/td&#62;&#60;/tr&#62;
 
-  <!-- HEADER -->
-  <tr><td style="background:#1a1a2e;padding:32px;text-align:center">
-    <h1 style="color:#c9a84c;margin:0;font-size:26px;letter-spacing:2px">✂ A ONE HAIR SALON</h1>
-    <p style="color:#c9a84c;margin:10px 0 0;font-size:13px;letter-spacing:3px">BOOKING RECEIVED</p>
-  </td></tr>
+  &#60;!-- GREETING --&#62;
+  &#60;tr&#62;&#60;td style="padding:28px 32px 0"&#62;
+    &#60;p style="font-size:18px;font-weight:bold;color:#1a1a2e;margin:0 0 10px"&#62;Hello {{to_name}}! &#128075;&#60;/p&#62;
+    &#60;p style="font-size:14px;color:#555;line-height:1.7;margin:0"&#62;Thank you for booking with &#60;strong&#62;A One Hair Salon&#60;/strong&#62;. Your request has been received and we will confirm it within &#60;strong&#62;2 hours via WhatsApp&#60;/strong&#62; to &#60;strong&#62;{{mobile}}&#60;/strong&#62;.&#60;/p&#62;
+  &#60;/td&#62;&#60;/tr&#62;
 
-  <!-- GREETING -->
-  <tr><td style="padding:32px 32px 0">
-    <h2 style="color:#1a1a2e;margin:0 0 12px;font-size:20px">Hello {{to_name}}! 👋</h2>
-    <p style="color:#666;line-height:1.7;margin:0">Thank you for booking with <strong>A One Hair Salon</strong>. Your appointment request has been received and we will confirm it within <strong>2 hours via WhatsApp</strong> to <strong>{{mobile}}</strong>.</p>
-  </td></tr>
+  &#60;!-- BOOKING CARD --&#62;
+  &#60;tr&#62;&#60;td style="padding:20px 32px"&#62;
+    &#60;table width="100%" cellpadding="0" cellspacing="0" style="background:#f9f7f0;border-left:5px solid #c9a84c"&#62;
+      &#60;tr&#62;&#60;td style="padding:18px 20px"&#62;
+        &#60;p style="font-size:12px;font-weight:bold;color:#1a1a2e;margin:0 0 14px;letter-spacing:1px"&#62;YOUR BOOKING DETAILS&#60;/p&#62;
+        &#60;table width="100%" cellpadding="0" cellspacing="0" style="font-size:13px"&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888;width:44%"&#62;Booking Reference&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:bold;color:#c9a84c"&#62;{{booking_id}}&#60;/td&#62;&#60;/tr&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888"&#62;Service&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:600;color:#1a1a2e"&#62;{{service}}&#60;/td&#62;&#60;/tr&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888"&#62;Stylist&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:600;color:#1a1a2e"&#62;{{stylist}}&#60;/td&#62;&#60;/tr&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888"&#62;Date&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:600;color:#1a1a2e"&#62;{{date}}&#60;/td&#62;&#60;/tr&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888"&#62;Time&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:600;color:#1a1a2e"&#62;{{time}}&#60;/td&#62;&#60;/tr&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888"&#62;Estimated Price&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:600;color:#1a1a2e"&#62;{{price}}&#60;/td&#62;&#60;/tr&#62;
+        &#60;/table&#62;
+      &#60;/td&#62;&#60;/tr&#62;
+    &#60;/table&#62;
+  &#60;/td&#62;&#60;/tr&#62;
 
-  <!-- BOOKING CARD -->
-  <tr><td style="padding:20px 32px">
-    <div style="background:#f9f7f0;border-left:5px solid #c9a84c;padding:22px;border-radius:0 10px 10px 0">
-      <h3 style="color:#1a1a2e;margin:0 0 16px;font-size:15px;letter-spacing:.5px">YOUR BOOKING DETAILS</h3>
-      <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px">
-        <tr><td style="padding:8px 0;color:#888;width:45%">Booking Reference</td><td style="padding:8px 0;font-weight:700;color:#c9a84c">{{booking_id}}</td></tr>
-        <tr><td style="padding:8px 0;color:#888">Service</td><td style="padding:8px 0;font-weight:600;color:#1a1a2e">{{service}}</td></tr>
-        <tr><td style="padding:8px 0;color:#888">Stylist</td><td style="padding:8px 0;font-weight:600;color:#1a1a2e">{{stylist}}</td></tr>
-        <tr><td style="padding:8px 0;color:#888">Date</td><td style="padding:8px 0;font-weight:600;color:#1a1a2e">{{date}}</td></tr>
-        <tr><td style="padding:8px 0;color:#888">Time</td><td style="padding:8px 0;font-weight:600;color:#1a1a2e">{{time}}</td></tr>
-        <tr><td style="padding:8px 0;color:#888">Estimated Price</td><td style="padding:8px 0;font-weight:600;color:#1a1a2e">{{price}}</td></tr>
-      </table>
-    </div>
-  </td></tr>
+  &#60;!-- REMINDERS --&#62;
+  &#60;tr&#62;&#60;td style="padding:0 32px 28px"&#62;
+    &#60;table width="100%" cellpadding="0" cellspacing="0" style="background:#fff8e1"&#62;
+      &#60;tr&#62;&#60;td style="padding:14px 18px;font-size:13px;color:#666;line-height:1.8"&#62;
+        &#9200; Please arrive &#60;strong&#62;10 minutes early&#60;/strong&#62;&#60;br&#62;
+        &#128222; Cancellations require &#60;strong&#62;24 hours notice&#60;/strong&#62;&#60;br&#62;
+        &#128140; Questions? Reply to this email or call us
+      &#60;/td&#62;&#60;/tr&#62;
+    &#60;/table&#62;
+    &#60;p style="font-size:13px;color:#555;margin-top:18px"&#62;See you soon!&#60;br&#62;&#60;strong&#62;A One Hair Salon Team&#60;/strong&#62;&#60;/p&#62;
+  &#60;/td&#62;&#60;/tr&#62;
 
-  <!-- REMINDER BOX -->
-  <tr><td style="padding:0 32px 28px">
-    <div style="background:#fff8e1;border-radius:8px;padding:16px 20px;font-size:13px;color:#666;line-height:1.8">
-      ⏰ Please arrive <strong>10 minutes early</strong><br>
-      📞 Cancellations require <strong>24 hours notice</strong><br>
-      📧 Questions? Reply to this email or call us
-    </div>
-  </td></tr>
+  &#60;!-- FOOTER --&#62;
+  &#60;tr&#62;&#60;td style="background:#1a1a2e;padding:14px 32px;text-align:center"&#62;
+    &#60;p style="color:#555;font-size:11px;margin:0"&#62;A One Hair Salon &#124; info@aonehairsalon.com&#60;/p&#62;
+  &#60;/td&#62;&#60;/tr&#62;
 
-  <!-- SIGN OFF -->
-  <tr><td style="padding:0 32px 28px">
-    <p style="color:#666;font-size:14px;margin:0;line-height:1.7">See you soon!<br><strong>The A One Hair Salon Team</strong></p>
-  </td></tr>
-
-  <!-- FOOTER -->
-  <tr><td style="background:#1a1a2e;padding:18px 32px;text-align:center">
-    <p style="color:#666;font-size:12px;margin:0">A One Hair Salon | info@aonehairsalon.com</p>
-  </td></tr>
-
-</table>
-</td></tr>
-</table>
-</body>
-</html><button class="copy-btn" onclick="copyCode('custTpl',this)">Copy</button></div>
-
- <p>Click <strong>Save Template</strong> when done.</p>
+&#60;/table&#62;
+&#60;/td&#62;&#60;/tr&#62;
+&#60;/table&#62;</div>
+ </div>
+ <p>Click <strong>Save Template</strong>.</p>
 </div>
 
-<!-- STEP 5 -->
+<!-- STEP 5 — Status Update Template (NEW) -->
 <div class="card">
- <div class="step-title"><span class="step-badge">5</span>Get your Public Key</div>
- <p>In EmailJS, click your account name (top-right) → <strong>Account</strong> → <strong>General</strong> tab.</p>
- <p>You will see your <strong>Public Key</strong> — it looks like <code>aBcDeFgHiJk1234</code>. Copy it.</p>
+ <div class="step-title"><span class="step-badge">5</span>Create Customer Status Update template (confirm / reschedule / reject from admin page)</div>
+ <p>This is a <strong>new template</strong> used when you take action on a booking from the <strong>Appointments</strong> admin page. It automatically adjusts its message for confirmed, rescheduled, or rejected status.</p>
+ <table class="tbl">
+  <tr><th>Field</th><th>Value to enter</th></tr>
+  <tr><td>Template Name</td><td>Customer Status Update</td></tr>
+  <tr><td><strong>Template ID</strong></td><td>Type exactly: <code>template_cust_update</code></td></tr>
+  <tr><td>Subject</td><td><code>Appointment {{status_label}} — {{booking_id}} | A One Hair Salon</code></td></tr>
+  <tr><td><strong>To Email</strong></td><td><code>{{to_email}}</code></td></tr>
+  <tr><td>From Name</td><td><code>A One Hair Salon</code></td></tr>
+  <tr><td>Reply To</td><td><code>{{salon_email}}</code></td></tr>
+ </table>
+ <p style="margin-top:14px">Switch to HTML mode, then paste:</p>
+ <div class="code-wrap">
+  <button class="copy-btn" onclick="copyEl('tpl-update',this)">Copy</button>
+  <div class="code-block" id="tpl-update">&#60;table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f2f5;padding:20px 0;font-family:Arial,Helvetica,sans-serif"&#62;
+&#60;tr&#62;&#60;td align="center"&#62;
+&#60;table width="580" cellpadding="0" cellspacing="0" style="background:#ffffff"&#62;
+
+  &#60;!-- HEADER --&#62;
+  &#60;tr&#62;&#60;td style="background:#1a1a2e;padding:24px 32px;text-align:center"&#62;
+    &#60;p style="color:#c9a84c;font-size:22px;font-weight:bold;margin:0;letter-spacing:2px"&#62;&#9986; A ONE HAIR SALON&#60;/p&#62;
+    &#60;p style="color:#f0d47a;font-size:14px;font-weight:bold;margin:8px 0 0"&#62;{{status_label}}&#60;/p&#62;
+  &#60;/td&#62;&#60;/tr&#62;
+
+  &#60;!-- STATUS MESSAGE --&#62;
+  &#60;tr&#62;&#60;td style="padding:28px 32px 0"&#62;
+    &#60;p style="font-size:17px;font-weight:bold;color:#1a1a2e;margin:0 0 10px"&#62;Hello {{to_name}},&#60;/p&#62;
+    &#60;p style="font-size:14px;color:#555;line-height:1.7;margin:0"&#62;{{status_message}}&#60;/p&#62;
+  &#60;/td&#62;&#60;/tr&#62;
+
+  &#60;!-- BOOKING DETAILS --&#62;
+  &#60;tr&#62;&#60;td style="padding:18px 32px"&#62;
+    &#60;table width="100%" cellpadding="0" cellspacing="0" style="background:#f9f7f0;border-left:5px solid #c9a84c"&#62;
+      &#60;tr&#62;&#60;td style="padding:18px 20px"&#62;
+        &#60;p style="font-size:11px;font-weight:bold;color:#1a1a2e;margin:0 0 12px;letter-spacing:1px"&#62;UPDATED APPOINTMENT DETAILS&#60;/p&#62;
+        &#60;table width="100%" cellpadding="0" cellspacing="0" style="font-size:13px"&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888;width:44%"&#62;Booking Reference&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:bold;color:#c9a84c"&#62;{{booking_id}}&#60;/td&#62;&#60;/tr&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888"&#62;Service&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:600;color:#1a1a2e"&#62;{{service}}&#60;/td&#62;&#60;/tr&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888"&#62;Stylist&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:600;color:#1a1a2e"&#62;{{stylist}}&#60;/td&#62;&#60;/tr&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888"&#62;Date&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:600;color:#1a1a2e"&#62;{{date}}&#60;/td&#62;&#60;/tr&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888"&#62;Time&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:600;color:#1a1a2e"&#62;{{time}}&#60;/td&#62;&#60;/tr&#62;
+          &#60;tr&#62;&#60;td style="padding:6px 0;color:#888"&#62;Price&#60;/td&#62;&#60;td style="padding:6px 0;font-weight:600;color:#1a1a2e"&#62;{{price}}&#60;/td&#62;&#60;/tr&#62;
+        &#60;/table&#62;
+      &#60;/td&#62;&#60;/tr&#62;
+    &#60;/table&#62;
+  &#60;/td&#62;&#60;/tr&#62;
+
+  &#60;!-- CUSTOM NOTE (if any) --&#62;
+  &#60;tr&#62;&#60;td style="padding:0 32px 20px"&#62;
+    &#60;p style="font-size:13px;color:#555;line-height:1.7"&#62;{{note}}&#60;/p&#62;
+    &#60;p style="font-size:13px;color:#555;margin-top:16px"&#62;If you have any questions, please reply to this email or WhatsApp us directly.&#60;br&#62;&#60;strong&#62;A One Hair Salon Team&#60;/strong&#62;&#60;/p&#62;
+  &#60;/td&#62;&#60;/tr&#62;
+
+  &#60;!-- FOOTER --&#62;
+  &#60;tr&#62;&#60;td style="background:#1a1a2e;padding:14px 32px;text-align:center"&#62;
+    &#60;p style="color:#555;font-size:11px;margin:0"&#62;A One Hair Salon &#124; info@aonehairsalon.com&#60;/p&#62;
+  &#60;/td&#62;&#60;/tr&#62;
+
+&#60;/table&#62;
+&#60;/td&#62;&#60;/tr&#62;
+&#60;/table&#62;</div>
+ </div>
+ <p>Click <strong>Save Template</strong>.</p>
 </div>
 
-<!-- STEP 6 -->
+<!-- STEP 6 — Get Public Key -->
 <div class="card">
- <div class="step-title"><span class="step-badge">6</span>Enter your IDs below — get the code to paste</div>
- <p>Fill in your IDs from EmailJS:</p>
+ <div class="step-title"><span class="step-badge">6</span>Get your Public Key</div>
+ <p>In EmailJS, click your account name (top-right) → <strong>Account</strong> → <strong>General</strong> tab → copy the <strong>Public Key</strong> (looks like <code>aBcDeFgH1234</code>).</p>
+</div>
 
- <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0">
-  <div>
-   <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:4px">Public Key</label>
-   <input id="pk" type="text" placeholder="aBcDeFgH..." oninput="genCode()" style="width:100%;padding:9px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:13px;box-sizing:border-box">
+<!-- STEP 7 — Generate Code -->
+<div class="card">
+ <div class="step-title"><span class="step-badge">7</span>Generate your config code</div>
+ <p>Enter your IDs below to get the exact code to paste into <strong>both</strong> <code>booking.html</code> and <code>admin-appointments.html</code>:</p>
+ <div class="config-grid">
+  <div class="config-field">
+   <label>Public Key</label>
+   <input type="text" id="ejs-pk" placeholder="aBcDeFgH..." oninput="genCode()">
   </div>
-  <div>
-   <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:4px">Service ID</label>
-   <input id="svc" type="text" placeholder="service_abc1234" oninput="genCode()" style="width:100%;padding:9px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:13px;box-sizing:border-box">
+  <div class="config-field">
+   <label>Service ID</label>
+   <input type="text" id="ejs-svc" placeholder="service_abc1234" oninput="genCode()">
   </div>
  </div>
- <div class="tip">The Template IDs are already set: <code>template_admin_booking</code> and <code>template_cust_confirm</code>. If you named them differently, update those too.</div>
+ <div class="tip">The 3 template IDs are already set in the code: <code>template_admin_booking</code>, <code>template_cust_confirm</code>, <code>template_cust_update</code></div>
+ <p style="margin-top:14px"><strong>Paste this block into <code>booking.html</code> (replace the 4 <code>var EMAILJS_</code> lines):</strong></p>
+ <div class="gen-code" id="gen-booking">/* Fill in your Public Key and Service ID above */</div>
+ <p style="margin-top:14px"><strong>Paste this block into <code>admin-appointments.html</code> (replace the 2 <code>var EMAILJS_</code> config lines near the top of the script):</strong></p>
+ <div class="gen-code" id="gen-admin">/* Fill in your Public Key and Service ID above */</div>
 
- <p style="margin-top:16px"><strong>Generated code for booking.html — copy and replace the 4 config lines:</strong></p>
- <div class="final-code" id="generatedCode">/* Fill in your Public Key and Service ID above to generate code */</div>
-
- <p style="font-size:13px;color:#666">In <strong>booking.html</strong>, find the 4 lines that start with <code>var EMAILJS_</code> (near the top of the &lt;script&gt; block) and replace them with the code above. Then run <strong>push-fix.html</strong> again to deploy.</p>
+ <p style="margin-top:14px;font-size:13px;color:#666">After pasting the IDs, run <strong>push-fix.html</strong> to deploy the updated files.</p>
 </div>
 
 <!-- DONE -->
 <div class="done-box">
- <h2>🎉 You're all set!</h2>
- <p>After deploying booking.html with your real IDs:<br><br>
- ✅ Admin gets a beautiful email with <strong>green CONFIRM</strong> and <strong>red REJECT</strong> WhatsApp buttons<br>
- ✅ Customer gets a confirmation email <strong>directly to their inbox</strong> instantly<br>
- ✅ Tap CONFIRM → WhatsApp opens with message ready → tap Send<br>
- ✅ 200 free emails per month — no credit card needed</p>
+ <h2>&#127881; All 3 templates created? You're done!</h2>
+ <p>
+  &#9989; Admin gets a beautiful email with <strong>green CONFIRM + red REJECT</strong> WhatsApp buttons<br>
+  &#9989; Customer gets a confirmation email <strong>directly to their inbox</strong> instantly<br>
+  &#9989; Admin Appointments page sends <strong>status update emails automatically</strong> when you confirm, reschedule or reject<br>
+  &#9989; 200 free emails/month — no credit card needed
+ </p>
 </div>
 
 </div>
-
 <script>
-function copyCode(id, btn){
+function copyEl(id, btn){
  var el = document.getElementById(id);
- var text = el.innerText.replace('Copy','').trim();
- navigator.clipboard.writeText(text).then(function(){
+ /* decode HTML entities before copying */
+ var txt = el.innerText
+  .replace(/&#60;/g,'<').replace(/&#62;/g,'>').replace(/&#124;/g,'|')
+  .replace(/&#9986;/g,'✂').replace(/&#128203;/g,'📋')
+  .replace(/&#128075;/g,'👋').replace(/&#9200;/g,'⏰')
+  .replace(/&#128222;/g,'📞').replace(/&#128140;/g,'📬')
+  .replace(/&#9989;/g,'✅').replace(/&#10060;/g,'❌')
+  .replace(/&#127881;/g,'🎉')
+  .replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+ navigator.clipboard.writeText(txt).then(function(){
   btn.textContent='Copied!';
-  setTimeout(function(){ btn.textContent='Copy'; }, 2000);
+  setTimeout(function(){ btn.textContent='Copy'; },2500);
  });
 }
 
 function genCode(){
- var pk  = document.getElementById('pk').value.trim();
- var svc = document.getElementById('svc').value.trim();
- var out = document.getElementById('generatedCode');
- if(!pk || !svc){
-  out.textContent = '/* Fill in your Public Key and Service ID above to generate code */';
+ var pk  = document.getElementById('ejs-pk').value.trim();
+ var svc = document.getElementById('ejs-svc').value.trim();
+ var b   = document.getElementById('gen-booking');
+ var a   = document.getElementById('gen-admin');
+ if(!pk||!svc){
+  b.textContent = '/* Fill in your Public Key and Service ID above */';
+  a.textContent = '/* Fill in your Public Key and Service ID above */';
   return;
  }
- out.textContent =
-  'var EMAILJS_PUBLIC_KEY   = \'' + pk + '\';\n' +
-  'var EMAILJS_SERVICE_ID   = \'' + svc + '\';\n' +
-  'var EMAILJS_ADMIN_TPL    = \'template_admin_booking\';\n' +
-  'var EMAILJS_CUST_TPL     = \'template_cust_confirm\';';
+ b.textContent =
+  "var EMAILJS_PUBLIC_KEY   = '"+pk+"';\n"+
+  "var EMAILJS_SERVICE_ID   = '"+svc+"';\n"+
+  "var EMAILJS_ADMIN_TPL    = 'template_admin_booking';\n"+
+  "var EMAILJS_CUST_TPL     = 'template_cust_confirm';";
+ a.textContent =
+  "var EMAILJS_PUBLIC_KEY      = '"+pk+"';\n"+
+  "var EMAILJS_SERVICE_ID      = '"+svc+"';\n"+
+  "var EMAILJS_CUST_UPDATE_TPL = 'template_cust_update';";
 }
 </script>
 </body>
