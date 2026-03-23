@@ -862,6 +862,20 @@ async function confirmBooking(){
   localStorage.setItem('salon_bookings', JSON.stringify(existing));
  } catch(e){}
 
+ /* Persist booking to server (admin-appointments.html reads from here) */
+ var notesVal = (document.getElementById('notes') ? document.getElementById('notes').value.trim() : '') || '';
+ try {
+  await fetch('/api/booking', {
+   method: 'POST',
+   headers: { 'Content-Type': 'application/json' },
+   body: JSON.stringify({
+    id: bid, svc: B.svc, price: B.price, stylist: B.stylist,
+    date: B.date, time: B.time, fname: B.fname, lname: B.lname,
+    email: B.email, mobile: B.mobile, notes: notesVal
+   })
+  });
+ } catch(e){ console.warn('Server persist error (non-critical):', e.message); }
+
  /* Build WhatsApp URLs — admin taps CONFIRM or REJECT, WhatsApp opens with message ready */
  var custPhone = B.mobile.replace(/\D/g,'');
  var waConfirm = 'https://wa.me/' + custPhone + '?text=' + encodeURIComponent(
@@ -875,8 +889,6 @@ async function confirmBooking(){
   'Service: ' + B.svc + ' | Requested: ' + B.date + ' at ' + B.time + '\n' +
   'Please call or message us to find another time. Sorry!\n- A One Hair Salon'
  );
-
- var notesVal = (document.getElementById('notes') ? document.getElementById('notes').value.trim() : '') || '';
 
  /* ── Initialise EmailJS ── */
  var ejsKey = window.EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY || '';
