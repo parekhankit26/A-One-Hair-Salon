@@ -6,7 +6,8 @@
 <title>Book Appointment — A One Hair Salon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- Booking engine — notifications via Web3Forms -->
+<!-- EmailJS SDK — sends real HTML emails with buttons directly to admin + customer -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 :root {
  --gold:#c9a84c; --gold-lt:#f0d47a; --gold-dk:#8a6f2e; --gold-glow:rgba(201,168,76,.35);
@@ -646,6 +647,16 @@ footer{background:var(--bg1);padding:60px 70px 40px;border-top:1px solid var(--b
 /* Salon WhatsApp — injected by cms.js from content.json (booking_page.salon_whatsapp) */
 var SALON_WA = '';
 
+/* ── EmailJS Configuration ──────────────────────────────────────
+   Sign up free at https://emailjs.com  →  200 emails/month free
+   After setup, replace the four values below with your real IDs.
+   See emailjs-setup.html for a full step-by-step walkthrough.
+   ─────────────────────────────────────────────────────────────── */
+var EMAILJS_PUBLIC_KEY   = 'YOUR_PUBLIC_KEY';       // Account → General tab
+var EMAILJS_SERVICE_ID   = 'YOUR_SERVICE_ID';        // Email Services → Service ID
+var EMAILJS_ADMIN_TPL    = 'template_admin_booking'; // Template for admin notification
+var EMAILJS_CUST_TPL     = 'template_cust_confirm';  // Template for customer confirmation
+
 /* Booking state — var so window.B works (cms.js reads it) */
 var B = { svc:'', price:'', stylist:'', date:'', time:'', fname:'', lname:'', email:'', mobile:'', notes:'' };
 var currentStep = 1;
@@ -836,7 +847,7 @@ window.validateStep3 = validateStep3;
 /* ── Confirm Booking ── */
 async function confirmBooking(){
  var btn = document.getElementById('confirmBtn');
- btn.textContent = 'Processing...';
+ btn.textContent = 'Sending...';
  btn.disabled = true;
 
  /* Generate booking ID */
@@ -851,132 +862,98 @@ async function confirmBooking(){
   localStorage.setItem('salon_bookings', JSON.stringify(existing));
  } catch(e){}
 
- /* Build customer phone (digits only for wa.me links) */
+ /* Build WhatsApp URLs — admin taps CONFIRM or REJECT, WhatsApp opens with message ready */
  var custPhone = B.mobile.replace(/\D/g,'');
-
- /* ── WhatsApp pre-filled messages (salon → customer) ── */
  var waConfirm = 'https://wa.me/' + custPhone + '?text=' + encodeURIComponent(
-  'Hi ' + B.fname + '! \u2705 Your appointment at A One Hair Salon is CONFIRMED.\n\n' +
-  'Booking ID: ' + bid + '\nService: ' + B.svc + '\nStylist: ' + B.stylist +
-  '\nDate & Time: ' + B.date + ' at ' + B.time + '\nPrice: ' + B.price +
-  '\n\nPlease arrive 10 minutes early. See you soon!\n\u2014 A One Hair Salon'
+  'Hi ' + B.fname + '! Your booking is CONFIRMED at A One Hair Salon.\n' +
+  'Service: ' + B.svc + ' | Stylist: ' + B.stylist + '\n' +
+  'Date: ' + B.date + ' at ' + B.time + '\n' +
+  'Please arrive 10 mins early. See you soon!\n- A One Hair Salon'
  );
  var waDecline = 'https://wa.me/' + custPhone + '?text=' + encodeURIComponent(
-  'Hi ' + B.fname + ', we\'re sorry but this time slot is unavailable.\n\n' +
-  'Service: ' + B.svc + '\nRequested: ' + B.date + ' at ' + B.time +
-  '\n\nPlease contact us to arrange an alternative. We apologise!\n\u2014 A One Hair Salon'
+  'Hi ' + B.fname + ', sorry we cannot take this slot.\n' +
+  'Service: ' + B.svc + ' | Requested: ' + B.date + ' at ' + B.time + '\n' +
+  'Please call or message us to find another time. Sorry!\n- A One Hair Salon'
  );
 
- var notesVal = (document.getElementById('notes') ? document.getElementById('notes').value.trim() : '') || 'None';
+ var notesVal = (document.getElementById('notes') ? document.getElementById('notes').value.trim() : '') || '';
 
- /* ── ADMIN EMAIL — clean HTML with CONFIRM + REJECT buttons only ── */
- var adminHtml =
-  '<div style="font-family:Arial,sans-serif;max-width:580px;margin:0 auto;background:#ffffff">' +
-  '<div style="background:#1a1a2e;padding:28px 32px;text-align:center">' +
-   '<h1 style="color:#c9a84c;margin:0;font-size:22px;letter-spacing:3px;font-family:Georgia,serif">A ONE HAIR SALON</h1>' +
-   '<p style="color:#aaa;margin:8px 0 0;font-size:11px;letter-spacing:2px;text-transform:uppercase">New Booking Request</p>' +
-  '</div>' +
-  '<div style="padding:28px 32px;background:#f8f8f8">' +
-   '<p style="margin:0 0 18px;font-size:13px;color:#999">Booking ID: <strong style="color:#333;font-size:14px">' + bid + '</strong></p>' +
-   '<table style="width:100%;border-collapse:collapse;font-size:14px">' +
-    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee;width:130px">Customer</td>' +
-     '<td style="padding:10px 0;border-bottom:1px solid #eee;font-weight:700;color:#222">' + B.fname + ' ' + B.lname + '</td></tr>' +
-    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Service</td>' +
-     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">' + B.svc + '</td></tr>' +
-    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Stylist</td>' +
-     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">' + B.stylist + '</td></tr>' +
-    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Date</td>' +
-     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">' + B.date + '</td></tr>' +
-    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Time</td>' +
-     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">' + B.time + '</td></tr>' +
-    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Price</td>' +
-     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#c9a84c;font-weight:700">' + B.price + '</td></tr>' +
-    '<tr><td style="padding:10px 0;color:#999;border-bottom:1px solid #eee">Mobile</td>' +
-     '<td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">' + B.mobile + '</td></tr>' +
-    '<tr><td style="padding:10px 0;color:#999' + (notesVal !== 'None' ? ';border-bottom:1px solid #eee' : '') + '">Email</td>' +
-     '<td style="padding:10px 0;color:#333' + (notesVal !== 'None' ? ';border-bottom:1px solid #eee' : '') + '">' + B.email + '</td></tr>' +
-    (notesVal !== 'None' ? '<tr><td style="padding:10px 0;color:#999">Notes</td><td style="padding:10px 0;color:#555;font-style:italic">' + notesVal + '</td></tr>' : '') +
-   '</table>' +
-  '</div>' +
-  '<div style="padding:32px;text-align:center;background:#ffffff;border-top:3px solid #c9a84c">' +
-   '<p style="margin:0 0 24px;font-size:13px;color:#555;font-weight:600;letter-spacing:1px;text-transform:uppercase">Respond to Customer via WhatsApp</p>' +
-   '<a href="' + waConfirm + '" style="display:inline-block;background:#25d366;color:#ffffff;padding:18px 44px;text-decoration:none;font-size:16px;font-weight:800;border-radius:6px;margin:0 8px 12px">' +
-    '&#10003; CONFIRM</a>' +
-   '<a href="' + waDecline + '" style="display:inline-block;background:#e53935;color:#ffffff;padding:18px 44px;text-decoration:none;font-size:16px;font-weight:800;border-radius:6px;margin:0 8px 12px">' +
-    '&#10007; REJECT</a>' +
-  '</div>' +
-  '<div style="padding:16px 32px;background:#f0f0f0;text-align:center;border-top:1px solid #ddd">' +
-   '<p style="color:#999;font-size:11px;margin:0;line-height:1.8">' +
-    'Tap <strong>CONFIRM</strong> or <strong>REJECT</strong> &mdash; WhatsApp opens with a message ready for ' + B.fname + '.<br>' +
-    'Or hit <strong>Reply</strong> on this email to write to the customer at ' + B.email + '</p>' +
-  '</div>' +
-  '</div>';
+ /* ── Initialise EmailJS ── */
+ var ejsKey = window.EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY || '';
+ var ejsSvc = window.EMAILJS_SERVICE_ID || EMAILJS_SERVICE_ID || '';
+ var ejsAdm = window.EMAILJS_ADMIN_TPL  || EMAILJS_ADMIN_TPL  || '';
+ var ejsCst = window.EMAILJS_CUST_TPL   || EMAILJS_CUST_TPL   || '';
 
- /* ── CUSTOMER CONFIRMATION — auto-sent via Formsubmit.co ──
-    First booking triggers a one-time verification email to info@aonehairsalon.com.
-    Click the verify link ONCE — after that, every booking auto-emails the customer. */
- var custAutoText =
-  'Dear ' + B.fname + ' ' + B.lname + ',\n\n' +
-  'Thank you for booking with A One Hair Salon!\n\n' +
-  'We have received your appointment request and will confirm within 2 hours via WhatsApp to ' + B.mobile + '.\n\n' +
-  'BOOKING DETAILS\n' +
-  '===============\n' +
-  'Booking ID  : ' + bid + '\n' +
-  'Service     : ' + B.svc + '\n' +
-  'Stylist     : ' + B.stylist + '\n' +
-  'Date & Time : ' + B.date + ' at ' + B.time + '\n' +
-  'Est. Price  : ' + B.price + '\n\n' +
-  'Please arrive 10 minutes before your appointment.\n' +
-  'Cancellations require at least 24 hours notice.\n\n' +
-  'See you soon!\n' +
-  'A One Hair Salon\n' +
-  'info@aonehairsalon.com';
+ if(ejsKey && ejsKey !== 'YOUR_PUBLIC_KEY'){
+  try { emailjs.init({ publicKey: ejsKey }); } catch(e){}
 
- var w3fKey = window.WEB3FORMS_KEY || '3c4dfd8f-dbb8-4d05-873e-bfb44d23d3dd';
+  /* ── 1. ADMIN EMAIL — real HTML with green CONFIRM + red REJECT buttons ── */
+  try {
+   await emailjs.send(ejsSvc, ejsAdm, {
+    to_email:       'info@aonehairsalon.com',
+    from_name:      B.fname + ' ' + B.lname,
+    booking_id:     bid,
+    service:        B.svc,
+    stylist:        B.stylist,
+    date:           B.date,
+    time:           B.time,
+    price:          B.price,
+    mobile:         B.mobile,
+    customer_email: B.email,
+    notes:          notesVal || 'None',
+    confirm_link:   waConfirm,
+    reject_link:    waDecline
+   });
+  } catch(e){ console.warn('Admin email error:', e); }
 
- /* Send admin notification (HTML email with CONFIRM/REJECT buttons) */
- try {
-  await fetch('https://api.web3forms.com/submit', {
-   method: 'POST',
-   headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-   body: JSON.stringify({
-    access_key: w3fKey,
-    subject:    'New Booking: ' + B.svc + ' \u2014 ' + B.fname + ' ' + B.lname + ' \u2014 ' + B.date,
-    from_name:  'A One Hair Salon Bookings',
-    name:       B.fname + ' ' + B.lname,
-    email:      B.email,
-    replyto:    B.email,
-    message:    adminHtml,
-    botcheck:   ''
-   })
-  });
- } catch(e){ console.warn('Admin notification error:', e); }
+  /* ── 2. CUSTOMER CONFIRMATION — sent directly to customer's inbox ── */
+  try {
+   await emailjs.send(ejsSvc, ejsCst, {
+    to_email:   B.email,
+    to_name:    B.fname,
+    from_name:  'A One Hair Salon',
+    booking_id: bid,
+    service:    B.svc,
+    stylist:    B.stylist,
+    date:       B.date,
+    time:       B.time,
+    price:      B.price,
+    mobile:     B.mobile
+   });
+  } catch(e){ console.warn('Customer email error:', e); }
 
- /* Send customer confirmation auto-email (Formsubmit.co → _autoresponse goes to customer) */
- try {
-  await fetch('https://formsubmit.co/ajax/info@aonehairsalon.com', {
-   method: 'POST',
-   headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-   body: JSON.stringify({
-    name:          B.fname + ' ' + B.lname,
-    email:         B.email,
-    _subject:      'Booking Received \u2014 A One Hair Salon (' + bid + ')',
-    _autoresponse: custAutoText,
-    _template:     'box',
-    _captcha:      'false',
-    booking_id:    bid,
-    service:       B.svc,
-    date_time:     B.date + ' at ' + B.time
-   })
-  });
- } catch(e){ console.warn('Customer confirmation error:', e); }
+ } else {
+  /* Fallback: EmailJS not configured yet — use Web3Forms plain-text */
+  console.warn('EmailJS not configured — falling back to Web3Forms plain text.');
+  var w3fKey = window.WEB3FORMS_KEY || '3c4dfd8f-dbb8-4d05-873e-bfb44d23d3dd';
+  var sep = '============================================';
+  var adminMsg =
+   sep + '\nNEW BOOKING — A ONE HAIR SALON\n' + sep + '\n\n' +
+   'Booking ID : ' + bid + '\nCustomer   : ' + B.fname + ' ' + B.lname +
+   '\nService    : ' + B.svc + '\nStylist    : ' + B.stylist +
+   '\nDate       : ' + B.date + '\nTime       : ' + B.time +
+   '\nPrice      : ' + B.price + '\nMobile     : ' + B.mobile +
+   '\nEmail      : ' + B.email +
+   (notesVal ? '\nNotes      : ' + notesVal : '') +
+   '\n\n>>> CONFIRM — tap link to open WhatsApp:\n' + waConfirm +
+   '\n\n>>> REJECT — tap link to open WhatsApp:\n' + waDecline + '\n' + sep;
+  try {
+   await fetch('https://api.web3forms.com/submit', {
+    method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body: JSON.stringify({ access_key:w3fKey, botcheck:'',
+     subject:'New Booking: ' + B.svc + ' | ' + B.fname + ' ' + B.lname + ' | ' + B.date + ' ' + B.time,
+     from_name:'A One Hair Salon Bookings', name:B.fname+' '+B.lname,
+     email:B.email, replyto:B.email, message:adminMsg })
+   });
+  } catch(e){ console.warn('Web3Forms fallback error:', e); }
+ }
 
- /* ── Build customer WhatsApp button (for success page) ── */
+ /* ── Build customer WhatsApp button (success screen) ── */
  var salonWANum = window.SALON_WA || SALON_WA || '';
  var custWaLink = salonWANum ? 'https://wa.me/' + salonWANum + '?text=' + encodeURIComponent(
-  'Hi A One Hair Salon! I just booked an appointment.\n\nBooking ID: ' + bid +
+  'Hi A One Hair Salon! I just booked.\n\nBooking ID: ' + bid +
   '\nName: ' + B.fname + ' ' + B.lname + '\nService: ' + B.svc +
-  '\nDate & Time: ' + B.date + ' at ' + B.time + '\n\nCould you please confirm? Thank you!'
+  '\nDate & Time: ' + B.date + ' at ' + B.time + '\n\nPlease confirm, thank you!'
  ) : '';
 
  /* ── Show success view ── */
@@ -994,13 +971,8 @@ async function confirmBooking(){
 
  var waBtn = document.getElementById('waSmsBtn');
  if(waBtn){
-  if(custWaLink){
-   waBtn.href = custWaLink;
-   waBtn.innerHTML = '&#128172; Message Us on WhatsApp';
-   waBtn.style.display = 'inline-block';
-  } else {
-   waBtn.style.display = 'none';
-  }
+  if(custWaLink){ waBtn.href=custWaLink; waBtn.innerHTML='&#128172; Message Us on WhatsApp'; waBtn.style.display='inline-block'; }
+  else { waBtn.style.display='none'; }
  }
 
  var emailNote = document.getElementById('emailStatusNote');
