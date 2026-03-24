@@ -654,8 +654,8 @@ var SALON_WA = '';
    ─────────────────────────────────────────────────────────────── */
 var EMAILJS_PUBLIC_KEY   = 'YOUR_PUBLIC_KEY';       // Account → General tab
 var EMAILJS_SERVICE_ID   = 'YOUR_SERVICE_ID';        // Email Services → Service ID
-var EMAILJS_ADMIN_TPL    = 'template_admin_booking'; // Template for admin notification
-var EMAILJS_CUST_TPL     = 'template_cust_confirm';  // Template for customer confirmation
+var EMAILJS_ADMIN_TPL    = 'template_admin_booking'; // Template 1 — admin notification
+var EMAILJS_CUST_TPL     = 'template_cust_update';   // Template 2 — all customer emails (receipt + status updates)
 
 /* Booking state — var so window.B works (cms.js reads it) */
 var B = { svc:'', price:'', stylist:'', date:'', time:'', fname:'', lname:'', email:'', mobile:'', notes:'' };
@@ -918,19 +918,23 @@ async function confirmBooking(){
    });
   } catch(e){ console.warn('Admin email error:', e); }
 
-  /* ── 2. CUSTOMER CONFIRMATION — sent directly to customer's inbox ── */
+  /* ── 2. CUSTOMER RECEIPT — uses the same template_cust_update (status = "BOOKING RECEIVED") ── */
   try {
    await emailjs.send(ejsSvc, ejsCst, {
-    to_email:   B.email,
-    to_name:    B.fname,
-    from_name:  'A One Hair Salon',
-    booking_id: bid,
-    service:    B.svc,
-    stylist:    B.stylist,
-    date:       B.date,
-    time:       B.time,
-    price:      B.price,
-    mobile:     B.mobile
+    to_email:       B.email,
+    to_name:        B.fname,
+    from_name:      'A One Hair Salon',
+    booking_id:     bid,
+    status_label:   'Booking Received \u2709\ufe0f',
+    status_message: 'Thank you for booking with A One Hair Salon! Your request has been received and we will confirm your appointment within 2 hours via WhatsApp to ' + B.mobile + '.',
+    service:        B.svc,
+    stylist:        B.stylist || 'Any Available',
+    date:           B.date,
+    time:           B.time,
+    price:          B.price,
+    mobile:         B.mobile,
+    note:           '',
+    salon_email:    'info@aonehairsalon.com'
    });
   } catch(e){ console.warn('Customer email error:', e); }
 
