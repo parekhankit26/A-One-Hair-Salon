@@ -90,51 +90,30 @@
     },
     {
       "icon": "◉",
-      "name": "Balayage & Color",
-      "price": "from ₹4,000",
+      "name": "Hair Color",
+      "price": "from £10.00",
       "detail": "Freehand painting for natural sun-kissed highlights blended seamlessly.",
-      "image": "images/aone-hero.jpg"
-    },
-    {
-      "icon": "♛",
-      "name": "Bridal Styling",
-      "price": "from ₹5,000",
-      "detail": "Complete bridal packages — hair, makeup & day-of styling.",
       "image": "images/aone-hero.jpg"
     },
     {
       "icon": "◈",
       "name": "Hair Spa",
-      "price": "from ₹1,500",
+      "price": "from ₹20.00",
       "detail": "Deep conditioning, scalp massage & nourishing mask treatment.",
-      "image": "images/aone-hero.jpg"
-    },
-    {
-      "icon": "✿",
-      "name": "Keratin Treatment",
-      "price": "from ₹5,000",
-      "detail": "Brazilian keratin for frizz-free, silky smooth hair.",
       "image": "images/aone-hero.jpg"
     },
     {
       "icon": "❋",
       "name": "Luxury Facial",
-      "price": "from ₹2,000",
+      "price": "from £25.00",
       "detail": "Deep cleanse, serum, facial massage & premium mask.",
       "image": "images/aone-hero.jpg"
     },
     {
-      "icon": "◆",
-      "name": "Nail Art",
-      "price": "from ₹1,200",
-      "detail": "Gel, acrylic & custom nail art extensions by specialists.",
-      "image": "images/aone-hero.jpg"
-    },
-    {
       "icon": "✦",
-      "name": "New Service",
-      "price": "from ₹0",
-      "detail": "",
+      "name": "Massage",
+      "price": "from £10.00",
+      "detail": "Special treatment via relaxation half body massage",
       "image": "images/aone-hero.jpg"
     }
   ],
