@@ -520,16 +520,16 @@
     "social_facebook_url": "#",
     "social_instagram_url": "#",
     "social_linkedin_url": "#",
-    "map_embed_url": "https://maps.google.com/maps?q=King+Street,+London,+United+Kingdom&t=&z=15&ie=UTF8&iwloc=&output=embed",
+    "map_embed_url": "https://www.google.com/maps/place/A+One+Hair+Salon/@51.5384346,0.0336952,17z/data=!4m6!3m5!1s0x47d8a7b19060199f:0xee9b675cc03d4d2f!8m2!3d51.5384346!4d0.0336952!16s%2Fg%2F11z4m0b0cd?hl=en-GB&entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D",
     "map_address_name": "A One Hair Salon",
-    "map_address_line": "Shop 12, 12 King Street, London",
-    "map_link": "https://maps.google.com/maps?q=King+Street,+London,+United+Kingdom",
+    "map_address_line": "Carlton Terrace, Wah Center, Shop No - 14 , London, E7 8LH",
+    "map_link": "https://www.google.com/maps/place/A+One+Hair+Salon/@51.5384346,0.0336952,17z/data=!4m6!3m5!1s0x47d8a7b19060199f:0xee9b675cc03d4d2f!8m2!3d51.5384346!4d0.0336952!16s%2Fg%2F11z4m0b0cd?hl=en-GB&entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D",
     "hours": [
       {
         "title": "Weekdays",
         "day_range": "Monday — Friday",
-        "open_time": "10:00",
-        "close_time": "8:00",
+        "open_time": "09:00",
+        "close_time": "09:00",
         "note": "Regular appointments available all day",
         "badge": "● Open Today",
         "badge_type": "green"
@@ -546,8 +546,8 @@
       {
         "title": "Sunday",
         "day_range": "Every Sunday",
-        "open_time": "10:00",
-        "close_time": "6:00",
+        "open_time": "09:00",
+        "close_time": "09:00",
         "note": "Relaxed Sunday sessions available",
         "badge": "● Open Today",
         "badge_type": "green"
