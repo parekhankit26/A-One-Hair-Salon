@@ -520,7 +520,7 @@
     "social_facebook_url": "#",
     "social_instagram_url": "#",
     "social_linkedin_url": "#",
-    "map_embed_url": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2481.625161967941!2d0.0336952!3d51.538434599999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a7b19060199f%3A0xee9b675cc03d4d2f!2sA%20One%20Hair%20Salon!5e0!3m2!1sen!2suk!4v1775515298961!5m2!1sen!2suk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+    "map_embed_url": "https://maps.app.goo.gl/GTcrhbcsW89g65CH7",
     "map_address_name": "A One Hair Salon",
     "map_address_line": "Carlton Terrace, Wah Center, Shop No - 14 , London, E7 8LH",
     "map_link": "https://maps.app.goo.gl/GTcrhbcsW89g65CH7",
